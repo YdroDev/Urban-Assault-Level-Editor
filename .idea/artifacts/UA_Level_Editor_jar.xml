@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="UA Level Editor:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/UA_Level_Editor_jar</output-path>
+    <root id="archive" name="UA Level Editor.jar">
+      <element id="module-output" name="UA Level Editor" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../json-simple-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/JTattoo-1.6.13.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../jl-1.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
