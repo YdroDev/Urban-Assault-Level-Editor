@@ -1,4 +1,4 @@
-package main;
+package UAstructures;
 
 public class Hoststation extends Unit {
 	

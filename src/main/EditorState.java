@@ -1,5 +1,10 @@
 package main;
 
+import UAstructures.BeamGate;
+import UAstructures.StoudsonBomb;
+import UAstructures.TechUpgrade;
+import UAstructures.Unit;
+
 import java.util.ArrayList;
 
 public class EditorState {

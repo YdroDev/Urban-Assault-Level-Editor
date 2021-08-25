@@ -1,6 +1,6 @@
 package Dialogs;
 
-import main.CheckList;
+import UAstructures.CheckList;
 import main.EditorState;
 import main.MainWindow;
 import main.UAdata;

@@ -1,5 +1,9 @@
 package LevelIO;
 
+import UAstructures.BeamGate;
+import UAstructures.SpecialBuilding;
+import UAstructures.StoudsonBomb;
+import UAstructures.TechUpgrade;
 import main.*;
 
 import javax.swing.*;

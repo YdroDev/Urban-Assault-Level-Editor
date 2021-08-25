@@ -1,4 +1,4 @@
-package main;
+package UAstructures;
 
 import java.awt.Graphics2D;
 import java.awt.Image;

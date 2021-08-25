@@ -1,4 +1,6 @@
-package main;
+package UAstructures;
+
+import UAstructures.UAitem;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

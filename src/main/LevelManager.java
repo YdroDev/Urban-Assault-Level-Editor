@@ -42,6 +42,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import UAstructures.UAitem;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -475,7 +476,7 @@ public class LevelManager extends JFrame{
 		
 		this.numLabel = new JLabel("Number of units: ");
 		this.numField = new JTextField(2);
-		this.ownLabel = new JLabel("main.Unit faction: ");
+		this.ownLabel = new JLabel("UAstructures.Unit faction: ");
 		this.hsStrings = new String[7];
 		this.hsStrings[0] = "Resistance"; this.hsStrings[1] = "Ghorkov"; this.hsStrings[2] = "Taerkasten"; this.hsStrings[3] = "Mykonian"; this.hsStrings[4] = "Sulgogar"; this.hsStrings[5] = "Black Sect"; this.hsStrings[6] = "Target faction";
 		this.ownList = new JComboBox<String>(hsStrings);
@@ -717,7 +718,7 @@ public class LevelManager extends JFrame{
 		this.unitScroller.setPreferredSize(new Dimension(300,300));
 		this.sectorScroller = new JScrollPane(this.sectorWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.sectorScroller.setPreferredSize(new Dimension(300,300));
-		this.tabs.addTab("Host Station / main.Squad", this.unitScroller);
+		this.tabs.addTab("Host Station / UAstructures.Squad", this.unitScroller);
 		this.tabs.addTab("Sector", this.sectorScroller);
 		
 		this.add(this.tabs);
@@ -733,25 +734,25 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.insets = new Insets(1,1,1,1);
 			switch(own) {
 			case 1:
-				this.unitName.setText("main.Hoststation "+index+": Resistance");
+				this.unitName.setText("UAstructures.Hoststation "+index+": Resistance");
 				break;
 			case 2:
-				this.unitName.setText("main.Hoststation "+index+": Sulgogar");
+				this.unitName.setText("UAstructures.Hoststation "+index+": Sulgogar");
 				break;
 			case 3:
-				this.unitName.setText("main.Hoststation "+index+": Mykonian");
+				this.unitName.setText("UAstructures.Hoststation "+index+": Mykonian");
 				break;
 			case 4:
-				this.unitName.setText("main.Hoststation "+index+": Taerkasten");
+				this.unitName.setText("UAstructures.Hoststation "+index+": Taerkasten");
 				break;
 			case 5:
-				this.unitName.setText("main.Hoststation "+index+": Black sect");
+				this.unitName.setText("UAstructures.Hoststation "+index+": Black sect");
 				break;
 			case 6:
-				this.unitName.setText("main.Hoststation "+index+": Ghorkov");
+				this.unitName.setText("UAstructures.Hoststation "+index+": Ghorkov");
 				break;
 			case 7:
-				this.unitName.setText("main.Hoststation "+index+": Target Host Station");
+				this.unitName.setText("UAstructures.Hoststation "+index+": Target Host Station");
 				break;
 			}
 			index--;
@@ -1063,7 +1064,7 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 0;
 			this.managerConstraints.gridx = 0;
 			this.imgLabel.setIcon(new ImageIcon(this.hsVehicle));
-			this.imgPanel.setBorder(BorderFactory.createTitledBorder("main.Hoststation type"));
+			this.imgPanel.setBorder(BorderFactory.createTitledBorder("UAstructures.Hoststation type"));
 			this.imgPanel.add(this.imgLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
 			this.hsType.setSelectedIndex(this.hsTypeSelected);
@@ -1093,13 +1094,13 @@ public class LevelManager extends JFrame{
 				for(UAitem unit : UAdata.allUnits) {
 					if(unit.getID() == vehicle) {
 						this.unitImg.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/img/icons/"+unit.getIconName()+".png"))));
-						this.unitName.setText("main.Unit: "+ unit.getName());
+						this.unitName.setText("UAstructures.Unit: "+ unit.getName());
 					}
 				}
 				for(UAitem unit : UAdata.fallbackUnits) {
 					if(unit.getID() == vehicle) {
 						this.unitImg.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/img/icons/"+unit.getIconName()+".png"))));
-						this.unitName.setText("main.Unit: "+ unit.getName());
+						this.unitName.setText("UAstructures.Unit: "+ unit.getName());
 					}
 				}
 			}catch(FileNotFoundException ex) {

@@ -1,4 +1,4 @@
-package main;
+package UAstructures;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -16,7 +16,7 @@ public class UAitem {
 	private BufferedImage img;
 	private int mapIcon;
 	
-	UAitem(){
+	public UAitem(){
 		this.name = "";
 		this.id = 0;
 		this.iconName = "";
