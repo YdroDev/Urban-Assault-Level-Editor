@@ -17,7 +17,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -2240,7 +2239,7 @@ public class MainWindow extends JFrame {
 			mapSaver.println("begin_level");
 			mapSaver.print("\t");
 			mapSaver.print("set = ");
-			mapSaver.println(Integer.toString(savedSet+1));
+			mapSaver.println(Integer.toString(EditorState.set));
 			mapSaver.print("\t");
 			mapSaver.print("sky = ");
 			mapSaver.println("objects/"+EditorState.sky+".base");
@@ -2252,49 +2251,15 @@ public class MainWindow extends JFrame {
 			mapSaver.println("\tslot5 = palette/invdark.pal");
 			mapSaver.println("\tslot6 = palette/sw.pal");
 			mapSaver.println("\tslot7 = palette/invtuerk.pal");
-			if(savedEventLoop > 0) mapSaver.println("\tevent_loop = "+savedEventLoop);
-			if(savedMusic > 0) {
-				mapSaver.print("\tambiencetrack = "+(savedMusic+1));
-				if(savedMinBreak < 10) mapSaver.print("_0"+savedMinBreak);
-				else mapSaver.print("_"+savedMinBreak);
-				if(savedMaxBreak < 10) mapSaver.println("_0"+savedMaxBreak);
-				else mapSaver.println("_"+savedMaxBreak);
+			if(EditorState.eventLoop > 0) mapSaver.println("\tevent_loop = "+EditorState.eventLoop);
+			if(EditorState.music > 0) {
+				mapSaver.print("\tambiencetrack = "+(EditorState.music));
+				if(EditorState.min_break < 10) mapSaver.print("_0"+EditorState.min_break);
+				else mapSaver.print("_"+EditorState.min_break);
+				if(EditorState.max_break < 10) mapSaver.println("_0"+EditorState.max_break);
+				else mapSaver.println("_"+EditorState.max_break);
 			}
-			switch(savedMovie) {
-			case 1:
-				mapSaver.println("\tmovie = mov:intro.mpg");
-				break;
-			case 2:
-				mapSaver.println("\tmovie = mov:tut1.mpg");
-				break;
-			case 3:
-				mapSaver.println("\tmovie = mov:tut2.mpg");
-				break;
-			case 4:
-				mapSaver.println("\tmovie = mov:tut3.mpg");
-				break;
-			case 5:
-				mapSaver.println("\tmovie = mov:kyt.mpg");
-				break;
-			case 6:
-				mapSaver.println("\tmovie = mov:taer.mpg");
-				break;
-			case 7:
-				mapSaver.println("\tmovie = mov:myk.mpg");
-				break;
-			case 8:
-				mapSaver.println("\tmovie = mov:sulg.mpg");
-				break;
-			case 9:
-				mapSaver.println("\tmovie = mov:black.mpg");
-				break;
-			case 10:
-				mapSaver.println("\tmovie = mov:lose.mpg");
-				break;
-			case 11:
-				mapSaver.println("\tmovie = mov:win.mpg");
-				break;
-			}
+			mapSaver.println("\tmovie = mov:"+EditorState.movie+".mpg");
 			mapSaver.println("end");
 			mapSaver.println(";------------------------------------------------------------");
 			mapSaver.println(";--- Mission Briefing Maps                                ---");

@@ -269,10 +269,17 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
             try
             {
                 savedSetIndex = selectedSetIndex;
+                EditorState.set = savedSetIndex + 1;
                 savedMovieIndex = selectedMovieIndex;
+                if(savedMovieIndex > 0) EditorState.movie = movies[savedMovieIndex];
+                else EditorState.movie = "";
                 savedEventLoopIndex = selectedEventLoopIndex;
+                EditorState.eventLoop = savedEventLoopIndex;
                 savedSkyIndex = selectedSkyIndex;
+                EditorState.sky = skies[savedSkyIndex];
                 savedMusicIndex = selectedMusicIndex;
+                if(savedMusicIndex > 0) EditorState.music = savedMusicIndex + 1;
+                else EditorState.music = 0;
                 selectedMinBreak = Integer.parseInt(minBreakValue.getText());
                 selectedMaxBreak = Integer.parseInt(maxBreakValue.getText());
                 if(selectedMinBreak < 0) selectedMinBreak = -selectedMinBreak;
@@ -280,7 +287,9 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
                 if(selectedMaxBreak < 0) selectedMaxBreak = -selectedMaxBreak;
                 if(selectedMaxBreak > 1000000) selectedMaxBreak = 1000000;
                 savedMinBreak = selectedMinBreak;
+                EditorState.min_break = savedMinBreak;
                 savedMaxBreak = selectedMaxBreak;
+                EditorState.max_break = savedMaxBreak;
                 if(musicPlayer != null)musicPlayer.close();
                 removeParamsDialog();
                 dialog.setVisible(false);
