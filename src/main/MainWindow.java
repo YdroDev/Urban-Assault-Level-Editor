@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
@@ -63,8 +65,7 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.advanced.AdvancedPlayer;
+import Dialogs.LevelParameters;
 
 import com.jtattoo.plaf.noire.NoireLookAndFeel;
 
@@ -72,8 +73,8 @@ import com.jtattoo.plaf.noire.NoireLookAndFeel;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
-	
 	private JPanel window;
+	private LevelParameters levelParameters;
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
 	private int wHeight = 720;
@@ -128,7 +129,6 @@ public class MainWindow extends JFrame {
 	private JTextField horizontalNum;
 	private JTextField verticalNum;
 	private JLabel borderInfo;
-	private JDialog paramDialog;
 	private JDialog enablerDialog;
 	private JDialog briefingDialog;
 	private JDialog playerHSDialog;
@@ -171,7 +171,7 @@ public class MainWindow extends JFrame {
 	private CheckList specialList;
 	private JCheckBox unlocker;
 	
-	private GridBagConstraints gridConstraints, paramConstraints , enablerConstraints, playerHSConstraints, descConstraints, modsConstraints, briefingConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
+	private GridBagConstraints gridConstraints , enablerConstraints, playerHSConstraints, descConstraints, modsConstraints, briefingConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
@@ -184,14 +184,8 @@ public class MainWindow extends JFrame {
 	private BufferedImage[] mbMapXp;
 	private BufferedImage[] dbMap;
 	private BufferedImage[] dbMapXp;
-	private BufferedImage[] sky;
 	private JComboBox<String> mbList;
 	private JComboBox<String> dbList;
-	private JComboBox<String> setList;
-	private JComboBox<String> skyList;
-	private JComboBox<String> musicList;
-	private JComboBox<String> movieList;
-	private JComboBox<String> eventLoopList;
 	private String[] mbMaps;
 	private String[] dbMaps;
 	private String[] mbMapsXp;
@@ -201,47 +195,15 @@ public class MainWindow extends JFrame {
 	private JLabel[] dbMapframe;
 	private JLabel[] mbMapframeXp;
 	private JLabel[] dbMapframeXp;
-	private JLabel[] skyFrame;
-	private JPanel setPanel;
-	private JLabel setText;
-	private JPanel skyPanel;
-	private JLabel skyText;
-	private JPanel musicPanel;
-	private JPanel moviePanel;
-	private JPanel eventLoopPanel;
-	private JButton playMusic;
-	private JLabel minBreakText;
-	private JLabel maxBreakText;
-	private JTextField minBreakValue;
-	private JTextField maxBreakValue;
-	private JSlider minBreakSlider;
-	private JSlider maxBreakSlider;
-	private JButton saveParams;
-	private JButton cancelParams;
 	private JButton saveBriefing;
 	private JButton cancelBriefing;
 	private JButton saveDesc;
 	private JButton cancelDesc;
-	private AdvancedPlayer player;
-	private BufferedInputStream bisPlayer;
 	private int selectedMB;
 	private int selectedDB;
-	private int selectedSet;
-	private int selectedSky;
-	private int selectedMovie;
-	private int selectedEventLoop;
-	private int selectedMusic;
-	private int selectedMinBreak;
-	private int selectedMaxBreak;
 	private int savedMB;
 	private int savedDB;
-	private int savedSet;
-	private int savedSky;
-	private int savedMovie;
-	private int savedEventLoop;
-	private int savedMusic;
-	private int savedMinBreak;
-	private int savedMaxBreak;
+
 	private JMenuItem campaignInfo;
 	private JMenuItem shortcutsInfo;
 	private JMenuItem aboutInfo;
@@ -311,6 +273,7 @@ public class MainWindow extends JFrame {
 	MainWindow(){	
 		layout = new BorderLayout();
 		window = new JPanel(layout);
+		levelParameters = new LevelParameters(this);
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -324,7 +287,6 @@ public class MainWindow extends JFrame {
 
 		listenToMenu = new MainMenuListener();
 		gridConstraints = new GridBagConstraints();
-		paramConstraints = new GridBagConstraints();
 		enablerConstraints = new GridBagConstraints();
 		playerHSConstraints = new GridBagConstraints();
 		modsConstraints = new GridBagConstraints();
@@ -335,7 +297,6 @@ public class MainWindow extends JFrame {
 		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
 		newMapDialog = new JDialog(this, "Create a new map", Dialog.ModalityType.DOCUMENT_MODAL);
-		paramDialog = new JDialog(this, "Level parameters", Dialog.ModalityType.DOCUMENT_MODAL);
 		enablerDialog = new JDialog(this, "Enabler", Dialog.ModalityType.DOCUMENT_MODAL);
 		briefingDialog = new JDialog(this, "Set briefing/debriefing map", Dialog.ModalityType.DOCUMENT_MODAL);
 		playerHSDialog = new JDialog(this, "Select Host Station for player", Dialog.ModalityType.DOCUMENT_MODAL);
@@ -376,12 +337,10 @@ public class MainWindow extends JFrame {
 		mbMapXp = new BufferedImage[31];
 		dbMap = new BufferedImage[114];
 		dbMapXp = new BufferedImage[71];
-		sky = new BufferedImage[73];
 		mbMapframe = new JLabel[74];
 		mbMapframeXp = new JLabel[31];
 		dbMapframe = new JLabel[114];
 		dbMapframeXp = new JLabel[71];
-		skyFrame = new JLabel[72];
 		selectedMB = 0;
 		selectedDB = 0;
 		savedMB = 0;
@@ -552,7 +511,6 @@ public class MainWindow extends JFrame {
 
 		mainMenu = new JMenuBar();
 		newMapDialog.addWindowListener(listenToMenu);
-		paramDialog.addWindowListener(listenToMenu);
 		enablerDialog.addWindowListener(listenToMenu);
 		briefingDialog.addWindowListener(listenToMenu);
 		playerHSDialog.addWindowListener(listenToMenu);
@@ -737,7 +695,7 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
-	private class MainMenuListener implements WindowListener, MenuListener, ActionListener, KeyListener, ChangeListener{
+	private class MainMenuListener implements WindowListener, MenuListener, ActionListener, KeyListener{
 
 		JButton confirmBut;
 		JButton cancelBut;
@@ -996,7 +954,7 @@ public class MainWindow extends JFrame {
 				newMapDialog.setVisible(false);
 			}	
 			if(e.getSource() == menuParams) {
-				initParamsDialog();
+				levelParameters.render();
 			}
 			if(e.getSource() == resEnabler) {
 				showEnabler(1);
@@ -1486,69 +1444,7 @@ public class MainWindow extends JFrame {
 				
 				descriptionDialog.setVisible(true);
 			}
-				
-			if(e.getSource() == setList) {
-				selectedSet = setList.getSelectedIndex();
-			}
-			if(e.getSource() == movieList) {
-				selectedMovie = movieList.getSelectedIndex();
-			}
-			if(e.getSource() == eventLoopList) {
-				selectedEventLoop = eventLoopList.getSelectedIndex();
-			}
-			if(e.getSource() == skyList) {
-				selectedSky = skyList.getSelectedIndex();
-				removeParamsDialog();
-				initParamsDialog();
-			}
-			if(e.getSource() == musicList) {
-				selectedMusic = musicList.getSelectedIndex();
-			}
-			if(e.getSource() == playMusic) {
-				initMusic();
-				audioThread.execute();
-			}
-			
-			
-			if(e.getSource() == saveParams) {
-				try
-				{
-					savedSet = selectedSet;
-					savedMovie = selectedMovie;
-					savedEventLoop = selectedEventLoop;
-					savedSky = selectedSky;
-					savedMusic = selectedMusic;
-					selectedMinBreak = Integer.parseInt(minBreakValue.getText());
-					selectedMaxBreak = Integer.parseInt(maxBreakValue.getText());
-					if(selectedMinBreak < 0) selectedMinBreak = -selectedMinBreak;
-					if(selectedMinBreak > 1000000) selectedMinBreak = 1000000;
-					if(selectedMaxBreak < 0) selectedMaxBreak = -selectedMaxBreak;
-					if(selectedMaxBreak > 1000000) selectedMaxBreak = 1000000;
-					savedMinBreak = selectedMinBreak;
-					savedMaxBreak = selectedMaxBreak;
-					if(player != null)player.close();
-					removeParamsDialog();
-					paramDialog.setVisible(false);
-					repaint();
-					cleanManager();
-					updateManagerSector(currentMap.getSelectedBorderSector(), currentMap.getSelectedSector(), currentMap.getHorizontalGrid(), currentMap.getVerticalGrid());
-					makeUnsaved();
-				}catch(NumberFormatException ex) {
-					JOptionPane.showMessageDialog(paramDialog,"Values must be numbers", "Wrong value", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-			if(e.getSource() == cancelParams) {
-				selectedSet = savedSet;
-				selectedMovie = savedMovie;
-				selectedEventLoop = savedEventLoop;
-				selectedSky = savedSky;
-				selectedMusic = savedMusic;
-				selectedMinBreak = savedMinBreak;
-				selectedMaxBreak = savedMaxBreak;
-				if(player != null)player.close();
-				removeParamsDialog();
-				paramDialog.setVisible(false);
-			}
+
 			if(e.getSource() == saveDesc) {
 				descString = descData.getText();
 				removeDescDialog();
@@ -1923,17 +1819,6 @@ public class MainWindow extends JFrame {
 			newMapDialog.remove(horizontalDialog);
 			newMapDialog.remove(dialogNewMap);
 		}
-		
-		void removeParamsDialog() {
-			if(cancelParams != null) paramDialog.remove(cancelParams);
-			if(saveParams != null) paramDialog.remove(saveParams);
-			if(musicPanel != null) paramDialog.remove(musicPanel);
-			if(skyPanel != null) paramDialog.remove(skyPanel);
-			if(eventLoopPanel != null) paramDialog.remove(eventLoopPanel);
-			if(moviePanel != null) paramDialog.remove(moviePanel);
-			if(setPanel != null) paramDialog.remove(setPanel);
-		}
-		
 		void removeEnablerDialog() {
 			if(cancelEnabler != null) enablerDialog.remove(cancelEnabler);
 			if(trainingSaveEnabler != null) enablerDialog.remove(trainingSaveEnabler);
@@ -2015,18 +1900,6 @@ public class MainWindow extends JFrame {
 				removeNewMapDialog();
 				newMapDialog.setVisible(false);
 			}
-			if(e.getSource() == paramDialog) {
-				selectedSet = savedSet;
-				selectedMovie = savedMovie;
-				selectedEventLoop = savedEventLoop;
-				selectedSky = savedSky;
-				selectedMusic = savedMusic;
-				selectedMinBreak = savedMinBreak;
-				selectedMaxBreak = savedMaxBreak;
-				if(player != null)player.close();
-				removeParamsDialog();
-				paramDialog.setVisible(false);
-			}
 			if(e.getSource() == enablerDialog) {
 				removeEnablerDialog();
 				enablerDialog.setVisible(false);
@@ -2088,159 +1961,6 @@ public class MainWindow extends JFrame {
 		public void windowDeactivated(WindowEvent e) {
 
 			
-		}
-		public void initParamsDialog() {
-			paramDialog.setSize(700,500);
-			paramDialog.setLocationRelativeTo(null);
-			paramDialog.setResizable(false);
-			paramDialog.setLayout(new GridBagLayout());
-			
-			setPanel = new JPanel();
-			setPanel.setLayout(new GridBagLayout());
-			setList = new JComboBox<String>(sets);
-			setText = new JLabel("Set: ");
-			skyPanel = new JPanel();
-			skyPanel.setLayout(new GridBagLayout());
-			skyList = new JComboBox<String>(skies);
-			skyText = new JLabel("Sky: ");
-			setPanel.setBorder(BorderFactory.createTitledBorder("Select sector set"));
-			musicPanel = new JPanel();
-			musicPanel.setLayout(new GridBagLayout());
-			musicList = new JComboBox<String>(musics);
-			playMusic = new JButton("Play");
-			moviePanel = new JPanel();
-			moviePanel.setLayout(new GridBagLayout());
-			moviePanel.setBorder(BorderFactory.createTitledBorder("Select movie"));
-			movieList = new JComboBox<String>(movies);
-			eventLoopPanel = new JPanel();
-			eventLoopPanel.setLayout(new GridBagLayout());
-			eventLoopPanel.setBorder(BorderFactory.createTitledBorder("Select event loop"));
-			eventLoopList = new JComboBox<String>(eventLoops);
-			minBreakText = new JLabel("Minimum break:");
-			minBreakSlider = new JSlider(0, 1000000, selectedMinBreak);
-			minBreakSlider.setPreferredSize(new Dimension(224,20));
-			minBreakValue = new JTextField(5);
-			minBreakValue.setText(Integer.toString(selectedMinBreak));
-			maxBreakText = new JLabel("Maximum break:");
-			maxBreakSlider = new JSlider(0, 1000000, selectedMaxBreak);
-			maxBreakSlider.setPreferredSize(new Dimension(224,20));
-			maxBreakValue = new JTextField(5);
-			maxBreakValue.setText(Integer.toString(selectedMaxBreak));
-			saveParams = new JButton("Save");
-			cancelParams = new JButton("Cancel");
-			
-			paramConstraints.insets = new Insets(2,20,2,4);
-			paramConstraints.gridx = 0;
-			paramConstraints.gridy = 0;
-			paramConstraints.gridwidth = 1;
-			paramConstraints.gridheight = 1;
-			paramConstraints.anchor = GridBagConstraints.WEST;
-			setPanel.add(setText, paramConstraints);
-			paramConstraints.gridx = 1;
-			paramConstraints.insets = new Insets(2,1,2,30);
-			setList.setSelectedIndex(selectedSet);
-			setPanel.add(setList, paramConstraints);
-			setList.addActionListener(this);
-			paramConstraints.gridx = 0;
-			paramConstraints.gridy = 0;
-			paramDialog.add(setPanel, paramConstraints);
-			
-			paramConstraints.gridx = 0;
-			movieList.setSelectedIndex(selectedMovie);
-			moviePanel.add(movieList, paramConstraints);
-			movieList.addActionListener(this);
-			paramConstraints.gridx = 1;
-			paramConstraints.anchor = GridBagConstraints.WEST;
-			paramDialog.add(moviePanel, paramConstraints);
-			
-			paramConstraints.gridx = 0;
-			paramConstraints.insets = new Insets(2,35,2,35);
-			eventLoopList.setSelectedIndex(selectedEventLoop);
-			eventLoopPanel.add(eventLoopList, paramConstraints);
-			eventLoopList.addActionListener(this);
-			paramConstraints.gridx = 2;
-			paramConstraints.insets = new Insets(2,1,2,20);
-			paramDialog.add(eventLoopPanel, paramConstraints);
-			
-			skyPanel.setBorder(BorderFactory.createTitledBorder("Select level sky"));
-			paramConstraints.insets = new Insets(2,20,2,4);
-			paramConstraints.gridx = 0;
-			paramConstraints.gridy = 0;
-			skyPanel.add(skyText, paramConstraints);
-			paramConstraints.gridx = 1;
-			paramConstraints.insets = new Insets(2,1,2,20);
-			skyList.setSelectedIndex(selectedSky);
-			skyPanel.add(skyList, paramConstraints);
-			skyList.addActionListener(this);
-			paramConstraints.gridx = 2;
-			paramConstraints.gridheight = 2;	
-			try {
-				sky[selectedSky] = ImageIO.read(this.getClass().getResourceAsStream("/img/sky-images/"+skies[selectedSky]+".jpg"));
-				sky[selectedSky] = resizeMap(400, 200, sky[selectedSky]);
-				skyFrame[selectedSky] = new JLabel(new ImageIcon(sky[selectedSky]));
-			}catch(IOException ex) {
-				System.out.println("The sky "+skies[selectedSky]+".jpg couldn't be loaded");
-			}
-			skyPanel.add(skyFrame[selectedSky], paramConstraints);
-			
-			musicPanel.setBorder(BorderFactory.createTitledBorder("Select music"));
-			paramConstraints.gridheight = 1;
-			paramConstraints.gridx = 0;
-			paramConstraints.gridy = 0;
-			paramConstraints.insets = new Insets(2,1,2,2);
-			musicList.setSelectedIndex(selectedMusic);
-			musicPanel.add(musicList, paramConstraints);
-			musicList.addActionListener(this);
-			paramConstraints.gridx = 1;
-			paramConstraints.gridwidth = 3;
-			musicPanel.add(playMusic, paramConstraints);
-			playMusic.addActionListener(this);
-			paramConstraints.gridy = 1;
-			paramConstraints.gridx = 0;
-			paramConstraints.insets = new Insets(20,1,2,2);
-			musicPanel.add(minBreakText, paramConstraints);
-			paramConstraints.gridx = 1;
-			paramConstraints.insets = new Insets(20,85,2,2);
-			minBreakValue.setText(Integer.toString(selectedMinBreak));
-			musicPanel.add(minBreakValue, paramConstraints);
-			paramConstraints.insets = new Insets(2,1,2,2);
-			paramConstraints.gridx = 0;
-			paramConstraints.gridy = 2;
-			musicPanel.add(minBreakSlider, paramConstraints);
-			minBreakSlider.addChangeListener(this);
-			paramConstraints.gridy = 3;
-			musicPanel.add(maxBreakText, paramConstraints);
-			paramConstraints.gridx = 1;
-			paramConstraints.insets = new Insets(20,85,2,2);
-			musicPanel.add(maxBreakValue, paramConstraints);
-			paramConstraints.insets = new Insets(2,1,2,2);
-			paramConstraints.gridy = 4;
-			paramConstraints.gridx = 0;
-			musicPanel.add(maxBreakSlider, paramConstraints);
-			maxBreakSlider.addChangeListener(this);
-			
-			paramConstraints.gridx = 0;
-			paramConstraints.gridy = 1;
-			paramConstraints.gridwidth = 4;
-			paramDialog.add(skyPanel, paramConstraints);
-			
-			paramConstraints.gridx = 0;
-			paramConstraints.gridy = 2;
-			paramConstraints.anchor = GridBagConstraints.WEST;
-			paramDialog.add(musicPanel, paramConstraints);
-			
-			paramConstraints.gridx = 3;
-			paramConstraints.gridy = 2;
-			paramConstraints.gridwidth = 2;
-			paramConstraints.insets = new Insets(2,6,2,7);
-			paramDialog.add(saveParams, paramConstraints);
-			saveParams.addActionListener(this);
-			paramConstraints.insets = new Insets(80,1,2,2);
-			paramDialog.add(cancelParams, paramConstraints);
-			cancelParams.addActionListener(this);
-			paramConstraints.insets = new Insets(0,0,0,0);
-			
-			paramDialog.setVisible(true);
 		}
 		
 		public void showEnabler(int owner) {
@@ -2489,19 +2209,6 @@ public class MainWindow extends JFrame {
 			
 			briefingDialog.setVisible(true);
 		}
-
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			if(e.getSource() == minBreakSlider) {
-				minBreakValue.setText(Integer.toString(minBreakSlider.getValue()));
-				selectedMinBreak = Integer.parseInt(minBreakValue.getText());
-			}
-			if(e.getSource() == maxBreakSlider) {
-				maxBreakValue.setText(Integer.toString(maxBreakSlider.getValue()));
-				selectedMaxBreak = Integer.parseInt(maxBreakValue.getText());
-			}
-		}
-		
 	}// end MainMenuListener class
 	public int getPlayerSelected() {
 		return this.playerSelected;
@@ -2536,7 +2243,7 @@ public class MainWindow extends JFrame {
 			mapSaver.println(Integer.toString(savedSet+1));
 			mapSaver.print("\t");
 			mapSaver.print("sky = ");
-			mapSaver.println("objects/"+skies[savedSky]+".base");
+			mapSaver.println("objects/"+EditorState.sky+".base");
 			mapSaver.println("\tslot0 = palette/standard.pal");
 			mapSaver.println("\tslot1 = palette/red.pal");
 			mapSaver.println("\tslot2 = palette/blau.pal");
@@ -4615,70 +4322,7 @@ public class MainWindow extends JFrame {
 		
 	}// end OpenMap
 	
-	@SuppressWarnings("rawtypes")
-	public void initMusic() {
-		audioThread = new SwingWorker() {
 
-			protected Object doInBackground() throws Exception {
-				if(player != null)player.close();
-				
-					switch(selectedMusic) {
-					case 0:
-						player = null;
-						break;
-					case 1:
-						bisPlayer = new BufferedInputStream(this.getClass().getResourceAsStream("/audio/track-2.mp3"));
-						try {
-							player = new AdvancedPlayer(bisPlayer);
-							player.play();
-						}catch(JavaLayerException ex) {
-							System.out.println("can't play track-2.mp3");
-						}
-						break;
-					case 2:
-						bisPlayer = new BufferedInputStream(this.getClass().getResourceAsStream("/audio/track-3.mp3"));
-						try {
-							player = new AdvancedPlayer(bisPlayer);
-							player.play();
-						}catch(JavaLayerException ex) {
-							System.out.println("can't play track-3.mp3");
-						}
-						break;
-					case 3:
-						bisPlayer = new BufferedInputStream(this.getClass().getResourceAsStream("/audio/track-4.mp3"));
-						try {
-							player = new AdvancedPlayer(bisPlayer);
-							player.play();
-						}catch(JavaLayerException ex) {
-							System.out.println("can't play track-4.mp3");
-						}
-						break;
-					case 4:
-						bisPlayer = new BufferedInputStream(this.getClass().getResourceAsStream("/audio/track-5.mp3"));
-						try {
-							player = new AdvancedPlayer(bisPlayer);
-							player.play();
-						}catch(JavaLayerException ex) {
-							System.out.println("can't play track-5.mp3");
-						}
-						break;
-					case 5:
-						bisPlayer = new BufferedInputStream(this.getClass().getResourceAsStream("/audio/track-6.mp3"));
-						try {
-							player = new AdvancedPlayer(bisPlayer);
-							player.play();
-						}catch(JavaLayerException ex) {
-							System.out.println("can't play track-6.mp3");
-						}
-						break;
-				}
-				
-				return null;
-			}
-		
-			
-		};
-	}
 	public void initShortcuts() {
 		shortcutsDialog.setSize(450,490);
 		shortcutsDialog.setLocationRelativeTo(null);
@@ -4931,6 +4575,12 @@ public class MainWindow extends JFrame {
 		this.manager.noUnit();
 		this.manager.noSector();
 		this.manager.revalidate();
+	}
+	public void updateEditor() {
+		repaint();
+		cleanManager();
+		updateManagerSector(currentMap.getSelectedBorderSector(), currentMap.getSelectedSector(), currentMap.getHorizontalGrid(), currentMap.getVerticalGrid());
+		makeUnsaved();
 	}
 	static void initLoadingScreen() {
 		loadingScreen = new JFrame();

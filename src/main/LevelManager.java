@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -473,7 +475,7 @@ public class LevelManager extends JFrame{
 		
 		this.numLabel = new JLabel("Number of units: ");
 		this.numField = new JTextField(2);
-		this.ownLabel = new JLabel("Unit faction: ");
+		this.ownLabel = new JLabel("main.Unit faction: ");
 		this.hsStrings = new String[7];
 		this.hsStrings[0] = "Resistance"; this.hsStrings[1] = "Ghorkov"; this.hsStrings[2] = "Taerkasten"; this.hsStrings[3] = "Mykonian"; this.hsStrings[4] = "Sulgogar"; this.hsStrings[5] = "Black Sect"; this.hsStrings[6] = "Target faction";
 		this.ownList = new JComboBox<String>(hsStrings);
@@ -715,7 +717,7 @@ public class LevelManager extends JFrame{
 		this.unitScroller.setPreferredSize(new Dimension(300,300));
 		this.sectorScroller = new JScrollPane(this.sectorWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.sectorScroller.setPreferredSize(new Dimension(300,300));
-		this.tabs.addTab("Host Station / Squad", this.unitScroller);
+		this.tabs.addTab("Host Station / main.Squad", this.unitScroller);
 		this.tabs.addTab("Sector", this.sectorScroller);
 		
 		this.add(this.tabs);
@@ -731,25 +733,25 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.insets = new Insets(1,1,1,1);
 			switch(own) {
 			case 1:
-				this.unitName.setText("Hoststation "+index+": Resistance");
+				this.unitName.setText("main.Hoststation "+index+": Resistance");
 				break;
 			case 2:
-				this.unitName.setText("Hoststation "+index+": Sulgogar");
+				this.unitName.setText("main.Hoststation "+index+": Sulgogar");
 				break;
 			case 3:
-				this.unitName.setText("Hoststation "+index+": Mykonian");
+				this.unitName.setText("main.Hoststation "+index+": Mykonian");
 				break;
 			case 4:
-				this.unitName.setText("Hoststation "+index+": Taerkasten");
+				this.unitName.setText("main.Hoststation "+index+": Taerkasten");
 				break;
 			case 5:
-				this.unitName.setText("Hoststation "+index+": Black sect");
+				this.unitName.setText("main.Hoststation "+index+": Black sect");
 				break;
 			case 6:
-				this.unitName.setText("Hoststation "+index+": Ghorkov");
+				this.unitName.setText("main.Hoststation "+index+": Ghorkov");
 				break;
 			case 7:
-				this.unitName.setText("Hoststation "+index+": Target Host Station");
+				this.unitName.setText("main.Hoststation "+index+": Target Host Station");
 				break;
 			}
 			index--;
@@ -1061,7 +1063,7 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 0;
 			this.managerConstraints.gridx = 0;
 			this.imgLabel.setIcon(new ImageIcon(this.hsVehicle));
-			this.imgPanel.setBorder(BorderFactory.createTitledBorder("Hoststation type"));
+			this.imgPanel.setBorder(BorderFactory.createTitledBorder("main.Hoststation type"));
 			this.imgPanel.add(this.imgLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
 			this.hsType.setSelectedIndex(this.hsTypeSelected);
@@ -1091,13 +1093,13 @@ public class LevelManager extends JFrame{
 				for(UAitem unit : UAdata.allUnits) {
 					if(unit.getID() == vehicle) {
 						this.unitImg.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/img/icons/"+unit.getIconName()+".png"))));
-						this.unitName.setText("Unit: "+ unit.getName());
+						this.unitName.setText("main.Unit: "+ unit.getName());
 					}
 				}
 				for(UAitem unit : UAdata.fallbackUnits) {
 					if(unit.getID() == vehicle) {
 						this.unitImg.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/img/icons/"+unit.getIconName()+".png"))));
-						this.unitName.setText("Unit: "+ unit.getName());
+						this.unitName.setText("main.Unit: "+ unit.getName());
 					}
 				}
 			}catch(FileNotFoundException ex) {
@@ -3042,4 +3044,4 @@ public class LevelManager extends JFrame{
 	    img = dimg;
 	    return img;
 	}
-}// end LevelManager class
+}// end main.LevelManager class
