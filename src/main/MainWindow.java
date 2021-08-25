@@ -103,7 +103,6 @@ public class MainWindow extends JFrame {
 	private JMenuItem resEnabler, ghorEnabler, taerEnabler, mykoEnabler, sulgEnabler, blasecEnabler, trainingEnabler;
 	private JMenuItem briefingMaps;
 	private JMenuItem playerHS;
-	private int playerSelected;
 	private int playerGridy;
 	private JLabel playerHSLabel;
 	private JPanel hsListPanel;
@@ -122,11 +121,7 @@ public class MainWindow extends JFrame {
 	private JRadioButton noneContent;
 	private JRadioButton mdContent;
 	private int savedContent;
-	
-	private JDialog newMapDialog;
-	private JTextField horizontalNum;
-	private JTextField verticalNum;
-	private JLabel borderInfo;
+
 	private JDialog briefingDialog;
 	private JDialog playerHSDialog;
 	private JDialog descriptionDialog;
@@ -566,8 +561,6 @@ public class MainWindow extends JFrame {
 		
 		availableHS = new ArrayList<JRadioButton>();
 		
-		playerSelected = 0;
-		
 		levelDescription = new JMenuItem("Set level description");
 		optionsMenu.add(levelDescription);
 		levelDescription.addActionListener(listenToMenu);
@@ -686,24 +679,24 @@ public class MainWindow extends JFrame {
 
 			if(e.getSource() == saveAsMap) {
 				if(JFileChooser.APPROVE_OPTION == selectSaveFile.showSaveDialog(null)) 
-					saveLevel(selectSaveFile.getSelectedFile());
+					save(selectSaveFile.getSelectedFile());
 			}
 			
 			if(e.getSource() == clear) {
-				if(saved == false) {
+				if(!EditorState.isSaved) {
 					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						savedMap = selectSaveFile.showSaveDialog(null);
 						if(JFileChooser.APPROVE_OPTION == savedMap) 
-							saveLevel(selectSaveFile.getSelectedFile());
+							save(selectSaveFile.getSelectedFile());
 						currentMap.closeMap();
 						setTitle("Urban Assault Level Editor");
 						savedMap = JFileChooser.CANCEL_OPTION;
-						saved = true;
+						EditorState.isSaved = true;
 					}else {
 						currentMap.closeMap();
 						setTitle("Urban Assault Level Editor");
 						savedMap = JFileChooser.CANCEL_OPTION;
-						saved = true;
+						EditorState.isSaved = true;
 					}
 				}else {
 					currentMap.closeMap();
@@ -713,13 +706,13 @@ public class MainWindow extends JFrame {
 			}
 			
 			if(e.getSource() == exit) {
-				if(saved == false) {
+				if(!EditorState.isSaved) {
 					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						savedMap = selectSaveFile.showSaveDialog(null);
 						if(JFileChooser.APPROVE_OPTION == savedMap) 
-							saveLevel(selectSaveFile.getSelectedFile());
+							save(selectSaveFile.getSelectedFile());
 						System.exit(0);
-						saved = true;
+						EditorState.isSaved = true;
 					}else System.exit(0);
 				}else System.exit(0);
 				
@@ -749,38 +742,35 @@ public class MainWindow extends JFrame {
 				toggleBlgSector();
 				repaint();
 			}
-			if(e.getSource() == cancelBut) {
-				removeNewMapDialog();
-				newMapDialog.setVisible(false);
-			}	
+
 			if(e.getSource() == menuParams) {
-				levelParameters.render();
+				levelParametersDialog.render();
 			}
 			if(e.getSource() == resEnabler) {
-				unitEnabler.render(1);
+				unitEnablerDialog.render(1);
 			}
 			if(e.getSource() == ghorEnabler) {
-				unitEnabler.render(6);
+				unitEnablerDialog.render(6);
 			}
 			if(e.getSource() == taerEnabler) {
-				unitEnabler.render(4);
+				unitEnablerDialog.render(4);
 			}
 			if(e.getSource() == mykoEnabler) {
-				unitEnabler.render(3);
+				unitEnablerDialog.render(3);
 			}
 			if(e.getSource() == sulgEnabler) {
-				unitEnabler.render(2);
+				unitEnablerDialog.render(2);
 			}
 			if(e.getSource() == blasecEnabler) {
-				unitEnabler.render(5);
+				unitEnablerDialog.render(5);
 			}
 			if(e.getSource() == trainingEnabler) {
-				unitEnabler.render(7);
+				unitEnablerDialog.render(7);
 			}
 			if(e.getSource() == savePlayer) {
 				for(int i = 0; i < availableHS.size(); i++) {
 					if(availableHS.get(i).isSelected())
-						playerSelected = i;
+						EditorState.playerSelected = i;
 				}
 				removePlayerHSDialog();
 				playerHSDialog.setVisible(false);
@@ -981,7 +971,7 @@ public class MainWindow extends JFrame {
 			}
 			
 			if(e.getSource() == briefingMaps) {
-				briefingAndDebriefing.render();
+				briefingAndDebriefingDialog.render();
 			}
 			
 			if(e.getSource() == playerHS) {
@@ -1063,8 +1053,8 @@ public class MainWindow extends JFrame {
 						
 						
 					}
-					if(availableHS.size() <= playerSelected) playerSelected = availableHS.size()-1;
-					availableHS.get(playerSelected).setSelected(true);
+					if(availableHS.size() <= EditorState.playerSelected) EditorState.playerSelected = availableHS.size()-1;
+					availableHS.get(EditorState.playerSelected).setSelected(true);
 				}
 				playerHSConstraints.anchor = GridBagConstraints.CENTER;
 				
@@ -1329,11 +1319,10 @@ public class MainWindow extends JFrame {
 		@Override
 		public void windowDeactivated(WindowEvent e) {}
 	}// end MainMenuListener class
-	public int getPlayerSelected() {
-		return this.playerSelected;
-	}
-	public void setPlayerSelected(int s) {
-		this.playerSelected = s;
+	public void createNewMap() {
+		currentMap.createMap(EditorState.horizontalSectors, EditorState.verticalSectors);
+		mapscroller.revalidate();
+		setTitle("Urban Assault Level Editor");
 	}
 	public void savePrompt() {
 		if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
@@ -1485,9 +1474,9 @@ public class MainWindow extends JFrame {
 		aboutDialog.add(aboutClose, aboutConstraints);
 	}
 	public void makeUnsaved() {
-		if(saved)
+		if(EditorState.isSaved)
 			this.setTitle("*"+this.getTitle());
-		saved = false;
+		EditorState.isSaved = false;
 	}
 	public static void setUIFont (javax.swing.plaf.FontUIResource f){
 	    @SuppressWarnings("rawtypes")

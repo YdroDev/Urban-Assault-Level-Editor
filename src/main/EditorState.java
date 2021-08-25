@@ -15,11 +15,11 @@ public class EditorState {
     public static int playerSelected;
 
     public static String description;
-    public static ArrayList<BeamGate> beamGates = new ArrayList<BeamGate>();;
-    public static ArrayList<StoudsonBomb> bombs = new ArrayList<StoudsonBomb>();
-    public static ArrayList<TechUpgrade> techUpgrades = new ArrayList<TechUpgrade>();
-    public static ArrayList<Unit> hostStations = new ArrayList<Unit>();
-    public static ArrayList<Unit> predefinedSquads = new ArrayList<Unit>();
+    public static ArrayList<BeamGate> beamGates = new ArrayList<>();
+    public static ArrayList<StoudsonBomb> bombs = new ArrayList<>();
+    public static ArrayList<TechUpgrade> techUpgrades = new ArrayList<>();
+    public static ArrayList<Unit> hostStations = new ArrayList<>();
+    public static ArrayList<Unit> predefinedSquads = new ArrayList<>();
     public static int hostStationForPlayer;
 
     public static int set;
@@ -54,8 +54,8 @@ public class EditorState {
     public static ArrayList<Integer> blackSectBuildings = new ArrayList<>();
     public static ArrayList<Integer> trainingBuildings = new ArrayList<>();
 
-    public static int horizontalSectors = 0;
-    public static int verticalSectors = 0;
+    public static int horizontalSectors;
+    public static int verticalSectors;
     public static ArrayList<Integer> typ_map = new ArrayList<>();
     public static ArrayList<Integer> own_map = new ArrayList<>();
     public static ArrayList<Integer> hgt_map = new ArrayList<>();
@@ -66,7 +66,7 @@ public class EditorState {
         playerSelected = 0;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
-        description = "------ Level name: \\n------ Created on: \"+dtf.format(now)+\" \\n------ Designed By: ";
+        description = "------ Level name: \\n------ Created on: "+dtf.format(now)+" \\n------ Designed By: ";
         beamGates.clear();
         bombs.clear();
         techUpgrades.clear();

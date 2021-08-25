@@ -119,13 +119,11 @@ public class NewLevel implements WindowListener, ActionListener {
                         warn = JOptionPane.showConfirmDialog(null,"Playing on level with number of sectors greater than 64 may be unstable. Do you want to proceed?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                     }
                     if(warn == JOptionPane.YES_OPTION) {
-                        currentMap.createMap(horizontalSectors, verticalSectors);
-                        this.window.mapscroller.revalidate();
-                        this.window.setTitle("Urban Assault Level Editor");
+                        EditorState.resetState();
+                        this.window.createNewMap();
                         removeNewMapDialog();
                         dialog.setVisible(false);
                         savedMap = JFileChooser.CANCEL_OPTION;
-                        EditorState.resetState();
                         this.window.makeUnsaved();
                     }
                 }else {
@@ -134,6 +132,10 @@ public class NewLevel implements WindowListener, ActionListener {
             }catch(NumberFormatException ex) {
                 JOptionPane.showMessageDialog(dialog,"Both fields must be a number", "Wrong value", JOptionPane.ERROR_MESSAGE);
             }
+        }
+        if(e.getSource() == cancelBut) {
+            removeNewMapDialog();
+            dialog.setVisible(false);
         }
     }
 
