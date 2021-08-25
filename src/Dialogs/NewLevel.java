@@ -112,52 +112,27 @@ public class NewLevel implements WindowListener, ActionListener {
             int warn = JOptionPane.YES_OPTION;
 
             try {
-                horizontalSectors = Integer.parseInt(hText);
-                verticalSectors = Integer.parseInt(vText);
-                if(horizontalSectors > 0 && verticalSectors > 0) {
-                    if(horizontalSectors > 64 || verticalSectors > 64) {
+                EditorState.horizontalSectors = Integer.parseInt(hText);
+                EditorState.verticalSectors = Integer.parseInt(vText);
+                if(EditorState.horizontalSectors > 0 && EditorState.verticalSectors > 0) {
+                    if(EditorState.horizontalSectors > 64 || EditorState.verticalSectors > 64) {
                         warn = JOptionPane.showConfirmDialog(null,"Playing on level with number of sectors greater than 64 may be unstable. Do you want to proceed?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                     }
                     if(warn == JOptionPane.YES_OPTION) {
-                        // CREATE NEW MAP
                         currentMap.createMap(horizontalSectors, verticalSectors);
-                        dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                        now = LocalDateTime.now();
-                        descString = "------ Level name: \n------ Created on: "+dtf.format(now)+" \n------ Designed By: ";
-                        modsString = "include data:scripts/startup2.scr";
-                        mapscroller.revalidate();
-                        setTitle("Urban Assault Level Editor");
-                        playerSelected = 0;
+                        this.window.mapscroller.revalidate();
+                        this.window.setTitle("Urban Assault Level Editor");
                         removeNewMapDialog();
-                        newMapDialog.setVisible(false);
+                        dialog.setVisible(false);
                         savedMap = JFileChooser.CANCEL_OPTION;
-                        resUnits.clear();
-                        resUnits.add(16);
-                        resBuildings.clear();
-                        ghorUnits.clear();
-                        ghorUnits.add(24);
-                        ghorBuildings.clear();
-                        taerUnits.clear();
-                        taerUnits.add(32);
-                        taerBuildings.clear();
-                        mykoUnits.clear();
-                        mykoUnits.add(65);
-                        mykoBuildings.clear();
-                        sulgUnits.clear();
-                        sulgUnits.add(73);
-                        sulgBuildings.clear();
-                        blasecUnits.clear();
-                        blasecBuildings.clear();
-                        trainingUnits.clear();
-                        trainingUnits.add(138);
-                        trainingBuildings.clear();
-                        makeUnsaved();
+                        EditorState.resetState();
+                        this.window.makeUnsaved();
                     }
                 }else {
-                    JOptionPane.showMessageDialog(newMapDialog,"Both numbers should be greater than 0", "Wrong value", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dialog,"Both numbers should be greater than 0", "Wrong value", JOptionPane.ERROR_MESSAGE);
                 }
             }catch(NumberFormatException ex) {
-                JOptionPane.showMessageDialog(newMapDialog,"Both fields must be a number", "Wrong value", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(dialog,"Both fields must be a number", "Wrong value", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

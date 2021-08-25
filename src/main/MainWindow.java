@@ -195,9 +195,6 @@ public class MainWindow extends JFrame {
 	
 	private GameMap currentMap;
 	@SuppressWarnings("rawtypes")
-	private DateTimeFormatter dtf;
-	private LocalDateTime now;
-	
 	private LevelManager manager;
 	static Font font;
 	static Font mainFont;
@@ -281,9 +278,6 @@ public class MainWindow extends JFrame {
 		MDtaerLabel = new JLabel();
 		shortcutsDialog = new JDialog(this, "Available shortcuts", Dialog.ModalityType.DOCUMENT_MODAL);
 		aboutDialog = new JDialog(this, "Urban Assault Level Editor", Dialog.ModalityType.DOCUMENT_MODAL);
-		
-		dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		now = LocalDateTime.now();
 
 		imageVisible = false;
 		heightVisible = false;
