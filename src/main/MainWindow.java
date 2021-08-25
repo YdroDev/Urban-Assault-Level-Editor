@@ -18,11 +18,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -52,7 +47,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
@@ -60,8 +54,10 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Dialogs.BriefingAndDebriefing;
 import Dialogs.LevelParameters;
 
+import Dialogs.NewLevel;
 import Dialogs.UnitEnabler;
 import com.jtattoo.plaf.noire.NoireLookAndFeel;
 
@@ -70,8 +66,10 @@ import com.jtattoo.plaf.noire.NoireLookAndFeel;
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	private JPanel window;
-	private LevelParameters levelParameters;
-	private UnitEnabler unitEnabler;
+	private NewLevel newLevelDialog;
+	private LevelParameters levelParametersDialog;
+	private UnitEnabler unitEnablerDialog;
+	private BriefingAndDebriefing briefingAndDebriefingDialog;
 
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
@@ -193,7 +191,6 @@ public class MainWindow extends JFrame {
 	
 	private GameMap currentMap;
 	@SuppressWarnings("rawtypes")
-	private SwingWorker audioThread;
 	private DateTimeFormatter dtf;
 	private LocalDateTime now;
 	
@@ -201,7 +198,6 @@ public class MainWindow extends JFrame {
 	static Font font;
 	static Font mainFont;
 	static Font hgtFont;
-	private boolean saved;
 	
 	public static void main(final String[] args) {
 		initLoadingScreen();
@@ -240,8 +236,11 @@ public class MainWindow extends JFrame {
 	MainWindow(){	
 		layout = new BorderLayout();
 		window = new JPanel(layout);
-		levelParameters = new LevelParameters(this);
-		unitEnabler = new UnitEnabler(this);
+		newLevelDialog = new NewLevel(this);
+		levelParametersDialog = new LevelParameters(this);
+		unitEnablerDialog = new UnitEnabler(this);
+		briefingAndDebriefingDialog = new BriefingAndDebriefing(this);
+
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -251,7 +250,6 @@ public class MainWindow extends JFrame {
 		}catch(IOException ex) {
 			System.out.println("Couldn't load main icon for the application");
 		}
-		this.saved = true;
 
 		listenToMenu = new MainMenuListener();
 		gridConstraints = new GridBagConstraints();
@@ -263,7 +261,6 @@ public class MainWindow extends JFrame {
 		contentConstraints = new GridBagConstraints();
 		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
-		newMapDialog = new JDialog(this, "Create a new map", Dialog.ModalityType.DOCUMENT_MODAL);
 		briefingDialog = new JDialog(this, "Set briefing/debriefing map", Dialog.ModalityType.DOCUMENT_MODAL);
 		playerHSDialog = new JDialog(this, "Select Host Station for player", Dialog.ModalityType.DOCUMENT_MODAL);
 		descriptionDialog = new JDialog(this, "Set level description", Dialog.ModalityType.DOCUMENT_MODAL);
@@ -451,7 +448,6 @@ public class MainWindow extends JFrame {
 		}
 
 		mainMenu = new JMenuBar();
-		newMapDialog.addWindowListener(listenToMenu);
 		briefingDialog.addWindowListener(listenToMenu);
 		playerHSDialog.addWindowListener(listenToMenu);
 		descriptionDialog.addWindowListener(listenToMenu);
@@ -478,12 +474,6 @@ public class MainWindow extends JFrame {
 		saveMap = new JMenuItem("Save");
 		fileMenu.add(saveMap);
 		saveMap.addActionListener(listenToMenu);
-		
-		savedMap = JFileChooser.CANCEL_OPTION;
-		selectSaveFile = new JFileChooser();
-		ldfFilter = new FileNameExtensionFilter("Urban Assault level file (.ldf)", "ldf");
-		selectSaveFile.setFileFilter(ldfFilter);
-		selectSaveFile.addActionListener(listenToMenu);
 		
 		selectOpenFile = new JFileChooser();
 		selectOpenFile.setFileFilter(ldfFilter);
@@ -637,11 +627,6 @@ public class MainWindow extends JFrame {
 	
 	private class MainMenuListener implements WindowListener, MenuListener, ActionListener, KeyListener{
 
-		JButton confirmBut;
-		JButton cancelBut;
-		JLabel dialogNewMap;
-		JLabel horizontalDialog;
-		JLabel verticalDialog;
 		JLabel descInfo;
 		JLabel modsInfo;
 		JTextArea descData;
@@ -673,90 +658,32 @@ public class MainWindow extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			
 			if(e.getSource() == newMap) {
-				if(saved == false) {
-					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
-						if(savedMap == JFileChooser.APPROVE_OPTION) saveLevel(selectSaveFile.getSelectedFile());
-					}
-				}
-				newMapDialog.setSize(400,250);
-				newMapDialog.setLocationRelativeTo(null);
-				newMapDialog.setResizable(false);
-				newMapDialog.setLayout(new GridBagLayout());
-				horizontalNum = new JTextField("", 3);
-				verticalNum = new JTextField("", 3);
-				borderInfo = new JLabel("(Borders will be added automatically to these values)");
-				confirmBut = new JButton("OK");
-				cancelBut = new JButton("Cancel");
-				dialogNewMap = new JLabel("Enter number of sectors for horizontal and vertical space:");
-				dialogNewMap.setFont(mainFont);
-				horizontalDialog = new JLabel("Horizontal sectors: ");
-				verticalDialog = new JLabel("Vertical sectors: ");
-				
-				gridConstraints.gridy = 0;
-				gridConstraints.gridx = 0;
-				gridConstraints.gridwidth = 5;
-				gridConstraints.insets = new Insets(1,0,20,0);
-				newMapDialog.add(dialogNewMap, gridConstraints);
-				gridConstraints.gridy = 2;
-				gridConstraints.gridx = 0;
-				gridConstraints.gridwidth = 1;
-				newMapDialog.add(horizontalDialog,gridConstraints);
-				gridConstraints.gridx = 1;
-				gridConstraints.gridwidth = 1;
-				newMapDialog.add(horizontalNum,gridConstraints);
-				gridConstraints.gridy = 3;
-				gridConstraints.gridx = 0;
-				gridConstraints.gridwidth = 1;
-				gridConstraints.insets = new Insets(0,13,20,0);
-				newMapDialog.add(verticalDialog,gridConstraints);
-				gridConstraints.gridx = 1;
-				gridConstraints.gridwidth = 1;
-				gridConstraints.insets = new Insets(1,0,20,0);
-				newMapDialog.add(verticalNum,gridConstraints);
-				gridConstraints.gridy = 4;
-				gridConstraints.gridx = 0;
-				gridConstraints.gridwidth = 6;
-				newMapDialog.add(borderInfo,gridConstraints);
-				gridConstraints.gridwidth = 1;
-				gridConstraints.gridy = 5;
-				gridConstraints.gridx = 1;
-				gridConstraints.insets = new Insets(20,1,20,10);
-				confirmBut.addActionListener(this);
-				newMapDialog.add(confirmBut,gridConstraints);
-				gridConstraints.gridwidth = 2;
-				gridConstraints.gridx = 2;
-				gridConstraints.insets = new Insets(20,1,20,0);
-				cancelBut.addActionListener(this);
-				newMapDialog.add(cancelBut,gridConstraints);
-				
-				
-				newMapDialog.setVisible(true);
+				newLevelDialog.render();
 			}
 			
 			if(e.getSource() == openMap) {
-				if(saved == false) {
-					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Are you sure you want to discard them?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						if(JFileChooser.APPROVE_OPTION == selectOpenFile.showOpenDialog(null)) {
-							openLevel(selectOpenFile.getSelectedFile());
-							savedMap = JFileChooser.APPROVE_OPTION;
-							selectSaveFile.setSelectedFile(selectOpenFile.getSelectedFile());
-							saved = true;
-						}
-					}
-				}else {
+				if(EditorState.isSaved) {
 					if(JFileChooser.APPROVE_OPTION == selectOpenFile.showOpenDialog(null)) {
-						openLevel(selectOpenFile.getSelectedFile());
+						open(selectOpenFile.getSelectedFile());
 						savedMap = JFileChooser.APPROVE_OPTION;
 						selectSaveFile.setSelectedFile(selectOpenFile.getSelectedFile());
-						saved = true;
+						EditorState.isSaved = true;
+					}
+				}else {
+					if (JOptionPane.showConfirmDialog(null, "Current level changes are not saved. Are you sure you want to discard them?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						if (JFileChooser.APPROVE_OPTION == selectOpenFile.showOpenDialog(null)) {
+							open(selectOpenFile.getSelectedFile());
+							savedMap = JFileChooser.APPROVE_OPTION;
+							selectSaveFile.setSelectedFile(selectOpenFile.getSelectedFile());
+							EditorState.isSaved = true;
+						}
 					}
 				}
 			}
 			
 			if(e.getSource() == saveMap) {
 				if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
-				if(savedMap == JFileChooser.APPROVE_OPTION) saveLevel(selectSaveFile.getSelectedFile());				
+				if(savedMap == JFileChooser.APPROVE_OPTION) save(selectSaveFile.getSelectedFile());
 			}
 
 			if(e.getSource() == saveAsMap) {
@@ -879,7 +806,6 @@ public class MainWindow extends JFrame {
 					JOptionPane.showMessageDialog(newMapDialog,"Both fields must be a number", "Wrong value", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			
 			if(e.getSource() == cancelBut) {
 				removeNewMapDialog();
 				newMapDialog.setVisible(false);
@@ -890,30 +816,24 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == resEnabler) {
 				unitEnabler.render(1);
 			}
-
 			if(e.getSource() == ghorEnabler) {
 				unitEnabler.render(6);
 			}
-
 			if(e.getSource() == taerEnabler) {
 				unitEnabler.render(4);
 			}
 			if(e.getSource() == mykoEnabler) {
 				unitEnabler.render(3);
 			}
-
 			if(e.getSource() == sulgEnabler) {
 				unitEnabler.render(2);
 			}
-
 			if(e.getSource() == blasecEnabler) {
 				unitEnabler.render(5);
 			}
-
 			if(e.getSource() == trainingEnabler) {
 				unitEnabler.render(7);
 			}
-			
 			if(e.getSource() == savePlayer) {
 				for(int i = 0; i < availableHS.size(); i++) {
 					if(availableHS.get(i).isSelected())
@@ -989,7 +909,7 @@ public class MainWindow extends JFrame {
 					if(JOptionPane.showConfirmDialog(null,"This will change typ_map on every sector based on current set. Are you sure you want to execute this?", "Confirmation", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 						for(int i = 0, rand = 0, fail = 1; i < (currentMap.getHorizontalGrid() * currentMap.getVerticalGrid()); i++) {
 							fail = 1;
-							if(savedSet == 0) {
+							if(EditorState.set == 1) {
 								while(fail == 1){
 									rand = (int)(Math.random() * ((255 - 0) + 1));
 									fail = 0;
@@ -1006,7 +926,7 @@ public class MainWindow extends JFrame {
 									if(rand > 236 && rand < 239) fail = 1;
 								}
 								
-							}else if(savedSet == 1) {
+							}else if(EditorState.set == 2) {
 								while(fail == 1){
 									rand = (int)(Math.random() * ((255 - 0) + 1));
 									fail = 0;
@@ -1021,7 +941,7 @@ public class MainWindow extends JFrame {
 									if(rand > 225 && rand < 228) fail = 1;
 									if(rand > 230 && rand < 239) fail = 1;
 								}
-							}else if(savedSet == 2) {
+							}else if(EditorState.set == 3) {
 								while(fail == 1){
 									rand = (int)(Math.random() * ((255 - 0) + 1));
 									fail = 0;
@@ -1037,7 +957,7 @@ public class MainWindow extends JFrame {
 									if(rand > 208 && rand < 228) fail = 1;
 									if(rand > 230 && rand < 239) fail = 1;
 								}
-							}else if(savedSet == 3) {
+							}else if(EditorState.set == 4) {
 								while(fail == 1){
 									rand = (int)(Math.random() * ((255 - 0) + 1));
 									fail = 0;
@@ -1053,7 +973,7 @@ public class MainWindow extends JFrame {
 									if(rand > 208 && rand < 228) fail = 1;
 									if(rand > 230 && rand < 239) fail = 1;
 								}
-							}else if(savedSet == 4) {
+							}else if(EditorState.set == 5) {
 								while(fail == 1){
 									rand = (int)(Math.random() * ((255 - 0) + 1));
 									fail = 0;
@@ -1067,7 +987,7 @@ public class MainWindow extends JFrame {
 									if(rand > 225 && rand < 228) fail = 1;
 									if(rand > 230 && rand < 239) fail = 1;
 								}
-							}else if(savedSet == 5) {
+							}else if(EditorState.set == 6) {
 								while(fail == 1){
 									rand = (int)(Math.random() * ((255 - 0) + 1));
 									fail = 0;
@@ -1118,7 +1038,7 @@ public class MainWindow extends JFrame {
 			}
 			
 			if(e.getSource() == briefingMaps) {
-				initBriefingMaps();
+				briefingAndDebriefing.render();
 			}
 			
 			if(e.getSource() == playerHS) {
@@ -1382,39 +1302,11 @@ public class MainWindow extends JFrame {
 			}
 		}// end actionPerformed
 		@Override
-		public void menuSelected(MenuEvent e) {
-
-		}
-
+		public void menuSelected(MenuEvent e) {}
 		@Override
-		public void menuDeselected(MenuEvent e) {
-
-			
-		}
-
+		public void menuDeselected(MenuEvent e) {}
 		@Override
-		public void menuCanceled(MenuEvent e) {
-
-			
-		}
-
-		void removeNewMapDialog() {
-			newMapDialog.remove(cancelBut);
-			newMapDialog.remove(confirmBut);
-			newMapDialog.remove(borderInfo);
-			newMapDialog.remove(verticalNum);
-			newMapDialog.remove(verticalDialog);
-			newMapDialog.remove(horizontalNum);
-			newMapDialog.remove(horizontalDialog);
-			newMapDialog.remove(dialogNewMap);
-		}
-		void removeBriefingMapDialog() {
-			if(cancelBriefing != null) briefingDialog.remove(cancelBriefing);
-			if(saveBriefing != null) briefingDialog.remove(saveBriefing);
-			if(MDpanel != null) briefingDialog.remove(MDpanel);
-			if(MBpanel != null) briefingDialog.remove(MBpanel);
-		}
-		
+		public void menuCanceled(MenuEvent e) {}
 		void removePlayerHSDialog() {
 			if(cancelPlayer != null) playerHSDialog.remove(cancelPlayer);
 			if(savePlayer != null) playerHSDialog.remove(savePlayer);
@@ -1448,11 +1340,7 @@ public class MainWindow extends JFrame {
 		}
 		
 		@Override
-		public void windowOpened(WindowEvent e) {
-
-			
-		}
-
+		public void windowOpened(WindowEvent e) {}
 		@Override
 		public void windowClosing(WindowEvent e) {
 			if(e.getSource() == MainWindow.this) {
@@ -1464,10 +1352,6 @@ public class MainWindow extends JFrame {
 						saved = true;
 					}
 				}
-			}
-			if(e.getSource() == newMapDialog) {
-				removeNewMapDialog();
-				newMapDialog.setVisible(false);
 			}
 			if(e.getSource() == playerHSDialog) {
 				removePlayerHSDialog();
@@ -1481,12 +1365,6 @@ public class MainWindow extends JFrame {
 				removeDescDialog();
 				descriptionDialog.setVisible(false);
 			}
-			if(e.getSource() == briefingDialog) {
-				removeBriefingMapDialog();
-				selectedMB = savedMB;
-				selectedDB = savedDB;
-				briefingDialog.setVisible(false);
-			}
 			if(e.getSource() == contentDialog) {
 				if(savedContent == 0)
 					noneContent.setSelected(true);
@@ -1497,178 +1375,16 @@ public class MainWindow extends JFrame {
 				removeMapsDialog();
 			}
 		}
-
 		@Override
-		public void windowClosed(WindowEvent e) {
-			
-			
-		}
-
+		public void windowClosed(WindowEvent e) {}
 		@Override
-		public void windowIconified(WindowEvent e) {
-
-			
-		}
-
+		public void windowIconified(WindowEvent e) {}
 		@Override
-		public void windowDeiconified(WindowEvent e) {
-
-			
-		}
-
+		public void windowDeiconified(WindowEvent e) {}
 		@Override
-		public void windowActivated(WindowEvent e) {
-
-			
-		}
-
+		public void windowActivated(WindowEvent e) {}
 		@Override
-		public void windowDeactivated(WindowEvent e) {
-
-			
-		}
-
-		public void initBriefingMaps() {
-			
-		
-			briefingDialog.setSize(500,880);
-			briefingDialog.setLocationRelativeTo(null);
-			briefingDialog.setResizable(false);
-			briefingDialog.setLayout(new GridBagLayout());
-			MBborder = BorderFactory.createTitledBorder("Select briefing map");
-			MDborder = BorderFactory.createTitledBorder("Select debriefing map");
-			MBpanel = new JPanel(new GridBagLayout());
-			MDpanel = new JPanel(new GridBagLayout());
-			
-			if(savedContent == 0) {
-				mbList = new JComboBox<String>(mbMaps);
-				mbList.setSelectedIndex(selectedMB);
-				mbList.addActionListener(this);
-				dbList = new JComboBox<String>(dbMaps);
-				dbList.setSelectedIndex(selectedDB);
-				dbList.addActionListener(this);
-			}else if(savedContent == 1) {
-				mbList = new JComboBox<String>(mbMapsXp);
-				mbList.setSelectedIndex(selectedMB);
-				mbList.addActionListener(this);
-				dbList = new JComboBox<String>(dbMapsXp);
-				dbList.setSelectedIndex(selectedDB);
-				dbList.addActionListener(this);
-			}
-			MBlabelX = new JLabel("Size x:");
-			MBlabelY = new JLabel("Size y:");
-			MDlabelX = new JLabel("Size x:");
-			MDlabelY = new JLabel("Size y:");
-			MBsizeXField = new JTextField(4);
-			MBsizeYField = new JTextField(4);
-			MDsizeXField = new JTextField(4);
-			MDsizeYField = new JTextField(4);
-			saveBriefing = new JButton("Save");
-			saveBriefing.addActionListener(this);
-			cancelBriefing = new JButton("Cancel");
-			cancelBriefing.addActionListener(this);
-			MBsizeXField.setText(Integer.toString(MBsizeX));
-			MBsizeYField.setText(Integer.toString(MBsizeY));
-			MDsizeXField.setText(Integer.toString(MDsizeX));
-			MDsizeYField.setText(Integer.toString(MDsizeY));
-			briefingConstraints.gridx = 0;
-			briefingConstraints.gridy = 0;
-			
-			MBpanel.setBorder(MBborder);
-			//MBpanel.setSize(700, 300);
-			MDpanel.setBorder(MDborder);
-			//MDpanel.setSize(500, 300);
-
-			briefingConstraints.gridx = 0;
-			briefingConstraints.gridy = 0;
-			briefingConstraints.gridwidth = 2;
-			briefingConstraints.insets = new Insets(10,2,4,2);
-			MBpanel.add(mbList, briefingConstraints);
-			briefingConstraints.gridwidth = 1;
-			briefingConstraints.gridy = 1;
-			MBpanel.add(MBlabelX, briefingConstraints);
-			briefingConstraints.gridx = 1;
-			MBpanel.add(MBsizeXField, briefingConstraints);
-			briefingConstraints.gridx = 0;
-			briefingConstraints.gridy = 2;
-			MBpanel.add(MBlabelY, briefingConstraints);
-			briefingConstraints.gridx = 1;
-			MBpanel.add(MBsizeYField, briefingConstraints);
-			briefingConstraints.gridx = 2;
-			briefingConstraints.gridy = 0;
-			briefingConstraints.gridheight = 4;
-			try {
-				if(savedContent == 0) {
-					mbMap[selectedMB] = ImageIO.read(this.getClass().getResourceAsStream("/img/mbgfx/"+mbMaps[selectedMB]+".png"));
-					if(mbMap[selectedMB].getWidth() > 400 || mbMap[selectedMB].getHeight() > 400) 
-						mbMap[selectedMB] = resizeMap((int)(mbMap[selectedMB].getWidth() / 1.5), (int)(mbMap[selectedMB].getHeight() / 1.5), mbMap[selectedMB]);
-				
-					mbMapframe[selectedMB] = new JLabel(new ImageIcon(mbMap[selectedMB]));
-					MBpanel.add(mbMapframe[selectedMB], briefingConstraints);
-				}else if(savedContent == 1) {
-					mbMapXp[selectedMB] = ImageIO.read(this.getClass().getResourceAsStream("/img/mbXpgfx/"+mbMapsXp[selectedMB]+".png"));
-					if(mbMapXp[selectedMB].getWidth() > 400 || mbMapXp[selectedMB].getHeight() > 400) 
-						mbMapXp[selectedMB] = resizeMap((int)(mbMapXp[selectedMB].getWidth() / 1.5), (int)(mbMapXp[selectedMB].getHeight() / 1.5), mbMapXp[selectedMB]);
-				
-					mbMapframeXp[selectedMB] = new JLabel(new ImageIcon(mbMapXp[selectedMB]));
-					MBpanel.add(mbMapframeXp[selectedMB], briefingConstraints);
-				}
-			}catch(IOException ex) {
-				System.out.println("An error occured while loading a briefing map");
-			}
-			briefingConstraints.gridheight = 1;
-			briefingConstraints.gridx = 0;
-			briefingConstraints.gridy = 1;
-			briefingDialog.add(MBpanel, briefingConstraints);
-			
-			briefingConstraints.gridx = 0;
-			briefingConstraints.gridy = 0;
-			briefingConstraints.gridwidth = 2;
-			MDpanel.add(dbList, briefingConstraints);
-			briefingConstraints.gridwidth = 1;
-			briefingConstraints.gridy = 1;
-			MDpanel.add(MDlabelX, briefingConstraints);
-			briefingConstraints.gridx = 1;
-			MDpanel.add(MDsizeXField, briefingConstraints);
-			briefingConstraints.gridy = 2;
-			briefingConstraints.gridx = 0;
-			MDpanel.add(MDlabelY, briefingConstraints);
-			briefingConstraints.gridx = 1;
-			MDpanel.add(MDsizeYField, briefingConstraints);
-			briefingConstraints.gridx = 2;
-			briefingConstraints.gridy = 0;
-			briefingConstraints.gridheight = 4;
-			try {
-				if(savedContent == 0) {
-					dbMap[selectedDB] = ImageIO.read(this.getClass().getResourceAsStream("/img/mbgfx/"+dbMaps[selectedDB]+".png"));
-					if(dbMap[selectedDB].getWidth() > 400 || dbMap[selectedDB].getHeight() > 400) {
-						dbMap[selectedDB] = resizeMap((int)(dbMap[selectedDB].getWidth() / 1.5), (int)(dbMap[selectedDB].getHeight() / 1.5), dbMap[selectedDB]);
-					}
-					dbMapframe[selectedDB] = new JLabel(new ImageIcon(dbMap[selectedDB]));
-					MDpanel.add(dbMapframe[selectedDB], briefingConstraints);
-				}else if(savedContent == 1) {
-					dbMapXp[selectedDB] = ImageIO.read(this.getClass().getResourceAsStream("/img/mbXpgfx/"+dbMapsXp[selectedDB]+".png"));
-					if(dbMapXp[selectedDB].getWidth() > 400 || dbMapXp[selectedDB].getHeight() > 400) {
-						dbMapXp[selectedDB] = resizeMap((int)(dbMapXp[selectedDB].getWidth() / 1.5), (int)(dbMapXp[selectedDB].getHeight() / 1.5), dbMapXp[selectedDB]);
-					}
-					dbMapframeXp[selectedDB] = new JLabel(new ImageIcon(dbMapXp[selectedDB]));
-					MDpanel.add(dbMapframeXp[selectedDB], briefingConstraints);
-				}
-				
-			}catch(IOException ex) {
-				System.out.println("An error occured while loading a debriefing map");
-			}
-			briefingConstraints.gridheight = 1;
-			briefingConstraints.gridx = 0;
-			briefingConstraints.gridy = 2;
-			briefingDialog.add(MDpanel, briefingConstraints);
-			briefingConstraints.gridy = 3;
-			briefingDialog.add(saveBriefing, briefingConstraints);
-			briefingConstraints.gridy = 4;
-			briefingDialog.add(cancelBriefing, briefingConstraints);
-			
-			briefingDialog.setVisible(true);
-		}
+		public void windowDeactivated(WindowEvent e) {}
 	}// end MainMenuListener class
 	public int getPlayerSelected() {
 		return this.playerSelected;
@@ -1892,10 +1608,6 @@ public class MainWindow extends JFrame {
 	
 	public void toggleBlgSector() {
 		blgVisible = !blgVisible;
-	}
-	
-	public int getMapSet() {
-		return this.savedSet;
 	}
 	
 	public int getContent() {

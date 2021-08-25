@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class EditorState {
 
+    public static boolean isSaved;
+
     public static String description;
     public static ArrayList<BeamGate> beamGates;
     public static ArrayList<StoudsonBomb> bombs;
@@ -52,6 +54,8 @@ public class EditorState {
     public static ArrayList<Integer> blg_map;
 
     public static void resetState() {
+        isSaved = true;
+
         description = "";
         beamGates = new ArrayList<BeamGate>();
         bombs = new ArrayList<StoudsonBomb>();
