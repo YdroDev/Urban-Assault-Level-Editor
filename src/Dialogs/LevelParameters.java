@@ -19,7 +19,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 
 public class LevelParameters implements WindowListener, ActionListener, ChangeListener {
-    private MainWindow owner;
+    private final MainWindow owner;
     private final JDialog dialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
 

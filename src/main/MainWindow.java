@@ -35,7 +35,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -49,7 +48,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -58,14 +56,13 @@ import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Dialogs.LevelParameters;
 
+import Dialogs.UnitEnabler;
 import com.jtattoo.plaf.noire.NoireLookAndFeel;
 
 
@@ -74,6 +71,7 @@ import com.jtattoo.plaf.noire.NoireLookAndFeel;
 public class MainWindow extends JFrame {
 	private JPanel window;
 	private LevelParameters levelParameters;
+	private UnitEnabler unitEnabler;
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
 	private int wHeight = 720;
@@ -128,7 +126,6 @@ public class MainWindow extends JFrame {
 	private JTextField horizontalNum;
 	private JTextField verticalNum;
 	private JLabel borderInfo;
-	private JDialog enablerDialog;
 	private JDialog briefingDialog;
 	private JDialog playerHSDialog;
 	private JDialog descriptionDialog;
@@ -160,24 +157,12 @@ public class MainWindow extends JFrame {
 	private JLabel MDlabelX;
 	private JLabel MDlabelY;
 	
-	private CheckList resList;
-	private CheckList ghorList;
-	private CheckList taerList;
-	private CheckList mykoList;
-	private CheckList sulgList;
-	private CheckList blackSectList;
-	private CheckList trainingList;
-	private CheckList specialList;
-	private JCheckBox unlocker;
-	
-	private GridBagConstraints gridConstraints , enablerConstraints, playerHSConstraints, descConstraints, modsConstraints, briefingConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
+	private GridBagConstraints gridConstraints, playerHSConstraints, descConstraints, modsConstraints, briefingConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
 	private boolean ownVisible;
 	private boolean blgVisible;
-	private String descString;
-	private String modsString;
 	private BorderLayout layout;
 	private BufferedImage[] mbMap; 
 	private BufferedImage[] mbMapXp;
@@ -212,22 +197,6 @@ public class MainWindow extends JFrame {
 	private SwingWorker audioThread;
 	private DateTimeFormatter dtf;
 	private LocalDateTime now;
-	
-	private ArrayList<Integer> resUnits;
-	private ArrayList<Integer> ghorUnits;
-	private ArrayList<Integer> taerUnits;
-	private ArrayList<Integer> mykoUnits;
-	private ArrayList<Integer> sulgUnits;
-	private ArrayList<Integer> blasecUnits;
-	private ArrayList<Integer> trainingUnits;
-	
-	private ArrayList<Integer> resBuildings;
-	private ArrayList<Integer> ghorBuildings;
-	private ArrayList<Integer> taerBuildings;
-	private ArrayList<Integer> mykoBuildings;
-	private ArrayList<Integer> sulgBuildings;
-	private ArrayList<Integer> blasecBuildings;
-	private ArrayList<Integer> trainingBuildings;
 	
 	private LevelManager manager;
 	static Font font;
@@ -273,6 +242,7 @@ public class MainWindow extends JFrame {
 		layout = new BorderLayout();
 		window = new JPanel(layout);
 		levelParameters = new LevelParameters(this);
+		unitEnabler = new UnitEnabler(this);
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -286,7 +256,6 @@ public class MainWindow extends JFrame {
 
 		listenToMenu = new MainMenuListener();
 		gridConstraints = new GridBagConstraints();
-		enablerConstraints = new GridBagConstraints();
 		playerHSConstraints = new GridBagConstraints();
 		modsConstraints = new GridBagConstraints();
 		briefingConstraints = new GridBagConstraints();
@@ -296,7 +265,6 @@ public class MainWindow extends JFrame {
 		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
 		newMapDialog = new JDialog(this, "Create a new map", Dialog.ModalityType.DOCUMENT_MODAL);
-		enablerDialog = new JDialog(this, "Enabler", Dialog.ModalityType.DOCUMENT_MODAL);
 		briefingDialog = new JDialog(this, "Set briefing/debriefing map", Dialog.ModalityType.DOCUMENT_MODAL);
 		playerHSDialog = new JDialog(this, "Select Host Station for player", Dialog.ModalityType.DOCUMENT_MODAL);
 		descriptionDialog = new JDialog(this, "Set level description", Dialog.ModalityType.DOCUMENT_MODAL);
@@ -316,9 +284,7 @@ public class MainWindow extends JFrame {
 		
 		dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		now = LocalDateTime.now();
-		
-		descString = "------ Level name: \n------ Created on: "+dtf.format(now)+" \n------ Designed By: ";
-		modsString = "include data:scripts/startup2.scr";
+
 		imageVisible = false;
 		heightVisible = false;
 		typVisible = false;
@@ -484,33 +450,9 @@ public class MainWindow extends JFrame {
 			if(j > 139)
 				dbMapsXp[i] = "db_"+j;
 		}
-		
-		resUnits = new ArrayList<Integer>();
-		ghorUnits = new ArrayList<Integer>();
-		taerUnits = new ArrayList<Integer>();
-		mykoUnits = new ArrayList<Integer>();
-		sulgUnits = new ArrayList<Integer>();
-		blasecUnits = new ArrayList<Integer>();
-		trainingUnits = new ArrayList<Integer>();
-		
-		resBuildings = new ArrayList<Integer>();
-		ghorBuildings = new ArrayList<Integer>();
-		taerBuildings = new ArrayList<Integer>();
-		mykoBuildings = new ArrayList<Integer>();
-		sulgBuildings = new ArrayList<Integer>();
-		blasecBuildings = new ArrayList<Integer>();
-		trainingBuildings = new ArrayList<Integer>();
-		
-		resUnits.add(16);
-		ghorUnits.add(24);	
-		taerUnits.add(32);
-		mykoUnits.add(65);
-		sulgUnits.add(73);
-		trainingUnits.add(138);
 
 		mainMenu = new JMenuBar();
 		newMapDialog.addWindowListener(listenToMenu);
-		enablerDialog.addWindowListener(listenToMenu);
 		briefingDialog.addWindowListener(listenToMenu);
 		playerHSDialog.addWindowListener(listenToMenu);
 		descriptionDialog.addWindowListener(listenToMenu);
@@ -698,14 +640,6 @@ public class MainWindow extends JFrame {
 
 		JButton confirmBut;
 		JButton cancelBut;
-		JButton resSaveEnabler;
-		JButton ghorSaveEnabler;
-		JButton taerSaveEnabler;
-		JButton mykoSaveEnabler;
-		JButton sulgSaveEnabler;
-		JButton blasecSaveEnabler;
-		JButton trainingSaveEnabler;
-		JButton cancelEnabler;
 		JLabel dialogNewMap;
 		JLabel horizontalDialog;
 		JLabel verticalDialog;
@@ -720,7 +654,6 @@ public class MainWindow extends JFrame {
 		JButton resetGhorMods;
 		JButton resetTaerMods;
 		JButton cancelMods;
-		int enablerOwner;
 		
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -956,114 +889,30 @@ public class MainWindow extends JFrame {
 				levelParameters.render();
 			}
 			if(e.getSource() == resEnabler) {
-				showEnabler(1);
+				unitEnabler.render(1);
 			}
-			if(e.getSource() == resSaveEnabler) {
-				resUnits.clear();
-				resBuildings.clear();
-				
-				enableUnits(resUnits);
-				enableBuildings(resBuildings);
-				
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-				makeUnsaved();
-			}
+
 			if(e.getSource() == ghorEnabler) {
-				showEnabler(6);
+				unitEnabler.render(6);
 			}
-			if(e.getSource() == ghorSaveEnabler) {
-				ghorUnits.clear();
-				ghorBuildings.clear();
-				
-				enableUnits(ghorUnits);
-				enableBuildings(ghorBuildings);
-				
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-				makeUnsaved();
-			}
+
 			if(e.getSource() == taerEnabler) {
-				showEnabler(4);
-			}
-			if(e.getSource() == taerSaveEnabler) {
-				taerUnits.clear();
-				taerBuildings.clear();
-				
-				enableUnits(taerUnits);
-				enableBuildings(taerBuildings);
-				
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-				makeUnsaved();
+				unitEnabler.render(4);
 			}
 			if(e.getSource() == mykoEnabler) {
-				showEnabler(3);
+				unitEnabler.render(3);
 			}
-			if(e.getSource() == mykoSaveEnabler) {
-				mykoUnits.clear();
-				mykoBuildings.clear();
-				
-				enableUnits(mykoUnits);
-				enableBuildings(mykoBuildings);
-				
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-				makeUnsaved();
-			}
+
 			if(e.getSource() == sulgEnabler) {
-				showEnabler(2);
+				unitEnabler.render(2);
 			}
-			if(e.getSource() == sulgSaveEnabler) {
-				sulgUnits.clear();
-				sulgBuildings.clear();
-				
-				enableUnits(sulgUnits);
-				enableBuildings(sulgBuildings);
-				
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-				makeUnsaved();
-			}
+
 			if(e.getSource() == blasecEnabler) {
-				showEnabler(5);
+				unitEnabler.render(5);
 			}
-			if(e.getSource() == blasecSaveEnabler) {
-				blasecUnits.clear();
-				blasecBuildings.clear();
-				
-				enableUnits(blasecUnits);
-				enableBuildings(blasecBuildings);
-				
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-				makeUnsaved();
-			}
+
 			if(e.getSource() == trainingEnabler) {
-				showEnabler(7);
-			}
-			if(e.getSource() == trainingSaveEnabler) {
-				trainingUnits.clear();
-				trainingBuildings.clear();
-				
-				enableUnits(trainingUnits);
-				enableBuildings(trainingBuildings);
-				
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-				makeUnsaved();
-			}
-			
-			
-			
-			if(e.getSource() == cancelEnabler) {
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-			}
-			
-			if(e.getSource() == unlocker) {
-				if(unlocker.isSelected()) unlock();
-				else lock();
+				unitEnabler.render(7);
 			}
 			
 			if(e.getSource() == savePlayer) {
@@ -1549,265 +1398,7 @@ public class MainWindow extends JFrame {
 
 			
 		}
-		
-		void initEnabler(int owner) {
-			resList = new CheckList("Resistance");
-			ghorList = new CheckList("Ghorkov");
-			taerList = new CheckList("Taerkasten");
-			mykoList = new CheckList("Mykonian");
-			sulgList = new CheckList("Sulgogar");
-			blackSectList = new CheckList("Black Sect");
-			trainingList = new CheckList("Training");
-			specialList = new CheckList("Special");
-			
-			resList.addUnits(UAdata.resUnits);
-			resList.addBuildings(UAdata.resBuildings);
-			resList.makeList();
-			
-			ghorList.addUnits(UAdata.ghorUnits);
-			ghorList.addBuildings(UAdata.ghorBuildings);
-			ghorList.makeList();
-			
-			taerList.addUnits(UAdata.taerUnits);
-			taerList.addBuildings(UAdata.taerBuildings);
-			taerList.makeList();
-			
-			mykoList.addUnits(UAdata.mykoUnits);
-			mykoList.addBuildings(UAdata.mykoBuildings);
-			mykoList.makeList();
-			
-			sulgList.addUnits(UAdata.sulgUnits);
-			sulgList.makeList();
-			
-			blackSectList.addBuildings(UAdata.blackSectBuildings);
-			blackSectList.makeList();
-			
-			trainingList.addUnits(UAdata.trainingUnits);
-			trainingList.makeList();
-			
-			specialList.addUnits(UAdata.specialUnits);
-			specialList.makeList();
 
-			unlocker = new JCheckBox("Unlock all");
-			unlocker.addActionListener(this);		
-
-			switch(owner) 
-			{
-				case 1:
-					checkUnits(resUnits);
-					checkBuildings(resBuildings);
-					break;
-				case 6:
-					checkUnits(ghorUnits);
-					checkBuildings(ghorBuildings);
-					break;
-				case 4:
-					checkUnits(taerUnits);
-					checkBuildings(taerBuildings);
-					break;
-				case 3:
-					checkUnits(mykoUnits);
-					checkBuildings(mykoBuildings);
-					break;
-				case 2:
-					checkUnits(sulgUnits);
-					checkBuildings(sulgBuildings);
-					break;
-				case 5:
-					checkUnits(blasecUnits);
-					checkBuildings(blasecBuildings);
-					break;
-				case 7:
-					checkUnits(trainingUnits);
-					checkBuildings(trainingBuildings);
-					break;
-			}
-			
-			this.enablerOwner = owner;
-			enablerConstraints.gridx = 0;
-			enablerConstraints.gridy = 0;
-			lock();
-		}
-		
-		void lock() {
-			if(this.enablerOwner != 1) {
-				resList.toggleUnitCheckBoxes(UAdata.resUnits, false);
-				resList.toggleBuildingCheckBoxes(UAdata.resBuildings, false);
-			}
-			if(this.enablerOwner != 6) {
-				ghorList.toggleUnitCheckBoxes(UAdata.ghorUnits, false);
-				ghorList.toggleBuildingCheckBoxes(UAdata.ghorBuildings, false);
-			}
-			if(this.enablerOwner != 4) {
-				taerList.toggleUnitCheckBoxes(UAdata.taerUnits, false);
-				taerList.toggleBuildingCheckBoxes(UAdata.taerBuildings, false);
-			}
-			if(this.enablerOwner != 3) {
-				mykoList.toggleUnitCheckBoxes(UAdata.mykoUnits, false);
-				mykoList.toggleBuildingCheckBoxes(UAdata.mykoBuildings, false);
-			}
-			if(this.enablerOwner != 2) {
-				sulgList.toggleUnitCheckBoxes(UAdata.sulgUnits, false);
-			}
-			if(this.enablerOwner != 5) {
-				blackSectList.toggleBuildingCheckBoxes(UAdata.blackSectBuildings, false);	
-			}
-			if(this.enablerOwner != 7) {
-				trainingList.toggleUnitCheckBoxes(UAdata.trainingUnits, false);
-			}
-			specialList.toggleUnitCheckBoxes(UAdata.specialUnits, false);
-		}
-		
-		
-		void unlock() {
-			if(this.enablerOwner != 1) {
-				resList.toggleUnitCheckBoxes(UAdata.resUnits, true);
-				resList.toggleBuildingCheckBoxes(UAdata.resBuildings, true);
-			}
-			if(this.enablerOwner != 6) {
-				ghorList.toggleUnitCheckBoxes(UAdata.ghorUnits, true);
-				ghorList.toggleBuildingCheckBoxes(UAdata.ghorBuildings, true);
-			}
-			if(this.enablerOwner != 4) {
-				taerList.toggleUnitCheckBoxes(UAdata.taerUnits, true);
-				taerList.toggleBuildingCheckBoxes(UAdata.taerBuildings, true);
-			}
-			if(this.enablerOwner != 3) {
-				mykoList.toggleUnitCheckBoxes(UAdata.mykoUnits, true);
-				mykoList.toggleBuildingCheckBoxes(UAdata.mykoBuildings, true);
-			}
-			if(this.enablerOwner != 2) {
-				sulgList.toggleUnitCheckBoxes(UAdata.sulgUnits, true);
-			}
-			if(this.enablerOwner != 5) {
-				blackSectList.toggleBuildingCheckBoxes(UAdata.blackSectBuildings, true);	
-			}
-			if(this.enablerOwner != 7) {
-				trainingList.toggleUnitCheckBoxes(UAdata.trainingUnits, true);
-			}
-			specialList.toggleUnitCheckBoxes(UAdata.specialUnits, true);
-		}
-		
-		void checkUnits(ArrayList<Integer> hsUnits) {
-			for(JCheckBox resUnitBox : resList.getUnitCheckBoxes()) {
-				if(hsUnits.contains(UAdata.getUnitIDfromName(resUnitBox.getText()))) {
-					resUnitBox.setSelected(true);
-				}
-			}
-			for(JCheckBox ghorUnitBox : ghorList.getUnitCheckBoxes()) {
-				if(hsUnits.contains(UAdata.getUnitIDfromName(ghorUnitBox.getText()))) {
-					ghorUnitBox.setSelected(true);
-				}
-			}
-			for(JCheckBox taerUnitBox : taerList.getUnitCheckBoxes()) {
-				if(hsUnits.contains(UAdata.getUnitIDfromName(taerUnitBox.getText()))) {
-					taerUnitBox.setSelected(true);
-				}
-			}
-			for(JCheckBox mykoUnitBox : mykoList.getUnitCheckBoxes()) {
-				if(hsUnits.contains(UAdata.getUnitIDfromName(mykoUnitBox.getText()))) {
-					mykoUnitBox.setSelected(true);
-				}
-			}
-			for(JCheckBox sulgUnitBox : sulgList.getUnitCheckBoxes()) {
-				if(hsUnits.contains(UAdata.getUnitIDfromName(sulgUnitBox.getText()))) {
-					sulgUnitBox.setSelected(true);
-				}
-			}
-			for(JCheckBox trainingUnitBox : trainingList.getUnitCheckBoxes()) {
-				if(hsUnits.contains(UAdata.getUnitIDfromName(trainingUnitBox.getText()))) {
-					trainingUnitBox.setSelected(true);
-				}
-			}
-			for(JCheckBox specialUnitBox : specialList.getUnitCheckBoxes()) {
-				if(hsUnits.contains(UAdata.getUnitIDfromName(specialUnitBox.getText()))) {
-					specialUnitBox.setSelected(true);
-				}
-			}
-		}
-		
-		void checkBuildings(ArrayList<Integer> hsBuildings) {
-			for(JCheckBox resBuildingBox : resList.getBuildingCheckBoxes()) {
-				if(hsBuildings.contains(UAdata.getBuildingIDfromName(resBuildingBox.getText()))) {
-					resBuildingBox.setSelected(true);
-				}
-			}
-			for(JCheckBox ghorBuildingBox : ghorList.getBuildingCheckBoxes()) {
-				if(hsBuildings.contains(UAdata.getBuildingIDfromName(ghorBuildingBox.getText()))) {
-					ghorBuildingBox.setSelected(true);
-				}
-			}
-			for(JCheckBox taerBuildingBox : taerList.getBuildingCheckBoxes()) {
-				if(hsBuildings.contains(UAdata.getBuildingIDfromName(taerBuildingBox.getText()))) {
-					taerBuildingBox.setSelected(true);
-				}
-			}
-			for(JCheckBox mykoBuildingBox : mykoList.getBuildingCheckBoxes()) {
-				if(hsBuildings.contains(UAdata.getBuildingIDfromName(mykoBuildingBox.getText()))) {
-					mykoBuildingBox.setSelected(true);
-				}
-			}
-			for(JCheckBox blackSectBuildingBox : blackSectList.getBuildingCheckBoxes()) {
-				if(hsBuildings.contains(UAdata.getBuildingIDfromName(blackSectBuildingBox.getText()))) {
-					blackSectBuildingBox.setSelected(true);
-				}
-			}
-		}
-		
-		void enableUnits(ArrayList<Integer> hsUnits) {
-			for(JCheckBox resUnitBox : resList.getUnitCheckBoxes()) {
-				if(resUnitBox.isSelected())
-					hsUnits.add(UAdata.getUnitIDfromName(resUnitBox.getText()));
-			}
-			for(JCheckBox ghorUnitBox : ghorList.getUnitCheckBoxes()) {
-				if(ghorUnitBox.isSelected())
-					hsUnits.add(UAdata.getUnitIDfromName(ghorUnitBox.getText()));
-			}
-			for(JCheckBox taerUnitBox : taerList.getUnitCheckBoxes()) {
-				if(taerUnitBox.isSelected())
-					hsUnits.add(UAdata.getUnitIDfromName(taerUnitBox.getText()));
-			}
-			for(JCheckBox mykoUnitBox : mykoList.getUnitCheckBoxes()) {
-				if(mykoUnitBox.isSelected())
-					hsUnits.add(UAdata.getUnitIDfromName(mykoUnitBox.getText()));
-			}
-			for(JCheckBox sulgUnitBox : sulgList.getUnitCheckBoxes()) {
-				if(sulgUnitBox.isSelected())
-					hsUnits.add(UAdata.getUnitIDfromName(sulgUnitBox.getText()));
-			}
-			for(JCheckBox trainingUnitBox : trainingList.getUnitCheckBoxes()) {
-				if(trainingUnitBox.isSelected())
-					hsUnits.add(UAdata.getUnitIDfromName(trainingUnitBox.getText()));
-			}
-			for(JCheckBox specialUnitBox : specialList.getUnitCheckBoxes()) {
-				if(specialUnitBox.isSelected())
-					hsUnits.add(UAdata.getUnitIDfromName(specialUnitBox.getText()));
-			}
-		}
-		
-		void enableBuildings(ArrayList<Integer> hsBuildings) {
-			for(JCheckBox resBuildingBox : resList.getBuildingCheckBoxes()) {
-				if(resBuildingBox.isSelected())
-					hsBuildings.add(UAdata.getBuildingIDfromName(resBuildingBox.getText()));
-			}
-			for(JCheckBox ghorBuildingBox : ghorList.getBuildingCheckBoxes()) {
-				if(ghorBuildingBox.isSelected())
-					hsBuildings.add(UAdata.getBuildingIDfromName(ghorBuildingBox.getText()));
-			}
-			for(JCheckBox taerBuildingBox : taerList.getBuildingCheckBoxes()) {
-				if(taerBuildingBox.isSelected())
-					hsBuildings.add(UAdata.getBuildingIDfromName(taerBuildingBox.getText()));
-			}
-			for(JCheckBox mykoBuildingBox : mykoList.getBuildingCheckBoxes()) {
-				if(mykoBuildingBox.isSelected())
-					hsBuildings.add(UAdata.getBuildingIDfromName(mykoBuildingBox.getText()));
-			}
-			for(JCheckBox blackSectBuildingBox : blackSectList.getBuildingCheckBoxes()) {
-				if(blackSectBuildingBox.isSelected())
-					hsBuildings.add(UAdata.getBuildingIDfromName(blackSectBuildingBox.getText()));
-			}
-		}
-		
 		void removeNewMapDialog() {
 			newMapDialog.remove(cancelBut);
 			newMapDialog.remove(confirmBut);
@@ -1818,26 +1409,6 @@ public class MainWindow extends JFrame {
 			newMapDialog.remove(horizontalDialog);
 			newMapDialog.remove(dialogNewMap);
 		}
-		void removeEnablerDialog() {
-			if(cancelEnabler != null) enablerDialog.remove(cancelEnabler);
-			if(trainingSaveEnabler != null) enablerDialog.remove(trainingSaveEnabler);
-			if(ghorSaveEnabler != null) enablerDialog.remove(ghorSaveEnabler);
-			if(blasecSaveEnabler != null) enablerDialog.remove(blasecSaveEnabler);
-			if(taerSaveEnabler != null) enablerDialog.remove(taerSaveEnabler);
-			if(mykoSaveEnabler != null) enablerDialog.remove(mykoSaveEnabler);
-			if(sulgSaveEnabler != null) enablerDialog.remove(sulgSaveEnabler);
-			if(resSaveEnabler != null) enablerDialog.remove(resSaveEnabler);
-			if(specialList.getGroup() != null) enablerDialog.remove(specialList.getGroup());
-			if(trainingList.getGroup() != null) enablerDialog.remove(trainingList.getGroup());
-			if(blackSectList.getGroup() != null) enablerDialog.remove(blackSectList.getGroup());
-			if(sulgList.getGroup() != null) enablerDialog.remove(sulgList.getGroup());
-			if(mykoList.getGroup() != null) enablerDialog.remove(mykoList.getGroup());
-			if(taerList.getGroup() != null) enablerDialog.remove(taerList.getGroup());
-			if(ghorList.getGroup() != null) enablerDialog.remove(ghorList.getGroup());
-			if(resList.getGroup() != null) enablerDialog.remove(resList.getGroup());
-			if(unlocker != null) enablerDialog.remove(unlocker);
-		}
-
 		void removeBriefingMapDialog() {
 			if(cancelBriefing != null) briefingDialog.remove(cancelBriefing);
 			if(saveBriefing != null) briefingDialog.remove(saveBriefing);
@@ -1899,10 +1470,6 @@ public class MainWindow extends JFrame {
 				removeNewMapDialog();
 				newMapDialog.setVisible(false);
 			}
-			if(e.getSource() == enablerDialog) {
-				removeEnablerDialog();
-				enablerDialog.setVisible(false);
-			}
 			if(e.getSource() == playerHSDialog) {
 				removePlayerHSDialog();
 				playerHSDialog.setVisible(false);
@@ -1961,112 +1528,7 @@ public class MainWindow extends JFrame {
 
 			
 		}
-		
-		public void showEnabler(int owner) {
-			enablerDialog.setSize(1200,800);
-			enablerDialog.setLocationRelativeTo(null);
-			enablerDialog.setResizable(false);
-			enablerDialog.setLayout(new GridBagLayout());
-			initEnabler(owner);
-			switch(owner) {
-			case 1:
-				enablerDialog.setTitle("Resistance enabler");
-				break;
-			case 2:
-				enablerDialog.setTitle("Sulgogar enabler");
-				break;
-			case 3:
-				enablerDialog.setTitle("Mykonian enabler");
-				break;
-			case 4:
-				enablerDialog.setTitle("Taerkasten enabler");
-				break;
-			case 5:
-				enablerDialog.setTitle("Black sect enabler");
-				break;
-			case 6:
-				enablerDialog.setTitle("Ghorkov enabler");
-				break;
-			case 7:
-				enablerDialog.setTitle("Training enabler");
-				break;
-			}
-			enablerConstraints.gridx = 0;
-			enablerConstraints.gridy = 0;
-			enablerDialog.add(unlocker,enablerConstraints);
-			enablerConstraints.gridy = 1;
-			enablerConstraints.anchor = GridBagConstraints.NORTH;
-			enablerDialog.add(resList.getGroup(), enablerConstraints);
-			enablerConstraints.gridx = 1;
-			enablerDialog.add(ghorList.getGroup(), enablerConstraints);
-			enablerConstraints.gridx = 2;
-			enablerDialog.add(taerList.getGroup(), enablerConstraints);
-			enablerConstraints.gridx = 3;
-			enablerDialog.add(mykoList.getGroup(), enablerConstraints);
-			enablerConstraints.gridx = 4;
-			enablerDialog.add(sulgList.getGroup(), enablerConstraints);
-			enablerConstraints.gridx = 5;
-			enablerDialog.add(blackSectList.getGroup(), enablerConstraints);
-			enablerConstraints.gridx = 6;
-			enablerDialog.add(trainingList.getGroup(), enablerConstraints);
-			enablerConstraints.gridy = 1;
-			enablerConstraints.insets = new Insets(80,0,0,0);
-			enablerDialog.add(specialList.getGroup(), enablerConstraints);
-			enablerConstraints.insets = new Insets(20,0,0,0);
-			
-			switch(owner) {
-				case 1:
-					resSaveEnabler = new JButton("Save");
-					enablerConstraints.gridy = 2;
-					enablerDialog.add(resSaveEnabler, enablerConstraints);
-					resSaveEnabler.addActionListener(this);
-					break;
-				case 2:
-					sulgSaveEnabler = new JButton("Save");
-					enablerConstraints.gridy = 2;
-					enablerDialog.add(sulgSaveEnabler, enablerConstraints);
-					sulgSaveEnabler.addActionListener(this);
-					break;
-				case 3:
-					mykoSaveEnabler = new JButton("Save");
-					enablerConstraints.gridy = 2;
-					enablerDialog.add(mykoSaveEnabler, enablerConstraints);
-					mykoSaveEnabler.addActionListener(this);
-					break;
-				case 4:
-					taerSaveEnabler = new JButton("Save");
-					enablerConstraints.gridy = 2;
-					enablerDialog.add(taerSaveEnabler, enablerConstraints);
-					taerSaveEnabler.addActionListener(this);
-					break;
-				case 5:
-					blasecSaveEnabler = new JButton("Save");
-					enablerConstraints.gridy = 2;
-					enablerDialog.add(blasecSaveEnabler, enablerConstraints);
-					blasecSaveEnabler.addActionListener(this);
-					break;
-				case 6:
-					ghorSaveEnabler = new JButton("Save");
-					enablerConstraints.gridy = 2;
-					enablerDialog.add(ghorSaveEnabler, enablerConstraints);
-					ghorSaveEnabler.addActionListener(this);
-					break;
-				case 7:
-					trainingSaveEnabler = new JButton("Save");
-					enablerConstraints.gridy = 2;
-					enablerDialog.add(trainingSaveEnabler, enablerConstraints);
-					trainingSaveEnabler.addActionListener(this);
-					break;
-			}
-			cancelEnabler = new JButton("Cancel");
-			enablerConstraints.gridy = 3;
-			enablerConstraints.insets = new Insets(20,0,0,0);
-			enablerDialog.add(cancelEnabler, enablerConstraints);
-			cancelEnabler.addActionListener(this);
-			enablerConstraints.insets = new Insets(0,0,0,0);
-			
-			enablerDialog.setVisible(true);
-		}
+
 		public void initBriefingMaps() {
 			
 		

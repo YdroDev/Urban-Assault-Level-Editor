@@ -31,7 +31,7 @@ public class CheckList {
 	private ArrayList<JPanel> buildings;
 	private ArrayList<JCheckBox> buildingCheckBoxes;
 	
-	CheckList(String hostStation){
+	public CheckList(String hostStation){
 		border = BorderFactory.createTitledBorder(hostStation);
 		group = new JPanel();
 		group.setBorder(border);
