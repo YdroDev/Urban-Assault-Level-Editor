@@ -29,14 +29,12 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
     private JLabel MBlabelY;
     private JLabel MDlabelX;
     private JLabel MDlabelY;
-
     private JComboBox<String> mbList;
     private JComboBox<String> dbList;
-    private String[] mbMaps = new String[74];;
-    private String[] dbMaps = new String[114];
-    private String[] mbMapsXp = new String[31];
-    private String[] dbMapsXp = new String[71];
-
+    private final String[] mbMaps = new String[74];;
+    private final String[] dbMaps = new String[114];
+    private final String[] mbMapsXp = new String[31];
+    private final String[] dbMapsXp = new String[71];
     private final BufferedImage[] mbMap = new BufferedImage[74];
     private final BufferedImage[] mbMapXp = new BufferedImage[31];
     private final BufferedImage[] dbMap = new BufferedImage[114];

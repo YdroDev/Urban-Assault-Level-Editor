@@ -104,16 +104,7 @@ public class GameMap extends JComponent{
 	private EditorMouseListener mouselisten;
 	private ArrayList<JMenuItem> bgList;
 	private ArrayList<JMenuItem> bombList;
-	
-	private ArrayList<BeamGate> beamgates;
-	private ArrayList<StoudsonBomb> bombs;
-	private ArrayList<TechUpgrade> techupgrades;
-	private ArrayList<Unit> hoststations;
-	private ArrayList<Unit> units;
-	private ArrayList<Integer> typ_map;
-	private ArrayList<Integer> own_map;
-	private ArrayList<Integer> hgt_map;
-	private ArrayList<Integer> blg_map;
+
 	private ArrayList<Boolean> error_map;
 	
 	private BufferedImage errorimg;
@@ -993,79 +984,7 @@ public class GameMap extends JComponent{
 	public int getVerticalGrid() {
 		return this.verticalGrid;
 	}
-	public Hoststation getHoststation(int index){
-		if(hoststations.size() > index)
-			return (Hoststation)hoststations.get(index);
-		
-		return null;
-	}
-	public int getHoststationSize() {
-		return hoststations.size();
-	}
-	public Squad getSquad(int index) {
-		if(units.size() > index)
-			return (Squad)units.get(index);
-		
-		return null;
-	}
-	public int getSquadSize() {
-		return units.size();
-	}
-	public BeamGate getBeamGate(int x, int y) {
-		if(beamgates.size() > 0) {
-			for(BeamGate bg : beamgates) {
-				if(bg.getX() == x && bg.getY() == y) return bg;
-			}
-		}
-		return null;
-	}
-	public int getBeamGateNumber(int x, int y) {
-		int cur = 0;
-		if(beamgates.size() > 0) {
-			cur++;
-			for(BeamGate bg : beamgates) {
-				if(bg.getX() == x && bg.getY() == y) return cur;
-				cur++;
-			}
-		}
-		return cur;
-	}
-	public ArrayList<BeamGate> getBeamGateList() {
-		return beamgates;
-	}
-	
-	public TechUpgrade getTechUpgrade(int x, int y) {
-		if(techupgrades.size() > 0) {
-			for(TechUpgrade tu : techupgrades) {
-				if(tu.getX() == x && tu.getY() == y) return tu;
-			}
-		}
-		return null;
-	}
-	public ArrayList<TechUpgrade> getTechUpgradeList(){
-		if(techupgrades.size() > 0) return techupgrades;
-		
-		return null;
-	}
-	public StoudsonBomb getStoudsonBomb(int x, int y) {
-		if(bombs.size() > 0) {
-			for(StoudsonBomb sb : bombs) {
-				if(sb.getX() == x && sb.getY() == y) return sb;
-			}
-		}
-		return null;
-	}
-	public int getStoudsonBombNumber(int x, int y) {
-		int cur = 0;
-		if(bombs.size() > 0) {
-			cur++;
-			for(StoudsonBomb sb : bombs) {
-				if(sb.getX() == x && sb.getY() == y) return cur;
-				cur++;
-			}
-		}
-		return cur;
-	}
+
 	public ArrayList<StoudsonBomb> getStoudsonBombList() {
 		return bombs;
 	}

@@ -4,14 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -29,7 +27,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -44,20 +41,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import Dialogs.BriefingAndDebriefing;
-import Dialogs.LevelParameters;
+import Dialogs.*;
 
-import Dialogs.NewLevel;
-import Dialogs.UnitEnabler;
 import UAstructures.Hoststation;
 import UAstructures.Squad;
 import UAstructures.Unit;
@@ -72,6 +64,7 @@ public class MainWindow extends JFrame {
 	private LevelParameters levelParametersDialog;
 	private UnitEnabler unitEnablerDialog;
 	private BriefingAndDebriefing briefingAndDebriefingDialog;
+	private PlayerHostStation playerHostStationDialog;
 
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
@@ -101,14 +94,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem resEnabler, ghorEnabler, taerEnabler, mykoEnabler, sulgEnabler, blasecEnabler, trainingEnabler;
 	private JMenuItem briefingMaps;
 	private JMenuItem playerHS;
-	private int playerGridy;
-	private JLabel playerHSLabel;
-	private JPanel hsListPanel;
-	private ArrayList<JRadioButton> availableHS;
-	private ButtonGroup playerHSgroup;
-	private JLabel noHSavailable;
-	private JButton savePlayer;
-	private JButton cancelPlayer;
+
 	private JMenuItem levelDescription;
 	private JMenuItem modifications;
 	private JMenuItem randomTypMap;
@@ -119,7 +105,6 @@ public class MainWindow extends JFrame {
 	private JRadioButton noneContent;
 	private JRadioButton mdContent;
 
-	private JDialog playerHSDialog;
 	private JDialog descriptionDialog;
 	private JDialog modsDialog;
 	private JDialog contentDialog;
@@ -135,7 +120,7 @@ public class MainWindow extends JFrame {
 	private JDialog aboutDialog;
 	private JButton aboutClose;
 
-	private GridBagConstraints gridConstraints, playerHSConstraints, descConstraints, modsConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
+	private GridBagConstraints gridConstraints, descConstraints, modsConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
@@ -198,6 +183,7 @@ public class MainWindow extends JFrame {
 		levelParametersDialog = new LevelParameters(this);
 		unitEnablerDialog = new UnitEnabler(this);
 		briefingAndDebriefingDialog = new BriefingAndDebriefing(this);
+		playerHostStationDialog = new PlayerHostStation(this);
 
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
@@ -211,14 +197,12 @@ public class MainWindow extends JFrame {
 
 		listenToMenu = new MainMenuListener();
 		gridConstraints = new GridBagConstraints();
-		playerHSConstraints = new GridBagConstraints();
 		modsConstraints = new GridBagConstraints();
 		mapsConstraints = new GridBagConstraints();
 		descConstraints = new GridBagConstraints();
 		contentConstraints = new GridBagConstraints();
 		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
-		playerHSDialog = new JDialog(this, "Select Host Station for player", Dialog.ModalityType.DOCUMENT_MODAL);
 		descriptionDialog = new JDialog(this, "Set level description", Dialog.ModalityType.DOCUMENT_MODAL);
 		modsDialog = new JDialog(this, "Prototype Modifications", Dialog.ModalityType.DOCUMENT_MODAL);
 		contentDialog = new JDialog(this, "Additional game content", Dialog.ModalityType.DOCUMENT_MODAL);
@@ -241,7 +225,6 @@ public class MainWindow extends JFrame {
 		blgVisible = false;
 
 		mainMenu = new JMenuBar();
-		playerHSDialog.addWindowListener(listenToMenu);
 		descriptionDialog.addWindowListener(listenToMenu);
 		modsDialog.addWindowListener(listenToMenu);
 		contentDialog.addWindowListener(listenToMenu);
@@ -358,8 +341,6 @@ public class MainWindow extends JFrame {
 		
 		mainMenu.add(helpMenu);
 		
-		availableHS = new ArrayList<JRadioButton>();
-		
 		levelDescription = new JMenuItem("Set level description");
 		optionsMenu.add(levelDescription);
 		levelDescription.addActionListener(listenToMenu);
@@ -430,27 +411,16 @@ public class MainWindow extends JFrame {
 		JButton cancelMods;
 		
 		@Override
-		public void keyTyped(KeyEvent e) {
-
-		}
-
+		public void keyTyped(KeyEvent e) {}
 		@Override
-		public void keyPressed(KeyEvent e) {
-		}
-
+		public void keyPressed(KeyEvent e) {}
 		@Override
-		public void keyReleased(KeyEvent e) {
-			
-			
-		}
-
+		public void keyReleased(KeyEvent e) {}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
 			if(e.getSource() == newMap) {
 				newLevelDialog.render();
 			}
-			
 			if(e.getSource() == openMap) {
 				if(EditorState.isSaved) {
 					if(JFileChooser.APPROVE_OPTION == selectOpenFile.showOpenDialog(null)) {
@@ -470,17 +440,14 @@ public class MainWindow extends JFrame {
 					}
 				}
 			}
-			
 			if(e.getSource() == saveMap) {
 				if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
 				if(savedMap == JFileChooser.APPROVE_OPTION) save(selectSaveFile.getSelectedFile());
 			}
-
 			if(e.getSource() == saveAsMap) {
 				if(JFileChooser.APPROVE_OPTION == selectSaveFile.showSaveDialog(null)) 
 					save(selectSaveFile.getSelectedFile());
 			}
-			
 			if(e.getSource() == clear) {
 				if(!EditorState.isSaved) {
 					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -516,32 +483,27 @@ public class MainWindow extends JFrame {
 				}else System.exit(0);
 				
 			}
-			
+
 			if(e.getSource() == sectorImgSwitch) {
 				toggleImgSector();
 				repaint();
 			}
-			
 			if(e.getSource() == sectorHeight) {
 				toggleHeightSector();
 				repaint();
 			}
-			
 			if(e.getSource() == sectorTyp) {
 				toggleTypSector();
 				repaint();
 			}
-			
 			if(e.getSource() == sectorOwner) {
 				toggleOwnSector();
 				repaint();
 			}
-			
 			if(e.getSource() == sectorBlg) {
 				toggleBlgSector();
 				repaint();
 			}
-
 			if(e.getSource() == menuParams) {
 				levelParametersDialog.render();
 			}
@@ -565,20 +527,6 @@ public class MainWindow extends JFrame {
 			}
 			if(e.getSource() == trainingEnabler) {
 				unitEnablerDialog.render(7);
-			}
-			if(e.getSource() == savePlayer) {
-				for(int i = 0; i < availableHS.size(); i++) {
-					if(availableHS.get(i).isSelected())
-						EditorState.playerSelected = i;
-				}
-				removePlayerHSDialog();
-				playerHSDialog.setVisible(false);
-				makeUnsaved();
-			}
-			
-			if(e.getSource() == cancelPlayer) {
-				removePlayerHSDialog();
-				playerHSDialog.setVisible(false);
 			}
 			
 			if(e.getSource() == modifications) {
@@ -771,109 +719,7 @@ public class MainWindow extends JFrame {
 				briefingAndDebriefingDialog.render();
 			}
 			if(e.getSource() == playerHS) {
-				playerHSDialog.setSize(300, 400);
-				playerHSDialog.setResizable(false);
-				playerHSDialog.setLocationRelativeTo(null);
-				playerHSDialog.setLayout(new GridBagLayout());
-				
-				playerHSConstraints.gridx = 0;
-				playerHSConstraints.gridy = 0;
-				playerHSLabel = new JLabel("Select Host Station you want to play with");
-				playerHSConstraints.gridwidth = 6;
-				playerHSDialog.add(playerHSLabel, playerHSConstraints);
-				playerHSConstraints.gridwidth = 1;
-				hsListPanel = new JPanel(new GridBagLayout());
-				playerHSgroup = new ButtonGroup();
-				playerHSConstraints.insets = new Insets(10,1,10,1);
-				playerGridy = 1;
-				playerHSConstraints.gridy = playerGridy;
-				if(currentMap.getHoststation(0) == null) {
-					noHSavailable = new JLabel("No Host Station available");
-					hsListPanel.add(noHSavailable, playerHSConstraints);
-				}else {
-					playerHSConstraints.insets = new Insets(5,1,5,1);
-					playerHSConstraints.anchor = GridBagConstraints.WEST;
-					hsListPanel.setBorder(BorderFactory.createTitledBorder("Available Host Stations"));
-					for(int i = 0;;i++) {
-						if(currentMap.getHoststation(i) == null) break;
-						
-						if(currentMap.getHoststation(i).getOwner() == 1) {
-							availableHS.add(new JRadioButton("Host Station "+(i+1)+": Resistance"));
-							playerHSgroup.add(availableHS.get(availableHS.size()-1));
-							hsListPanel.add(availableHS.get(availableHS.size()-1),  playerHSConstraints);
-							playerGridy++;
-							playerHSConstraints.gridy = playerGridy;
-						}
-						if(currentMap.getHoststation(i).getOwner() == 6) {
-							availableHS.add(new JRadioButton("Host Station "+(i+1)+": Ghorkov"));
-							playerHSgroup.add(availableHS.get(availableHS.size()-1));
-							hsListPanel.add(availableHS.get(availableHS.size()-1),  playerHSConstraints);
-							playerGridy++;
-							playerHSConstraints.gridy = playerGridy;
-						}
-						if(currentMap.getHoststation(i).getOwner() == 4) {
-							availableHS.add(new JRadioButton("Host Station "+(i+1)+": Taerkasten"));
-							playerHSgroup.add(availableHS.get(availableHS.size()-1));
-							hsListPanel.add(availableHS.get(availableHS.size()-1),  playerHSConstraints);
-							playerGridy++;
-							playerHSConstraints.gridy = playerGridy;
-						}
-						if(currentMap.getHoststation(i).getOwner() == 3) {
-							availableHS.add(new JRadioButton("Host Station "+(i+1)+": Mykonian"));
-							playerHSgroup.add(availableHS.get(availableHS.size()-1));
-							hsListPanel.add(availableHS.get(availableHS.size()-1),  playerHSConstraints);
-							playerGridy++;
-							playerHSConstraints.gridy = playerGridy;
-						}
-						if(currentMap.getHoststation(i).getOwner() == 2) {
-							availableHS.add(new JRadioButton("Host Station "+(i+1)+": Sulgogar"));
-							playerHSgroup.add(availableHS.get(availableHS.size()-1));
-							hsListPanel.add(availableHS.get(availableHS.size()-1),  playerHSConstraints);
-							playerGridy++;
-							playerHSConstraints.gridy = playerGridy;
-						}
-						if(currentMap.getHoststation(i).getOwner() == 5) {
-							availableHS.add(new JRadioButton("Host Station "+(i+1)+": Black Sect"));
-							playerHSgroup.add(availableHS.get(availableHS.size()-1));
-							hsListPanel.add(availableHS.get(availableHS.size()-1),  playerHSConstraints);
-							playerGridy++;
-							playerHSConstraints.gridy = playerGridy;
-						}
-						if(currentMap.getHoststation(i).getOwner() == 7) {
-							availableHS.add(new JRadioButton("Host Station "+(i+1)+": Target Host Station"));
-							playerHSgroup.add(availableHS.get(availableHS.size()-1));
-							hsListPanel.add(availableHS.get(availableHS.size()-1),  playerHSConstraints);
-							playerGridy++;
-							playerHSConstraints.gridy = playerGridy;
-						}
-						
-						
-					}
-					if(availableHS.size() <= EditorState.playerSelected) EditorState.playerSelected = availableHS.size()-1;
-					availableHS.get(EditorState.playerSelected).setSelected(true);
-				}
-				playerHSConstraints.anchor = GridBagConstraints.CENTER;
-				
-				playerHSConstraints.gridy = 1;
-				playerHSConstraints.gridwidth = 6;
-				playerHSConstraints.gridx = 1;
-				playerHSDialog.add(hsListPanel, playerHSConstraints);
-				playerHSConstraints.gridwidth = 2;
-				playerHSConstraints.gridx = 3;
-				savePlayer = new JButton("Save");
-				playerHSConstraints.gridy = 2;
-				playerHSConstraints.insets = new Insets(5,60,5,1);
-				playerHSDialog.add(savePlayer, playerHSConstraints);
-				playerHSConstraints.gridwidth = 1;
-				savePlayer.addActionListener(this);
-				playerHSConstraints.gridx = 5;
-				playerHSConstraints.insets = new Insets(5,1,5,30);
-				cancelPlayer = new JButton("Cancel");
-				playerHSDialog.add(cancelPlayer, playerHSConstraints);
-				cancelPlayer.addActionListener(this);
-				playerHSConstraints.insets = new Insets(1,1,1,1);
-				
-				playerHSDialog.setVisible(true);
+				playerHostStationDialog.render();
 			}
 			if(e.getSource() == levelDescription){
 				descriptionDialog.setSize(900, 880);
@@ -999,16 +845,7 @@ public class MainWindow extends JFrame {
 		public void menuDeselected(MenuEvent e) {}
 		@Override
 		public void menuCanceled(MenuEvent e) {}
-		void removePlayerHSDialog() {
-			if(cancelPlayer != null) playerHSDialog.remove(cancelPlayer);
-			if(savePlayer != null) playerHSDialog.remove(savePlayer);
-			if(noHSavailable != null) playerHSDialog.remove(noHSavailable);
-			if(hsListPanel != null) playerHSDialog.remove(hsListPanel);
-			availableHS.clear();
-			hsListPanel.setBorder(null);
-			if(playerHSLabel != null) playerHSDialog.remove(playerHSLabel);
-		}
-		
+
 		void removeDescDialog() {
 			if(cancelDesc != null) descriptionDialog.remove(cancelDesc);
 			if(saveDesc != null) descriptionDialog.remove(saveDesc);
@@ -1045,10 +882,7 @@ public class MainWindow extends JFrame {
 					}
 				}
 			}
-			if(e.getSource() == playerHSDialog) {
-				removePlayerHSDialog();
-				playerHSDialog.setVisible(false);
-			}
+
 			if(e.getSource() == modsDialog) {
 				removeModsDialog();
 				modsDialog.setVisible(false);
@@ -1058,9 +892,9 @@ public class MainWindow extends JFrame {
 				descriptionDialog.setVisible(false);
 			}
 			if(e.getSource() == contentDialog) {
-				if(savedContent == 0)
+				if(EditorState.gameContent == 0)
 					noneContent.setSelected(true);
-				else if(savedContent == 1)
+				else if(EditorState.gameContent == 1)
 					mdContent.setSelected(true);
 			}
 			if(e.getSource() == mapsDialog) {
@@ -1246,17 +1080,7 @@ public class MainWindow extends JFrame {
 	      if (value instanceof javax.swing.plaf.FontUIResource)
 	        UIManager.put (key, f);
 	      }
-	    } 
-	public BufferedImage resizeMap(int newW, int newH, BufferedImage img) { 
-	    Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
-	    BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-
-	    Graphics2D g2d = dimg.createGraphics();
-	    g2d.drawImage(tmp, 0, 0, null);
-	    g2d.dispose();
-	    img = dimg;
-	    return img;
-	}  
+	    }
 	public void mouseReleased() {
 		//System.out.println("Mouse released");
 	}
