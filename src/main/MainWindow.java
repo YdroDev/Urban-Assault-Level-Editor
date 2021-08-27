@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
@@ -39,11 +38,7 @@ import UAstructures.Squad;
 import UAstructures.Unit;
 import com.jtattoo.plaf.noire.NoireLookAndFeel;
 
-
-
-@SuppressWarnings("serial")
 public class MainWindow extends JFrame {
-	private JPanel window;
 	private final NewLevel newLevelDialog;
 	private final LevelParameters levelParametersDialog;
 	private final UnitEnabler unitEnablerDialog;
@@ -59,14 +54,13 @@ public class MainWindow extends JFrame {
 
 	private final SingleplayerLevelSaver singleplayerLevelSaver = new SingleplayerLevelSaver();
 
-	private MainMenuListener listenToMenu;
 	private static JFrame loadingScreen;
 	private final JScrollPane mapscroller;
 	private final JMenuItem newMap, openMap, saveMap, saveAsMap, clear, exit;
 	private int savedMap;
 	private FileNameExtensionFilter ldfFilter;
-	private JFileChooser selectSaveFile;
-	private JFileChooser selectOpenFile;
+	private final JFileChooser selectSaveFile;
+	private final JFileChooser selectOpenFile;
 
 	private final JMenuItem showManager;
 	private final JMenuItem sectorImgSwitch;
@@ -95,7 +89,6 @@ public class MainWindow extends JFrame {
 	private final JMenuItem aboutInfo;
 	
 	private final GameMap currentMap;
-	@SuppressWarnings("rawtypes")
 	private final LevelManager manager;
 	static Font font;
 	static Font mainFont;
@@ -119,16 +112,12 @@ public class MainWindow extends JFrame {
 			e.printStackTrace();
 		}
 
-		SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow();
-            }
-        });
+		SwingUtilities.invokeLater(MainWindow::new);
 	}
 	
 	MainWindow(){
 		BorderLayout layout = new BorderLayout();
-		window = new JPanel(layout);
+		JPanel window = new JPanel(layout);
 		newLevelDialog = new NewLevel(this);
 		levelParametersDialog = new LevelParameters(this);
 		unitEnablerDialog = new UnitEnabler(this);
@@ -154,7 +143,7 @@ public class MainWindow extends JFrame {
 			System.out.println("Couldn't load main icon for the application");
 		}
 
-		listenToMenu = new MainMenuListener();
+		MainMenuListener listenToMenu = new MainMenuListener();
 
 		imageVisible = false;
 		heightVisible = false;
@@ -183,7 +172,11 @@ public class MainWindow extends JFrame {
 		saveMap = new JMenuItem("Save");
 		fileMenu.add(saveMap);
 		saveMap.addActionListener(listenToMenu);
-		
+
+		selectSaveFile = new JFileChooser();
+		selectSaveFile.setFileFilter(ldfFilter);
+		selectSaveFile.addActionListener(listenToMenu);
+
 		selectOpenFile = new JFileChooser();
 		selectOpenFile.setFileFilter(ldfFilter);
 		selectOpenFile.addActionListener(listenToMenu);
