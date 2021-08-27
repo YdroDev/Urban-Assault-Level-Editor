@@ -14,7 +14,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +35,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -65,6 +63,8 @@ public class MainWindow extends JFrame {
 	private LevelModifications levelModificationsDialog;
 	private TypMapGenerator typMapGenerator;
 	private GameContent gameContentDialog;
+	private CampaignMaps campaignMapsDialog;
+	private KeyboardShortcuts keyboardShortcutsDialog;
 
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
@@ -100,19 +100,10 @@ public class MainWindow extends JFrame {
 	private JMenuItem randomTypMap;
 	private JMenuItem gameContent;
 
-	private JDialog mapsDialog;
-	private JPanel mapsPanel;
-	private JButton mapsClose;
-	private JTabbedPane mapsTabs;
-	private JPanel originalMap, MDghorMap, MDtaerMap;
-	private JLabel originalLabel, MDghorLabel, MDtaerLabel;
-	private BufferedImage originalImg, MDghorImg, MDtaerImg;
-	private JDialog shortcutsDialog;
-	private JButton shortcutsClose;
 	private JDialog aboutDialog;
 	private JButton aboutClose;
 
-	private GridBagConstraints gridConstraints, mapsConstraints, shortcutsConstraints, aboutConstraints;
+	private GridBagConstraints gridConstraints, aboutConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
@@ -177,6 +168,8 @@ public class MainWindow extends JFrame {
 		levelModificationsDialog = new LevelModifications(this);
 		typMapGenerator = new TypMapGenerator();
 		gameContentDialog = new GameContent(this);
+		campaignMapsDialog = new CampaignMaps(this);
+		keyboardShortcutsDialog = new KeyboardShortcuts(this);
 
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
@@ -190,19 +183,7 @@ public class MainWindow extends JFrame {
 
 		listenToMenu = new MainMenuListener();
 		gridConstraints = new GridBagConstraints();
-		mapsConstraints = new GridBagConstraints();
-		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
-		mapsDialog = new JDialog(this, "Campaign maps");
-		mapsPanel = new JPanel(new GridBagLayout());
-		mapsTabs = new JTabbedPane();
-		originalMap = new JPanel();
-		MDghorMap = new JPanel();
-		MDtaerMap = new JPanel();
-		originalLabel = new JLabel();
-		MDghorLabel = new JLabel();
-		MDtaerLabel = new JLabel();
-		shortcutsDialog = new JDialog(this, "Available shortcuts", Dialog.ModalityType.DOCUMENT_MODAL);
 		aboutDialog = new JDialog(this, "Urban Assault Level Editor", Dialog.ModalityType.DOCUMENT_MODAL);
 
 		imageVisible = false;
@@ -212,7 +193,6 @@ public class MainWindow extends JFrame {
 		blgVisible = false;
 
 		mainMenu = new JMenuBar();
-		mapsDialog.addWindowListener(listenToMenu);
 		this.addWindowListener(listenToMenu);
 		
 		fileMenu = new JMenu("File");
@@ -303,15 +283,10 @@ public class MainWindow extends JFrame {
 		campaignInfo = new JMenuItem("Campaign maps");
 		helpMenu.add(campaignInfo);
 		campaignInfo.addActionListener(listenToMenu);
-		mapsClose = new JButton("Close");
-		mapsClose.addActionListener(listenToMenu);
 		
 		shortcutsInfo = new JMenuItem("Keyboard shortcuts");
 		helpMenu.add(shortcutsInfo);
 		shortcutsInfo.addActionListener(listenToMenu);
-		shortcutsClose = new JButton("Close");
-		shortcutsClose.addActionListener(listenToMenu);
-		initShortcuts();
 		
 		aboutInfo = new JMenuItem("About");
 		helpMenu.add(aboutInfo);
@@ -517,48 +492,14 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == levelDescription){
 				levelDescriptionDialog.render();
 			}
+			if(e.getSource() == campaignInfo) {
+				campaignMapsDialog.render();
+			}
 			if(e.getSource() == showManager) {
 				manager.setVisible(true);
 			}
-			if(e.getSource() == campaignInfo) {
-				mapsDialog.setSize(670, 580);
-				mapsDialog.setLocationRelativeTo(null);
-				mapsDialog.setResizable(false);
-				
-				try {
-					originalImg = ImageIO.read(this.getClass().getResource("/img/campaignMaps/originalMap.jpg"));
-					originalLabel.setIcon(new ImageIcon(originalImg));
-					MDghorImg = ImageIO.read(this.getClass().getResource("/img/campaignMaps/MDGhorMap.jpg"));
-					MDghorLabel.setIcon(new ImageIcon(MDghorImg));
-					MDtaerImg = ImageIO.read(this.getClass().getResource("/img/campaignMaps/MDTaerMap.jpg"));
-					MDtaerLabel.setIcon(new ImageIcon(MDtaerImg));
-				}catch(IOException ex) {
-					System.out.println("campaign map could not load");
-				}
-				originalMap.add(originalLabel);
-				MDghorMap.add(MDghorLabel);
-				MDtaerMap.add(MDtaerLabel);
-				mapsTabs.addTab("Original levels", originalMap);
-				mapsTabs.addTab("Metropolis Dawn levels(Ghorkov)", MDghorMap);
-				mapsTabs.addTab("Metropolis Dawn levels(Taerkasten)", MDtaerMap);
-				mapsConstraints.gridx = 0;
-				mapsConstraints.gridy = 0;
-				mapsPanel.add(mapsTabs, mapsConstraints);
-				mapsConstraints.gridy = 1;
-				mapsPanel.add(mapsClose, mapsConstraints);
-				
-				mapsDialog.add(mapsPanel);
-				mapsDialog.setVisible(true);
-			}
-			if(e.getSource() == mapsClose) {
-				removeMapsDialog();
-				mapsDialog.setVisible(false);
-			}
 			if(e.getSource() == shortcutsInfo) {
-				shortcutsDialog.setVisible(true);
-			}
-			if(e.getSource() == shortcutsClose) {
-				shortcutsDialog.setVisible(false);
+				keyboardShortcutsDialog.render();
 			}
 			if(e.getSource() == aboutInfo) {
 				aboutDialog.setVisible(true);
@@ -573,11 +514,6 @@ public class MainWindow extends JFrame {
 		public void menuDeselected(MenuEvent e) {}
 		@Override
 		public void menuCanceled(MenuEvent e) {}
-
-		void removeMapsDialog() {
-			if(mapsClose != null) mapsDialog.remove(mapsClose);
-		}
-		
 		@Override
 		public void windowOpened(WindowEvent e) {}
 		@Override
@@ -591,9 +527,6 @@ public class MainWindow extends JFrame {
 						EditorState.isSaved = true;
 					}
 				}
-			}
-			if(e.getSource() == mapsDialog) {
-				removeMapsDialog();
 			}
 		}
 		@Override
@@ -616,52 +549,6 @@ public class MainWindow extends JFrame {
 		if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
 		if(savedMap == JFileChooser.APPROVE_OPTION) save(selectSaveFile.getSelectedFile());
 	}
-
-	public void initShortcuts() {
-		shortcutsDialog.setSize(450,490);
-		shortcutsDialog.setLocationRelativeTo(null);
-		shortcutsDialog.setResizable(false);
-		shortcutsDialog.setLayout(new GridBagLayout());
-		shortcutsConstraints.gridx = 0;
-		shortcutsConstraints.gridy = 0;
-		shortcutsConstraints.insets = new Insets(5,1,5,1);
-		shortcutsConstraints.anchor = GridBagConstraints.WEST;
-		
-		shortcutsDialog.add(new JLabel("'1' - set selected sector owner to resistance"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 1;
-		shortcutsDialog.add(new JLabel("'2' - set selected sector owner to sulgogar"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 2;
-		shortcutsDialog.add(new JLabel("'3' - set selected sector owner to mykonian"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 3;
-		shortcutsDialog.add(new JLabel("'4' - set selected sector owner to taerkasten"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 4;
-		shortcutsDialog.add(new JLabel("'5' - set selected sector owner to black sect"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 5;
-		shortcutsDialog.add(new JLabel("'6' - set selected sector owner to ghorkov"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 6;
-		shortcutsDialog.add(new JLabel("'7' - set selected sector owner to neutral(for buildings)"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 7;
-		shortcutsDialog.add(new JLabel("'0' - set selected sector owner to neutral"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 8;
-		shortcutsDialog.add(new JLabel("'+' - increase selected sector height by 1"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 9;
-		shortcutsDialog.add(new JLabel("'-' - decrease selected sector height by 1"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 10;
-		shortcutsDialog.add(new JLabel("'.' - change selected sector appearance(typ_map) to next one"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 11;
-		shortcutsDialog.add(new JLabel("',' - change selected sector appearance(typ_map) to previous one"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 12;
-		shortcutsDialog.add(new JLabel("'H' - change selected sector/sectors height"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 13;
-		shortcutsDialog.add(new JLabel("'T' - change selected sector appearance(typ_map)"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 14;
-		shortcutsDialog.add(new JLabel("'Del' - clear selected sector"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 15;
-		shortcutsDialog.add(new JLabel("'Ctrl + S' - save current level"), shortcutsConstraints);
-		shortcutsConstraints.gridy = 16;
-		shortcutsConstraints.anchor = GridBagConstraints.CENTER;
-		shortcutsDialog.add(shortcutsClose, shortcutsConstraints);
-	}
 	public void initAbout() { 
 		aboutDialog.setSize(400,260);
 		aboutDialog.setLocationRelativeTo(null);
@@ -673,8 +560,7 @@ public class MainWindow extends JFrame {
 		JLabel header = new JLabel("Urban Assault Level Editor");
 		header.setFont(header.getFont().deriveFont (22f));
 		aboutDialog.add(header, aboutConstraints);
-		
-		shortcutsConstraints.anchor = GridBagConstraints.WEST;
+
 		aboutConstraints.gridx = 0;
 		aboutConstraints.gridwidth = 1;
 		aboutConstraints.insets = new Insets(30,1,1,1);
@@ -688,7 +574,6 @@ public class MainWindow extends JFrame {
 		aboutConstraints.gridy = 3;
 		aboutConstraints.gridwidth = 3;
 		aboutDialog.add(new JLabel("Compiled with: JRE 1.8.0_271 "), aboutConstraints);
-		shortcutsConstraints.anchor = GridBagConstraints.CENTER;
 		aboutConstraints.gridy = 4;
 		aboutConstraints.gridwidth = 5;
 		aboutConstraints.insets = new Insets(20,1,1,1);
