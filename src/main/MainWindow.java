@@ -21,8 +21,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -120,9 +118,7 @@ public class MainWindow extends JFrame {
 	private JButton cancelContent;
 	private JRadioButton noneContent;
 	private JRadioButton mdContent;
-	private int savedContent;
 
-	private JDialog briefingDialog;
 	private JDialog playerHSDialog;
 	private JDialog descriptionDialog;
 	private JDialog modsDialog;
@@ -138,51 +134,17 @@ public class MainWindow extends JFrame {
 	private JButton shortcutsClose;
 	private JDialog aboutDialog;
 	private JButton aboutClose;
-	private Border MBborder, MDborder;
-	private JPanel MBpanel, MDpanel;
-	private JTextField MBsizeXField;
-	private JTextField MBsizeYField;
-	private JTextField MDsizeXField;
-	private JTextField MDsizeYField;
-	private int MBsizeX;
-	private int MBsizeY;
-	private int MDsizeX;
-	private int MDsizeY;
-	private JLabel MBlabelX;
-	private JLabel MBlabelY;
-	private JLabel MDlabelX;
-	private JLabel MDlabelY;
-	
-	private GridBagConstraints gridConstraints, playerHSConstraints, descConstraints, modsConstraints, briefingConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
+
+	private GridBagConstraints gridConstraints, playerHSConstraints, descConstraints, modsConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
 	private boolean ownVisible;
 	private boolean blgVisible;
 	private BorderLayout layout;
-	private BufferedImage[] mbMap; 
-	private BufferedImage[] mbMapXp;
-	private BufferedImage[] dbMap;
-	private BufferedImage[] dbMapXp;
-	private JComboBox<String> mbList;
-	private JComboBox<String> dbList;
-	private String[] mbMaps;
-	private String[] dbMaps;
-	private String[] mbMapsXp;
-	private String[] dbMapsXp;
-	private String[] musics;
-	private JLabel[] mbMapframe;
-	private JLabel[] dbMapframe;
-	private JLabel[] mbMapframeXp;
-	private JLabel[] dbMapframeXp;
-	private JButton saveBriefing;
-	private JButton cancelBriefing;
+
 	private JButton saveDesc;
 	private JButton cancelDesc;
-	private int selectedMB;
-	private int selectedDB;
-	private int savedMB;
-	private int savedDB;
 
 	private JMenuItem campaignInfo;
 	private JMenuItem shortcutsInfo;
@@ -251,13 +213,11 @@ public class MainWindow extends JFrame {
 		gridConstraints = new GridBagConstraints();
 		playerHSConstraints = new GridBagConstraints();
 		modsConstraints = new GridBagConstraints();
-		briefingConstraints = new GridBagConstraints();
 		mapsConstraints = new GridBagConstraints();
 		descConstraints = new GridBagConstraints();
 		contentConstraints = new GridBagConstraints();
 		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
-		briefingDialog = new JDialog(this, "Set briefing/debriefing map", Dialog.ModalityType.DOCUMENT_MODAL);
 		playerHSDialog = new JDialog(this, "Select Host Station for player", Dialog.ModalityType.DOCUMENT_MODAL);
 		descriptionDialog = new JDialog(this, "Set level description", Dialog.ModalityType.DOCUMENT_MODAL);
 		modsDialog = new JDialog(this, "Prototype Modifications", Dialog.ModalityType.DOCUMENT_MODAL);
@@ -279,169 +239,8 @@ public class MainWindow extends JFrame {
 		typVisible = false;
 		ownVisible = false;
 		blgVisible = false;
-		MBsizeX = 480;
-		MBsizeY = 480;
-		MDsizeX = 480;
-		MDsizeY = 480;
-		mbMaps = new String[74];
-		mbMapsXp = new String[31];
-		dbMaps = new String[114];
-		dbMapsXp = new String[71];
-		mbMap = new BufferedImage[74];
-		mbMapXp = new BufferedImage[31];
-		dbMap = new BufferedImage[114];
-		dbMapXp = new BufferedImage[71];
-		mbMapframe = new JLabel[74];
-		mbMapframeXp = new JLabel[31];
-		dbMapframe = new JLabel[114];
-		dbMapframeXp = new JLabel[71];
-		selectedMB = 0;
-		selectedDB = 0;
-		savedMB = 0;
-		savedDB = 0;
-		
-
-		for(int i = 0, j= 0; i < 74; i++, j++) {
-			if(j == 0) {
-				mbMaps[i] = "mb";
-			}
-			if(j > 0 && j < 9) {
-				mbMaps[i] = "mb_0" + j;
-			}
-			if(j == 9) j = 10;
-			if(j > 9 && j < 24) {
-				mbMaps[i] = "mb_" + j;
-			}
-			if(j == 24) j = 25;
-			if(j > 24 && j < 27) {
-				mbMaps[i] = "mb_" + j;
-			}
-			if(j == 27) j = 28;
-			if(j > 27 && j < 49) {
-				mbMaps[i] = "mb_" + j;
-			}
-			if(j == 49)j = 50;
-			if(j > 49 && j < 59) {
-				mbMaps[i] = "mb_" + j;
-			}
-			if(j == 59) j = 60;
-			if(j > 59 && j < 76) {
-				mbMaps[i] = "mb_" + j;
-			}
-			if(j == 76) j = 77;
-			if(j > 76) {
-				mbMaps[i] = "mb_" + j;
-			}
-		}
-
-		for(int i = 0, j = 1; i < 114; i++, j++) {
-			if(j < 6) {
-				dbMaps[i] = "db_0" + j;
-			}
-			if(j == 6) j = 10;
-			if(j > 9 && j < 13) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 13) j = 15;
-			if(j == 15) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 16) j = 20;
-			if(j > 19 && j < 24) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 24) j = 25;
-			if(j > 24 && j < 27) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 27) j = 30;
-			if(j > 29 && j < 35) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 35) j = 40;
-			if(j > 39 && j < 45) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 45) j = 50;
-			if(j > 49 && j < 55) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 55) j = 60;
-			if(j > 59 && j < 65) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 65) j = 66;
-			if(j == 66) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 67) j = 70;
-			if(j > 69 && j < 76) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 76) j = 80;
-			if(j > 79 && j < 97) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 97) j = 100;
-			if(j > 99 && j < 136) {
-				dbMaps[i] = "db_" + j;
-			}
-			if(j == 136) j = 140;
-			if(j > 139) {
-				dbMaps[i] = "db_" + j;
-			}
-		}
-		
-		for(int i = 0, j = 0; i < 31; i++, j++) {
-			if(j == 0) j = 6;
-			if(j > 5 && j < 9)
-				mbMapsXp[i] = "mb_0"+j;
-			if(j == 9) j = 13;
-			if(j > 12 && j < 15)
-				mbMapsXp[i] = "mb_"+j;
-			if(j == 15) j = 16;
-			if(j > 15 && j < 20)
-				mbMapsXp[i] = "mb_"+j;
-			if(j == 20) j = 28;
-			if(j > 27 && j < 30)
-				mbMapsXp[i] = "mb_"+j;
-			if(j == 30) j = 35;
-			if(j > 34 && j < 40)
-				mbMapsXp[i] = "mb_"+j;
-			if(j == 40) j = 45;
-			if(j > 44 && j < 49)
-				mbMapsXp[i] = "mb_"+j;
-			if(j == 49) j = 55;
-			if(j > 54 && j < 59)
-				mbMapsXp[i] = "mb_"+j;
-			if(j == 59) j = 65;
-			if(j == 65) 
-				mbMapsXp[i] = "mb_"+j;
-			if(j == 66) j = 67;
-			if(j > 66 && j < 70)
-				mbMapsXp[i] = "mb_"+j;
-			if(j == 70) j = 77;
-			if(j > 76)
-				mbMapsXp[i] = "mb_"+j;
-		}
-		
-		for(int i = 0, j = 0; i < 71; i++, j++) {
-			if(j == 0) j = 80;
-			if(j > 79 && j < 97)
-				dbMapsXp[i] = "db_"+j;
-			if(j == 97) j = 100;
-			if(j > 99 && j < 121)
-				dbMapsXp[i] = "db_"+j;
-			if(j == 121) j = 122;
-			if(j > 121 && j < 136)
-				dbMapsXp[i] = "db_"+j;
-			if(j == 136) j = 140;
-			if(j > 139)
-				dbMapsXp[i] = "db_"+j;
-		}
 
 		mainMenu = new JMenuBar();
-		briefingDialog.addWindowListener(listenToMenu);
 		playerHSDialog.addWindowListener(listenToMenu);
 		descriptionDialog.addWindowListener(listenToMenu);
 		modsDialog.addWindowListener(listenToMenu);
@@ -844,7 +643,7 @@ public class MainWindow extends JFrame {
 							fail = 1;
 							if(EditorState.set == 1) {
 								while(fail == 1){
-									rand = (int)(Math.random() * ((255 - 0) + 1));
+									rand = (int)(Math.random() * (255 + 1));
 									fail = 0;
 									if(rand > 53 && rand < 59) fail = 1;
 									if(rand > 59 && rand < 66) fail = 1;
@@ -861,7 +660,7 @@ public class MainWindow extends JFrame {
 								
 							}else if(EditorState.set == 2) {
 								while(fail == 1){
-									rand = (int)(Math.random() * ((255 - 0) + 1));
+									rand = (int)(Math.random() * (255 + 1));
 									fail = 0;
 									if(rand > 24 && rand < 27) fail = 1;
 									if(rand > 104 && rand < 110) fail = 1;
@@ -876,7 +675,7 @@ public class MainWindow extends JFrame {
 								}
 							}else if(EditorState.set == 3) {
 								while(fail == 1){
-									rand = (int)(Math.random() * ((255 - 0) + 1));
+									rand = (int)(Math.random() * (255 + 1));
 									fail = 0;
 									if(rand > 49 && rand < 59) fail = 1;
 									if(rand > 59 && rand < 66) fail = 1;
@@ -892,7 +691,7 @@ public class MainWindow extends JFrame {
 								}
 							}else if(EditorState.set == 4) {
 								while(fail == 1){
-									rand = (int)(Math.random() * ((255 - 0) + 1));
+									rand = (int)(Math.random() * (255 + 1));
 									fail = 0;
 									if(rand > 49 && rand < 59) fail = 1;
 									if(rand > 60 && rand < 66) fail = 1;
@@ -908,7 +707,7 @@ public class MainWindow extends JFrame {
 								}
 							}else if(EditorState.set == 5) {
 								while(fail == 1){
-									rand = (int)(Math.random() * ((255 - 0) + 1));
+									rand = (int)(Math.random() * (255 + 1));
 									fail = 0;
 									if(rand > 95 && rand < 97) fail = 1;
 									if(rand > 116 && rand < 118) fail = 1;
@@ -922,7 +721,7 @@ public class MainWindow extends JFrame {
 								}
 							}else if(EditorState.set == 6) {
 								while(fail == 1){
-									rand = (int)(Math.random() * ((255 - 0) + 1));
+									rand = (int)(Math.random() * (255 + 1));
 									fail = 0;
 									if(rand > 49 && rand < 59) fail = 1;
 									if(rand > 59 && rand < 66) fail = 1;
@@ -964,16 +763,13 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == resetTaerMods) {
 				modsData.setText("include script:startupT.scr");
 			}
-			
 			if(e.getSource() == cancelMods) {
 				removeModsDialog();
 				modsDialog.setVisible(false);
 			}
-			
 			if(e.getSource() == briefingMaps) {
 				briefingAndDebriefingDialog.render();
 			}
-			
 			if(e.getSource() == playerHS) {
 				playerHSDialog.setSize(300, 400);
 				playerHSDialog.setResizable(false);
@@ -1079,40 +875,6 @@ public class MainWindow extends JFrame {
 				
 				playerHSDialog.setVisible(true);
 			}
-			
-			if(e.getSource() == mbList) {
-				selectedMB = mbList.getSelectedIndex();
-				removeBriefingMapDialog();
-				initBriefingMaps();
-			}
-			
-			if(e.getSource() == dbList) {
-				selectedDB = dbList.getSelectedIndex();
-				removeBriefingMapDialog();
-				initBriefingMaps();
-			}
-			
-			if(e.getSource() == saveBriefing) {
-				try {
-					MBsizeX = Integer.parseInt(MBsizeXField.getText());
-					MBsizeY = Integer.parseInt(MBsizeYField.getText());
-					MDsizeX = Integer.parseInt(MDsizeXField.getText());
-					MDsizeY = Integer.parseInt(MDsizeYField.getText());
-					removeBriefingMapDialog();
-					savedMB = selectedMB;
-					savedDB = selectedDB;
-					briefingDialog.setVisible(false);
-					makeUnsaved();
-				}catch(NumberFormatException ex) {
-					JOptionPane.showMessageDialog(briefingDialog,"Entered value is not valid", "Wrong value", JOptionPane.ERROR_MESSAGE);	
-				}
-			}
-			if(e.getSource() == cancelBriefing) {
-				removeBriefingMapDialog();
-				selectedMB = savedMB;
-				selectedDB = savedDB;
-				briefingDialog.setVisible(false);
-			}
 			if(e.getSource() == levelDescription){
 				descriptionDialog.setSize(900, 880);
 				descriptionDialog.setLocationRelativeTo(null);
@@ -1206,17 +968,14 @@ public class MainWindow extends JFrame {
 			}
 			if(e.getSource() == saveContent) {
 				if(noneContent.isSelected()) {
-					savedContent = 0;
+					EditorState.gameContent = 0;
 					UAdata.addOriginalData();
 				}
 				else if(mdContent.isSelected()) {
-					savedContent = 1;
+					EditorState.gameContent = 1;
 					UAdata.addMetropolisDawnData();
 				}
-				savedMB = 0;
-				selectedMB = 0;
-				savedDB = 0;
-				selectedDB = 0;
+				briefingAndDebriefingDialog.reset();
 				currentMap.removeAddUnits();
 				currentMap.initAddUnits();
 				currentMap.removeSpecialBuildings();
@@ -1227,9 +986,9 @@ public class MainWindow extends JFrame {
 				makeUnsaved();
 			}
 			if(e.getSource() == cancelContent) {
-				if(savedContent == 0)
+				if(EditorState.gameContent == 0)
 					noneContent.setSelected(true);
-				else if(savedContent == 1)
+				else if(EditorState.gameContent == 1)
 					mdContent.setSelected(true);
 				contentDialog.setVisible(false);
 			}
@@ -1277,12 +1036,12 @@ public class MainWindow extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			if(e.getSource() == MainWindow.this) {
-				if(saved == false) {
+				if(!EditorState.isSaved) {
 					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						savedMap = selectSaveFile.showSaveDialog(null);
 						if(JFileChooser.APPROVE_OPTION == savedMap) 
-							saveLevel(selectSaveFile.getSelectedFile());
-						saved = true;
+							save(selectSaveFile.getSelectedFile());
+						EditorState.isSaved = true;
 					}
 				}
 			}
@@ -1326,7 +1085,7 @@ public class MainWindow extends JFrame {
 	}
 	public void savePrompt() {
 		if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
-		if(savedMap == JFileChooser.APPROVE_OPTION) saveLevel(selectSaveFile.getSelectedFile());
+		if(savedMap == JFileChooser.APPROVE_OPTION) save(selectSaveFile.getSelectedFile());
 	}
 
 	public void initShortcuts() {
@@ -1505,45 +1264,32 @@ public class MainWindow extends JFrame {
 	public boolean IsImgEnabled() {
 		return imageVisible;
 	}
-	
 	public boolean IsTypEnabled() {
 		return typVisible;
 	}
-	
 	public boolean IsHeightEnabled() {
 		return heightVisible;
 	}
-	
 	public boolean IsOwnEnabled() {
 		return ownVisible;
 	}
-	
 	public boolean IsBlgEnabled() {
 		return blgVisible;
 	}
-	
 	public void toggleImgSector() {
 		imageVisible = !imageVisible;
 	}
-	
 	public void toggleTypSector() {
 		typVisible = !typVisible;
 	}
-	
 	public void toggleOwnSector() {
 		ownVisible = !ownVisible;
 	}
-	
 	public void toggleHeightSector() {
 		heightVisible = !heightVisible;
 	}
-	
 	public void toggleBlgSector() {
 		blgVisible = !blgVisible;
-	}
-	
-	public int getContent() {
-		return savedContent;
 	}
 	
 	public void showManager(int i) {
@@ -1585,7 +1331,7 @@ public class MainWindow extends JFrame {
 		makeUnsaved();
 	}
 
-	public void save(File f) {
+	public void saveLevel(File f) {
 		//TODO implement save
 	}
 	static void initLoadingScreen() {

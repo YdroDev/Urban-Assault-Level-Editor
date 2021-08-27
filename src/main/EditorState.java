@@ -13,6 +13,7 @@ public class EditorState {
 
     public static boolean isSaved;
     public static int playerSelected;
+    public static int gameContent; // 0 is original, 1 is Metropolis Dawn
 
     public static String description;
     public static ArrayList<BeamGate> beamGates = new ArrayList<>();
@@ -64,6 +65,7 @@ public class EditorState {
     public static void resetState() {
         isSaved = true;
         playerSelected = 0;
+        gameContent = 0;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         description = "------ Level name: \\n------ Created on: "+dtf.format(now)+" \\n------ Designed By: ";

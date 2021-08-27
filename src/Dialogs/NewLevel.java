@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class NewLevel implements WindowListener, ActionListener {
     private final MainWindow window;
@@ -46,7 +44,7 @@ public class NewLevel implements WindowListener, ActionListener {
         if(!EditorState.isSaved) {
             if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
-                if(savedMap == JFileChooser.APPROVE_OPTION) this.window.save(selectSaveFile.getSelectedFile());
+                if(savedMap == JFileChooser.APPROVE_OPTION) this.window.saveLevel(selectSaveFile.getSelectedFile());
             }
         }
         dialog.setSize(400,250);
