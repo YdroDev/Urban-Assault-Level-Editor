@@ -33,7 +33,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 
-@SuppressWarnings("serial")
 public class GameMap extends JComponent{
 	
 	private MainWindow mainwindow;
@@ -272,7 +271,7 @@ public class GameMap extends JComponent{
 
 		try {
 			errorimg = ImageIO.read(this.getClass().getResourceAsStream("/img/blg_map/error.png"));
-			errorimg = resize(size,size, errorimg);
+			errorimg = resize(EditorState.sectorSize,EditorState.sectorSize, errorimg);
 		}catch(IOException ex) {
 			System.out.println("Couldn't load special building image:");
 			System.out.println(ex);

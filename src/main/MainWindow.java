@@ -32,6 +32,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Dialogs.*;
 
+import LevelIO.SingleplayerLevelOpener;
 import LevelIO.SingleplayerLevelSaver;
 import UAstructures.Hoststation;
 import UAstructures.Squad;
@@ -53,6 +54,7 @@ public class MainWindow extends JFrame {
 	private final About aboutDialog;
 
 	private final SingleplayerLevelSaver singleplayerLevelSaver = new SingleplayerLevelSaver();
+	private final SingleplayerLevelOpener singleplayerLevelOpener = new SingleplayerLevelOpener();
 
 	private static JFrame loadingScreen;
 	private final JScrollPane mapscroller;
@@ -320,7 +322,7 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == openMap) {
 				if(EditorState.isSaved) {
 					if(JFileChooser.APPROVE_OPTION == selectOpenFile.showOpenDialog(null)) {
-						open(selectOpenFile.getSelectedFile());
+						openLevel(selectOpenFile.getSelectedFile());
 						savedMap = JFileChooser.APPROVE_OPTION;
 						selectSaveFile.setSelectedFile(selectOpenFile.getSelectedFile());
 						EditorState.isSaved = true;
@@ -328,7 +330,7 @@ public class MainWindow extends JFrame {
 				}else {
 					if (JOptionPane.showConfirmDialog(null, "Current level changes are not saved. Are you sure you want to discard them?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						if (JFileChooser.APPROVE_OPTION == selectOpenFile.showOpenDialog(null)) {
-							open(selectOpenFile.getSelectedFile());
+							openLevel(selectOpenFile.getSelectedFile());
 							savedMap = JFileChooser.APPROVE_OPTION;
 							selectSaveFile.setSelectedFile(selectOpenFile.getSelectedFile());
 							EditorState.isSaved = true;
@@ -516,12 +518,11 @@ public class MainWindow extends JFrame {
 		else this.manager.noUnit();
 	}
 	public void updateManagerSector(int sectorBorder,int sector, int hGrid, int vGrid) {
-		if(sectorBorder >= 0 ) this.manager.showSectorOptions(this.savedSet, sectorBorder, sector, hGrid, vGrid);
+		if(sectorBorder >= 0 ) this.manager.showSectorOptions(EditorState.set, sectorBorder, sector, hGrid, vGrid);
 		else this.manager.noSector();
 	}
 	public void updateManagerSector(ArrayList<Integer> sectorBorder, int hGrid, int vGrid) {
-		if(sectorBorder.size() >= 0 ) this.manager.showSectorOptions(this.savedSet, sectorBorder, hGrid, vGrid);
-//		else this.manager.noSector();
+		this.manager.showSectorOptions(EditorState.set, sectorBorder, hGrid, vGrid);
 	}
 	
 	public void refreshHoststationManager(int index) {
@@ -540,7 +541,7 @@ public class MainWindow extends JFrame {
 	public void updateEditor() {
 		repaint();
 		cleanManager();
-		updateManagerSector(currentMap.getSelectedBorderSector(), currentMap.getSelectedSector(), currentMap.getHorizontalGrid(), currentMap.getVerticalGrid());
+		updateManagerSector(currentMap.getSelectedBorderSector(), currentMap.getSelectedSector(), EditorState.horizontalSectors, EditorState.verticalSectors);
 		makeUnsaved();
 	}
 	public void updateGameContent() {
@@ -555,6 +556,9 @@ public class MainWindow extends JFrame {
 	public void saveLevel(File f) {
 		singleplayerLevelSaver.save(f);
 		this.setTitle(f+" ("+EditorState.horizontalSectors+"x"+EditorState.verticalSectors+") - Urban Assault Level Editor");
+	}
+	public void openLevel(File f) {
+		singleplayerLevelOpener.open(f);
 	}
 	static void initLoadingScreen() {
 		loadingScreen = new JFrame();
