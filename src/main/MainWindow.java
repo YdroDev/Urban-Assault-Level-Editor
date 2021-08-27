@@ -66,6 +66,7 @@ public class MainWindow extends JFrame {
 	private BriefingAndDebriefing briefingAndDebriefingDialog;
 	private PlayerHostStation playerHostStationDialog;
 	private LevelDescription levelDescriptionDialog;
+	private LevelModifications levelModificationsDialog;
 
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
@@ -106,7 +107,6 @@ public class MainWindow extends JFrame {
 	private JRadioButton noneContent;
 	private JRadioButton mdContent;
 
-	private JDialog modsDialog;
 	private JDialog contentDialog;
 	private JDialog mapsDialog;
 	private JPanel mapsPanel;
@@ -120,7 +120,7 @@ public class MainWindow extends JFrame {
 	private JDialog aboutDialog;
 	private JButton aboutClose;
 
-	private GridBagConstraints gridConstraints, modsConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
+	private GridBagConstraints gridConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
@@ -182,6 +182,7 @@ public class MainWindow extends JFrame {
 		briefingAndDebriefingDialog = new BriefingAndDebriefing(this);
 		playerHostStationDialog = new PlayerHostStation(this);
 		levelDescriptionDialog = new LevelDescription(this);
+		levelModificationsDialog = new LevelModifications(this);
 
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
@@ -195,12 +196,10 @@ public class MainWindow extends JFrame {
 
 		listenToMenu = new MainMenuListener();
 		gridConstraints = new GridBagConstraints();
-		modsConstraints = new GridBagConstraints();
 		mapsConstraints = new GridBagConstraints();
 		contentConstraints = new GridBagConstraints();
 		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
-		modsDialog = new JDialog(this, "Prototype Modifications", Dialog.ModalityType.DOCUMENT_MODAL);
 		contentDialog = new JDialog(this, "Additional game content", Dialog.ModalityType.DOCUMENT_MODAL);
 		mapsDialog = new JDialog(this, "Campaign maps");
 		mapsPanel = new JPanel(new GridBagLayout());
@@ -221,7 +220,6 @@ public class MainWindow extends JFrame {
 		blgVisible = false;
 
 		mainMenu = new JMenuBar();
-		modsDialog.addWindowListener(listenToMenu);
 		contentDialog.addWindowListener(listenToMenu);
 		mapsDialog.addWindowListener(listenToMenu);
 		this.addWindowListener(listenToMenu);
@@ -292,8 +290,6 @@ public class MainWindow extends JFrame {
 		sectorBlg = new JMenuItem("Show/hide BlgMap values");
 		viewMenu.add(sectorBlg);
 		sectorBlg.addActionListener(listenToMenu);
-		
-		
 		
 		mainMenu.add(optionsMenu);
 		
@@ -392,16 +388,6 @@ public class MainWindow extends JFrame {
 	}
 	
 	private class MainMenuListener implements WindowListener, MenuListener, ActionListener, KeyListener{
-
-		JLabel modsInfo;
-		JTextArea modsData;
-		JScrollPane modsScroller;
-		JButton saveMods;
-		JButton resetMods;
-		JButton resetGhorMods;
-		JButton resetTaerMods;
-		JButton cancelMods;
-		
 		@Override
 		public void keyTyped(KeyEvent e) {}
 		@Override
@@ -520,61 +506,8 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == trainingEnabler) {
 				unitEnablerDialog.render(7);
 			}
-			
 			if(e.getSource() == modifications) {
-				modsDialog.setSize(900, 720);
-				modsDialog.setLocationRelativeTo(null);
-				modsDialog.setResizable(false);
-				modsDialog.setLayout(new GridBagLayout());
-				
-				modsInfo = new JLabel("This section allows you to modify any vehicle, weapon or building. \nThis is for advanced users so typing incorrect data may crash the game");
-				modsConstraints.gridy = 0;
-				modsConstraints.gridx = 0;
-				modsConstraints.insets = new Insets (10,0,10,0);
-				modsConstraints.gridwidth = 6;
-				modsDialog.add(modsInfo, modsConstraints);
-				modsData = new JTextArea(30,78);
-				modsData.setText(modsString);
-				modsData.setLineWrap(true);
-				modsData.setWrapStyleWord(true);
-				modsScroller = new JScrollPane(modsData, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-				modsConstraints.gridy = 1;
-				modsDialog.add(modsScroller, modsConstraints);
-				
-				modsConstraints.anchor = GridBagConstraints.WEST;
-				modsConstraints.gridwidth = 1;
-				modsConstraints.insets = new Insets (2,0,2,0);
-				modsConstraints.gridx = 1;
-				modsConstraints.gridy = 2;
-				resetMods = new JButton("Reset for original campaign");
-				modsDialog.add(resetMods, modsConstraints);
-				resetMods.addActionListener(this);
-				
-				modsConstraints.gridy = 3;
-				resetGhorMods = new JButton("Reset for metropoils dawn(Ghorkov)");
-				modsDialog.add(resetGhorMods, modsConstraints);
-				resetGhorMods.addActionListener(this);
-				
-				modsConstraints.gridy = 4;
-				resetTaerMods = new JButton("Reset for metropoils dawn(Taerkasten)");
-				modsDialog.add(resetTaerMods, modsConstraints);
-				resetTaerMods.addActionListener(this);
-				
-				saveMods = new JButton("Save");
-				modsConstraints.gridx = 5;
-				modsConstraints.anchor = GridBagConstraints.EAST;
-				modsConstraints.gridy = 2;
-				modsDialog.add(saveMods, modsConstraints);
-				saveMods.addActionListener(this);
-				
-				modsConstraints.insets = new Insets (10,0,10,0);
-				cancelMods = new JButton("Cancel");
-				modsConstraints.gridy = 3;
-				modsDialog.add(cancelMods, modsConstraints);
-				cancelMods.addActionListener(this);
-				modsConstraints.anchor = GridBagConstraints.CENTER;
-				
-				modsDialog.setVisible(true);
+				levelModificationsDialog.render();
 			}
 			if(e.getSource() == randomTypMap) {
 				if(currentMap.getHorizontalGrid() > 0 && currentMap.getVerticalGrid() > 0) {
@@ -688,25 +621,6 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == gameContent) {
 				contentDialog.setVisible(true);
 			}
-			if(e.getSource() == saveMods) {
-				modsString = modsData.getText();
-				removeModsDialog();
-				modsDialog.setVisible(false);
-				makeUnsaved();
-			}
-			if(e.getSource() == resetMods) {
-				modsData.setText("include data:scripts/startup2.scr");
-			}
-			if(e.getSource() == resetGhorMods) {
-				modsData.setText("include script:startupG.scr");
-			}
-			if(e.getSource() == resetTaerMods) {
-				modsData.setText("include script:startupT.scr");
-			}
-			if(e.getSource() == cancelMods) {
-				removeModsDialog();
-				modsDialog.setVisible(false);
-			}
 			if(e.getSource() == briefingMaps) {
 				briefingAndDebriefingDialog.render();
 			}
@@ -716,7 +630,6 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == levelDescription){
 				levelDescriptionDialog.render();
 			}
-
 			if(e.getSource() == showManager) {
 				manager.setVisible(true);
 			}
@@ -800,17 +713,6 @@ public class MainWindow extends JFrame {
 		@Override
 		public void menuCanceled(MenuEvent e) {}
 
-		void removeModsDialog() {
-			if(cancelMods != null) modsDialog.remove(cancelMods);
-			if(resetMods != null) modsDialog.remove(resetMods);
-			if(resetGhorMods != null) modsDialog.remove(resetGhorMods);
-			if(resetTaerMods != null) modsDialog.remove(resetTaerMods);
-			if(saveMods != null) modsDialog.remove(saveMods);
-			if(modsData != null) modsDialog.remove(modsData);
-			if(modsScroller != null) modsDialog.remove(modsScroller);
-			if(modsInfo != null) modsDialog.remove(modsInfo);
-		}
-		
 		void removeMapsDialog() {
 			if(mapsClose != null) mapsDialog.remove(mapsClose);
 		}
@@ -828,10 +730,6 @@ public class MainWindow extends JFrame {
 						EditorState.isSaved = true;
 					}
 				}
-			}
-			if(e.getSource() == modsDialog) {
-				removeModsDialog();
-				modsDialog.setVisible(false);
 			}
 			if(e.getSource() == contentDialog) {
 				if(EditorState.gameContent == 0)
