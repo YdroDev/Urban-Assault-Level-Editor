@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 public class EditorState {
 
+    public static int sectorSize = 50;
+    public static int sectorIndent = 2;
+
     public static boolean isSaved;
     public static int playerSelected;
     public static int gameContent; // 0 is original, 1 is Metropolis Dawn
@@ -21,7 +24,6 @@ public class EditorState {
     public static ArrayList<TechUpgrade> techUpgrades = new ArrayList<>();
     public static ArrayList<Unit> hostStations = new ArrayList<>();
     public static ArrayList<Unit> predefinedSquads = new ArrayList<>();
-    public static int hostStationForPlayer;
 
     public static int set;
     public static String movie;
@@ -74,7 +76,6 @@ public class EditorState {
         techUpgrades.clear();
         hostStations.clear();
         predefinedSquads.clear();
-        hostStationForPlayer = 0;
 
         set = 1;
         movie = "";

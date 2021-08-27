@@ -40,8 +40,6 @@ public class GameMap extends JComponent{
 	private int horizontalGrid = 0;
 	private int verticalGrid = 0;
 	private Graphics2D drawMap;
-	private int size = 50; // SECTOR SIZE
-	private final int mapIndent = 2;
 	private int sumIndentX;
 	private int sumIndentY;
 	private int hSize = 1;
@@ -950,10 +948,6 @@ public class GameMap extends JComponent{
 	public void updateMap() {
 		mainwindow.updateManagerSector(borderSelectedSector, selectedSector,horizontalGrid, verticalGrid);
 	}
-	public int getMapSize() {
-		return (this.size + mapIndent);
-	}
-	
 	public int getLeftCorner() {
 		return this.leftCorner;
 	}
@@ -966,93 +960,13 @@ public class GameMap extends JComponent{
 	public int getDownCorner() {
 		return this.downCorner;
 	}
-	public int getMapSet() {
-		return this.mainwindow.getMapSet();
-	}
-	public int getContent() {
-		return mainwindow.getContent();
-	}
 	public int getSelectedBorderSector() {
 		return this.borderSelectedSector;
 	}
 	public int getSelectedSector() {
 		return this.selectedSector;
 	}
-	public int getHorizontalGrid() {
-		return this.horizontalGrid;
-	}
-	public int getVerticalGrid() {
-		return this.verticalGrid;
-	}
 
-	public ArrayList<StoudsonBomb> getStoudsonBombList() {
-		return bombs;
-	}
-	public int getTypMap(int index) {
-		return typ_map.get(index);
-	}
-	public int getOwnMap(int index){
-		return own_map.get(index);
-	}
-	public int getHgtMap(int index) {
-		return hgt_map.get(index);
-	}
-	public int getBlgMap(int index) {
-		return blg_map.get(index);
-	}
-	public void setTypMap(int index, int e) {
-		typ_map.set(index, e);
-	}
-	public void addTypMap(int n) {
-		typ_map.add(n);
-	}
-	public void addOwnMap(int n) {
-		own_map.add(n);
-	}
-	public void addHgtMap(int n) {
-		hgt_map.add(n);
-	}
-	public void addBlgMap(int n) {
-		blg_map.add(n);
-	}
-	public void addBeamGate(int x, int y) {
-		boolean newBG = true;
-		if(beamgates.size() > 0) {
-			for(BeamGate bg : beamgates) {
-				if(bg.getX() == x && bg.getY() == y) newBG = false;
-			}
-		}
-		if(newBG == true) beamgates.add(new BeamGate(x, y));
-	}
-	public void addHoststation(int x, int y, int own, int vehicle) {
-		hoststations.add(new Hoststation(x, y, own, vehicle));
-	}
-	public void addStoudsonBomb(int x, int y, int c) {
-		boolean newSB = true;
-		if(bombs.size() > 0) {
-			for(StoudsonBomb sb : bombs) {
-				if(sb.getX() == x && sb.getY() == y) newSB = false;
-			}
-			
-		}
-		if(c < 1) newSB = false;
-		if(newSB == true) bombs.add(new StoudsonBomb(x, y, c));
-
-	}
-	public void addSquad(int x, int y, int own, int vehicle) {
-		units.add(new Squad(x, y, own, vehicle));
-	}
-	public void addTechUpgrade(int x, int y) {
-		boolean newTU = true;
-		if(techupgrades.size() > 0) {
-			for(TechUpgrade tu : techupgrades) {
-				if(tu.getX() == x && tu.getY() == y) newTU = false;
-			}
-		}
-		if(newTU == true) techupgrades.add(new TechUpgrade(x, y));
-	}
-	
-	
 	private class EditorMouseListener implements MouseListener, MouseMotionListener, ActionListener, KeyListener{
 		// TODO EditorMouseListener begins here
 		private int diffX;

@@ -1,10 +1,7 @@
 package main;
 
 import java.awt.BorderLayout;
-import java.awt.Dialog;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
@@ -14,16 +11,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,6 +37,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Dialogs.*;
 
+import LevelIO.SingleplayerLevelSaver;
 import UAstructures.Hoststation;
 import UAstructures.Squad;
 import UAstructures.Unit;
@@ -66,6 +61,8 @@ public class MainWindow extends JFrame {
 	private KeyboardShortcuts keyboardShortcutsDialog;
 	private About aboutDialog;
 
+	private SingleplayerLevelSaver singleplayerLevelSaver = new SingleplayerLevelSaver();
+
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
 	private int wHeight = 720;
@@ -81,8 +78,7 @@ public class MainWindow extends JFrame {
 	private FileNameExtensionFilter ldfFilter;
 	private JFileChooser selectSaveFile;
 	private JFileChooser selectOpenFile;
-	private PrintWriter mapSaver;
-	private BufferedReader mapOpener;
+
 	private JMenuItem showManager;
 	private JMenuItem sectorImgSwitch;
 	private JMenuItem sectorHeight;
@@ -597,7 +593,8 @@ public class MainWindow extends JFrame {
 		cleanManager();
 	}
 	public void saveLevel(File f) {
-		//TODO implement save
+		singleplayerLevelSaver.save(f);
+		this.setTitle(f+" ("+EditorState.horizontalSectors+"x"+EditorState.verticalSectors+") - Urban Assault Level Editor");
 	}
 	static void initLoadingScreen() {
 		loadingScreen = new JFrame();
