@@ -24,7 +24,6 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -65,6 +64,7 @@ public class MainWindow extends JFrame {
 	private GameContent gameContentDialog;
 	private CampaignMaps campaignMapsDialog;
 	private KeyboardShortcuts keyboardShortcutsDialog;
+	private About aboutDialog;
 
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
@@ -100,10 +100,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem randomTypMap;
 	private JMenuItem gameContent;
 
-	private JDialog aboutDialog;
-	private JButton aboutClose;
-
-	private GridBagConstraints gridConstraints, aboutConstraints;
+	private GridBagConstraints gridConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
@@ -170,6 +167,7 @@ public class MainWindow extends JFrame {
 		gameContentDialog = new GameContent(this);
 		campaignMapsDialog = new CampaignMaps(this);
 		keyboardShortcutsDialog = new KeyboardShortcuts(this);
+		aboutDialog = new About(this);
 
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
@@ -183,8 +181,6 @@ public class MainWindow extends JFrame {
 
 		listenToMenu = new MainMenuListener();
 		gridConstraints = new GridBagConstraints();
-		aboutConstraints = new GridBagConstraints();
-		aboutDialog = new JDialog(this, "Urban Assault Level Editor", Dialog.ModalityType.DOCUMENT_MODAL);
 
 		imageVisible = false;
 		heightVisible = false;
@@ -240,8 +236,7 @@ public class MainWindow extends JFrame {
 		showManager = new JMenuItem("Show level manager");
 		viewMenu.add(showManager);
 		showManager.addActionListener(listenToMenu);
-		
-		
+
 		sectorImgSwitch = new JMenuItem("Show/hide TypMap images");
 		viewMenu.add(sectorImgSwitch);
 		sectorImgSwitch.addActionListener(listenToMenu);
@@ -291,9 +286,6 @@ public class MainWindow extends JFrame {
 		aboutInfo = new JMenuItem("About");
 		helpMenu.add(aboutInfo);
 		aboutInfo.addActionListener(listenToMenu);
-		aboutClose = new JButton("Close");
-		aboutClose.addActionListener(listenToMenu);
-		initAbout();
 		
 		mainMenu.add(helpMenu);
 		
@@ -413,7 +405,6 @@ public class MainWindow extends JFrame {
 					savedMap = JFileChooser.CANCEL_OPTION;
 				}
 			}
-			
 			if(e.getSource() == exit) {
 				if(!EditorState.isSaved) {
 					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -426,7 +417,6 @@ public class MainWindow extends JFrame {
 				}else System.exit(0);
 				
 			}
-
 			if(e.getSource() == sectorImgSwitch) {
 				toggleImgSector();
 				repaint();
@@ -447,67 +437,30 @@ public class MainWindow extends JFrame {
 				toggleBlgSector();
 				repaint();
 			}
-			if(e.getSource() == menuParams) {
-				levelParametersDialog.render();
-			}
-			if(e.getSource() == resEnabler) {
-				unitEnablerDialog.render(1);
-			}
-			if(e.getSource() == ghorEnabler) {
-				unitEnablerDialog.render(6);
-			}
-			if(e.getSource() == taerEnabler) {
-				unitEnablerDialog.render(4);
-			}
-			if(e.getSource() == mykoEnabler) {
-				unitEnablerDialog.render(3);
-			}
-			if(e.getSource() == sulgEnabler) {
-				unitEnablerDialog.render(2);
-			}
-			if(e.getSource() == blasecEnabler) {
-				unitEnablerDialog.render(5);
-			}
-			if(e.getSource() == trainingEnabler) {
-				unitEnablerDialog.render(7);
-			}
-			if(e.getSource() == modifications) {
-				levelModificationsDialog.render();
-			}
+			if(e.getSource() == menuParams) levelParametersDialog.render();
+			if(e.getSource() == resEnabler) unitEnablerDialog.render(1);
+			if(e.getSource() == ghorEnabler) unitEnablerDialog.render(6);
+			if(e.getSource() == taerEnabler) unitEnablerDialog.render(4);
+			if(e.getSource() == mykoEnabler) unitEnablerDialog.render(3);
+			if(e.getSource() == sulgEnabler) unitEnablerDialog.render(2);
+			if(e.getSource() == blasecEnabler) unitEnablerDialog.render(5);
+			if(e.getSource() == trainingEnabler) unitEnablerDialog.render(7);
+			if(e.getSource() == modifications) levelModificationsDialog.render();
 			if(e.getSource() == randomTypMap) {
 				typMapGenerator.generate();
 				repaint();
 				currentMap.updateMap();
 				makeUnsaved();
 			}
-			if(e.getSource() == gameContent) {
-				gameContentDialog.render();
-			}
-			if(e.getSource() == briefingMaps) {
-				briefingAndDebriefingDialog.render();
-			}
-			if(e.getSource() == playerHS) {
-				playerHostStationDialog.render();
-			}
-			if(e.getSource() == levelDescription){
-				levelDescriptionDialog.render();
-			}
-			if(e.getSource() == campaignInfo) {
-				campaignMapsDialog.render();
-			}
-			if(e.getSource() == showManager) {
-				manager.setVisible(true);
-			}
-			if(e.getSource() == shortcutsInfo) {
-				keyboardShortcutsDialog.render();
-			}
-			if(e.getSource() == aboutInfo) {
-				aboutDialog.setVisible(true);
-			}
-			if(e.getSource() == aboutClose) {
-				aboutDialog.setVisible(false);
-			}
-		}// end actionPerformed
+			if(e.getSource() == gameContent) gameContentDialog.render();
+			if(e.getSource() == briefingMaps) briefingAndDebriefingDialog.render();
+			if(e.getSource() == playerHS) playerHostStationDialog.render();
+			if(e.getSource() == levelDescription) levelDescriptionDialog.render();
+			if(e.getSource() == campaignInfo) campaignMapsDialog.render();
+			if(e.getSource() == shortcutsInfo) keyboardShortcutsDialog.render();
+			if(e.getSource() == aboutInfo) aboutDialog.render();
+			if(e.getSource() == showManager) manager.setVisible(true);
+		}
 		@Override
 		public void menuSelected(MenuEvent e) {}
 		@Override
@@ -548,36 +501,6 @@ public class MainWindow extends JFrame {
 	public void savePrompt() {
 		if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
 		if(savedMap == JFileChooser.APPROVE_OPTION) save(selectSaveFile.getSelectedFile());
-	}
-	public void initAbout() { 
-		aboutDialog.setSize(400,260);
-		aboutDialog.setLocationRelativeTo(null);
-		aboutDialog.setResizable(false);
-		aboutDialog.setLayout(new GridBagLayout());
-		aboutConstraints.gridx = 0;
-		aboutConstraints.gridy = 0;
-		aboutConstraints.gridwidth = 5;
-		JLabel header = new JLabel("Urban Assault Level Editor");
-		header.setFont(header.getFont().deriveFont (22f));
-		aboutDialog.add(header, aboutConstraints);
-
-		aboutConstraints.gridx = 0;
-		aboutConstraints.gridwidth = 1;
-		aboutConstraints.insets = new Insets(30,1,1,1);
-		aboutConstraints.gridy = 1;
-		aboutDialog.add(new JLabel("Version: 1.4.0a"), aboutConstraints);
-		aboutConstraints.gridwidth = 2; // TODO update about
-		aboutConstraints.insets = new Insets(10,1,1,1);
-		aboutConstraints.gridy = 2;
-		aboutDialog.add(new JLabel("Compile Date: 2020-11-14"), aboutConstraints);
-		
-		aboutConstraints.gridy = 3;
-		aboutConstraints.gridwidth = 3;
-		aboutDialog.add(new JLabel("Compiled with: JRE 1.8.0_271 "), aboutConstraints);
-		aboutConstraints.gridy = 4;
-		aboutConstraints.gridwidth = 5;
-		aboutConstraints.insets = new Insets(20,1,1,1);
-		aboutDialog.add(aboutClose, aboutConstraints);
 	}
 	public void makeUnsaved() {
 		if(EditorState.isSaved)
