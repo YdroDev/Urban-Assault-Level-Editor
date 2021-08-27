@@ -65,6 +65,7 @@ public class MainWindow extends JFrame {
 	private UnitEnabler unitEnablerDialog;
 	private BriefingAndDebriefing briefingAndDebriefingDialog;
 	private PlayerHostStation playerHostStationDialog;
+	private LevelDescription levelDescriptionDialog;
 
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
@@ -105,7 +106,6 @@ public class MainWindow extends JFrame {
 	private JRadioButton noneContent;
 	private JRadioButton mdContent;
 
-	private JDialog descriptionDialog;
 	private JDialog modsDialog;
 	private JDialog contentDialog;
 	private JDialog mapsDialog;
@@ -120,16 +120,13 @@ public class MainWindow extends JFrame {
 	private JDialog aboutDialog;
 	private JButton aboutClose;
 
-	private GridBagConstraints gridConstraints, descConstraints, modsConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
+	private GridBagConstraints gridConstraints, modsConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
 	private boolean ownVisible;
 	private boolean blgVisible;
 	private BorderLayout layout;
-
-	private JButton saveDesc;
-	private JButton cancelDesc;
 
 	private JMenuItem campaignInfo;
 	private JMenuItem shortcutsInfo;
@@ -184,6 +181,7 @@ public class MainWindow extends JFrame {
 		unitEnablerDialog = new UnitEnabler(this);
 		briefingAndDebriefingDialog = new BriefingAndDebriefing(this);
 		playerHostStationDialog = new PlayerHostStation(this);
+		levelDescriptionDialog = new LevelDescription(this);
 
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
@@ -199,11 +197,9 @@ public class MainWindow extends JFrame {
 		gridConstraints = new GridBagConstraints();
 		modsConstraints = new GridBagConstraints();
 		mapsConstraints = new GridBagConstraints();
-		descConstraints = new GridBagConstraints();
 		contentConstraints = new GridBagConstraints();
 		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
-		descriptionDialog = new JDialog(this, "Set level description", Dialog.ModalityType.DOCUMENT_MODAL);
 		modsDialog = new JDialog(this, "Prototype Modifications", Dialog.ModalityType.DOCUMENT_MODAL);
 		contentDialog = new JDialog(this, "Additional game content", Dialog.ModalityType.DOCUMENT_MODAL);
 		mapsDialog = new JDialog(this, "Campaign maps");
@@ -225,7 +221,6 @@ public class MainWindow extends JFrame {
 		blgVisible = false;
 
 		mainMenu = new JMenuBar();
-		descriptionDialog.addWindowListener(listenToMenu);
 		modsDialog.addWindowListener(listenToMenu);
 		contentDialog.addWindowListener(listenToMenu);
 		mapsDialog.addWindowListener(listenToMenu);
@@ -398,12 +393,9 @@ public class MainWindow extends JFrame {
 	
 	private class MainMenuListener implements WindowListener, MenuListener, ActionListener, KeyListener{
 
-		JLabel descInfo;
 		JLabel modsInfo;
-		JTextArea descData;
 		JTextArea modsData;
 		JScrollPane modsScroller;
-		JScrollPane descScroller;
 		JButton saveMods;
 		JButton resetMods;
 		JButton resetGhorMods;
@@ -722,47 +714,9 @@ public class MainWindow extends JFrame {
 				playerHostStationDialog.render();
 			}
 			if(e.getSource() == levelDescription){
-				descriptionDialog.setSize(900, 880);
-				descriptionDialog.setLocationRelativeTo(null);
-				descriptionDialog.setResizable(false);
-				descriptionDialog.setLayout(new GridBagLayout());
-				
-				descInfo = new JLabel("You can write description to this level here which will be added at the beginning of ldf file");
-				descData = new JTextArea(42, 80);
-				
-				descData.setText(descString);
-				descScroller = new JScrollPane(descData, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-				descScroller.setPreferredSize(new Dimension(890, 700));
-				saveDesc = new JButton("Save");
-				cancelDesc = new JButton("Cancel");
-				
-				descConstraints.gridx = 0;
-				descConstraints.gridy = 0;
-				descConstraints.insets = new Insets(3, 2, 2, 2);
-				descriptionDialog.add(descInfo, descConstraints);
-				descConstraints.gridy = 1;
-				descConstraints.insets = new Insets(20, 2, 2, 2);
-				descriptionDialog.add(descScroller, descConstraints);
-				descConstraints.gridy = 2;
-				descriptionDialog.add(saveDesc, descConstraints);
-				saveDesc.addActionListener(this);
-				descConstraints.gridy = 3;
-				descriptionDialog.add(cancelDesc, descConstraints);
-				cancelDesc.addActionListener(this);
-				
-				descriptionDialog.setVisible(true);
+				levelDescriptionDialog.render();
 			}
 
-			if(e.getSource() == saveDesc) {
-				descString = descData.getText();
-				removeDescDialog();
-				descriptionDialog.setVisible(false);
-				makeUnsaved();
-			}
-			if(e.getSource() == cancelDesc) {
-				removeDescDialog();
-				descriptionDialog.setVisible(false);
-			}
 			if(e.getSource() == showManager) {
 				manager.setVisible(true);
 			}
@@ -846,13 +800,6 @@ public class MainWindow extends JFrame {
 		@Override
 		public void menuCanceled(MenuEvent e) {}
 
-		void removeDescDialog() {
-			if(cancelDesc != null) descriptionDialog.remove(cancelDesc);
-			if(saveDesc != null) descriptionDialog.remove(saveDesc);
-			if(descScroller != null) descriptionDialog.remove(descScroller);
-			if(descInfo != null) descriptionDialog.remove(descInfo);
-		}
-		
 		void removeModsDialog() {
 			if(cancelMods != null) modsDialog.remove(cancelMods);
 			if(resetMods != null) modsDialog.remove(resetMods);
@@ -882,14 +829,9 @@ public class MainWindow extends JFrame {
 					}
 				}
 			}
-
 			if(e.getSource() == modsDialog) {
 				removeModsDialog();
 				modsDialog.setVisible(false);
-			}
-			if(e.getSource() == descriptionDialog) {
-				removeDescDialog();
-				descriptionDialog.setVisible(false);
 			}
 			if(e.getSource() == contentDialog) {
 				if(EditorState.gameContent == 0)
@@ -1081,9 +1023,6 @@ public class MainWindow extends JFrame {
 	        UIManager.put (key, f);
 	      }
 	    }
-	public void mouseReleased() {
-		//System.out.println("Mouse released");
-	}
 	
 	public boolean IsImgEnabled() {
 		return imageVisible;

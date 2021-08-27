@@ -33,6 +33,7 @@ public class PlayerHostStation implements WindowListener, ActionListener {
         availableHS = new ArrayList<JRadioButton>();
     }
     public void render() {
+        removePlayerHSDialog();
         dialog.setSize(300, 400);
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
