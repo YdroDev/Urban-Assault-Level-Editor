@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -36,7 +34,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -67,6 +64,7 @@ public class MainWindow extends JFrame {
 	private LevelDescription levelDescriptionDialog;
 	private LevelModifications levelModificationsDialog;
 	private TypMapGenerator typMapGenerator;
+	private GameContent gameContentDialog;
 
 	private MainMenuListener listenToMenu;
 	private int wWidth = 880;
@@ -101,13 +99,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem modifications;
 	private JMenuItem randomTypMap;
 	private JMenuItem gameContent;
-	private JPanel contentList;
-	private JButton saveContent;
-	private JButton cancelContent;
-	private JRadioButton noneContent;
-	private JRadioButton mdContent;
 
-	private JDialog contentDialog;
 	private JDialog mapsDialog;
 	private JPanel mapsPanel;
 	private JButton mapsClose;
@@ -120,7 +112,7 @@ public class MainWindow extends JFrame {
 	private JDialog aboutDialog;
 	private JButton aboutClose;
 
-	private GridBagConstraints gridConstraints, mapsConstraints, shortcutsConstraints, contentConstraints, aboutConstraints;
+	private GridBagConstraints gridConstraints, mapsConstraints, shortcutsConstraints, aboutConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
@@ -184,6 +176,7 @@ public class MainWindow extends JFrame {
 		levelDescriptionDialog = new LevelDescription(this);
 		levelModificationsDialog = new LevelModifications(this);
 		typMapGenerator = new TypMapGenerator();
+		gameContentDialog = new GameContent(this);
 
 		this.setSize(wWidth,wHeight);
 		this.setLocationRelativeTo(null);
@@ -198,10 +191,8 @@ public class MainWindow extends JFrame {
 		listenToMenu = new MainMenuListener();
 		gridConstraints = new GridBagConstraints();
 		mapsConstraints = new GridBagConstraints();
-		contentConstraints = new GridBagConstraints();
 		shortcutsConstraints = new GridBagConstraints();
 		aboutConstraints = new GridBagConstraints();
-		contentDialog = new JDialog(this, "Additional game content", Dialog.ModalityType.DOCUMENT_MODAL);
 		mapsDialog = new JDialog(this, "Campaign maps");
 		mapsPanel = new JPanel(new GridBagLayout());
 		mapsTabs = new JTabbedPane();
@@ -221,7 +212,6 @@ public class MainWindow extends JFrame {
 		blgVisible = false;
 
 		mainMenu = new JMenuBar();
-		contentDialog.addWindowListener(listenToMenu);
 		mapsDialog.addWindowListener(listenToMenu);
 		this.addWindowListener(listenToMenu);
 		
@@ -322,7 +312,6 @@ public class MainWindow extends JFrame {
 		shortcutsClose = new JButton("Close");
 		shortcutsClose.addActionListener(listenToMenu);
 		initShortcuts();
-		initGameContent();
 		
 		aboutInfo = new JMenuItem("About");
 		helpMenu.add(aboutInfo);
@@ -516,9 +505,8 @@ public class MainWindow extends JFrame {
 				currentMap.updateMap();
 				makeUnsaved();
 			}
-			
 			if(e.getSource() == gameContent) {
-				contentDialog.setVisible(true);
+				gameContentDialog.render();
 			}
 			if(e.getSource() == briefingMaps) {
 				briefingAndDebriefingDialog.render();
@@ -578,32 +566,6 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == aboutClose) {
 				aboutDialog.setVisible(false);
 			}
-			if(e.getSource() == saveContent) {
-				if(noneContent.isSelected()) {
-					EditorState.gameContent = 0;
-					UAdata.addOriginalData();
-				}
-				else if(mdContent.isSelected()) {
-					EditorState.gameContent = 1;
-					UAdata.addMetropolisDawnData();
-				}
-				briefingAndDebriefingDialog.reset();
-				currentMap.removeAddUnits();
-				currentMap.initAddUnits();
-				currentMap.removeSpecialBuildings();
-				currentMap.initAddBuildings();
-				currentMap.resizeBuildingImg();
-				cleanManager();
-				contentDialog.setVisible(false);
-				makeUnsaved();
-			}
-			if(e.getSource() == cancelContent) {
-				if(EditorState.gameContent == 0)
-					noneContent.setSelected(true);
-				else if(EditorState.gameContent == 1)
-					mdContent.setSelected(true);
-				contentDialog.setVisible(false);
-			}
 		}// end actionPerformed
 		@Override
 		public void menuSelected(MenuEvent e) {}
@@ -629,12 +591,6 @@ public class MainWindow extends JFrame {
 						EditorState.isSaved = true;
 					}
 				}
-			}
-			if(e.getSource() == contentDialog) {
-				if(EditorState.gameContent == 0)
-					noneContent.setSelected(true);
-				else if(EditorState.gameContent == 1)
-					mdContent.setSelected(true);
 			}
 			if(e.getSource() == mapsDialog) {
 				removeMapsDialog();
@@ -705,73 +661,6 @@ public class MainWindow extends JFrame {
 		shortcutsConstraints.gridy = 16;
 		shortcutsConstraints.anchor = GridBagConstraints.CENTER;
 		shortcutsDialog.add(shortcutsClose, shortcutsConstraints);
-	}
-	public void initGameContent() {
-		ButtonGroup contentGroup = new ButtonGroup();
-		noneContent = new JRadioButton("none");
-		mdContent = new JRadioButton("Metropolis Dawn");
-		JPanel contentNote = new JPanel(new GridBagLayout());
-		JPanel contentButtons = new JPanel(new GridBagLayout());
-		saveContent = new JButton("Apply");
-		cancelContent = new JButton("Cancel");
-		contentDialog.setSize(500, 400);
-		contentDialog.setLocationRelativeTo(null);
-		contentDialog.setResizable(false);
-		contentDialog.setLayout(new GridBagLayout());
-		
-		contentConstraints.gridx = 0;
-		contentConstraints.gridy = 0;
-		contentConstraints.insets = new Insets(2,5,2,20);
-		contentDialog.add(new JLabel("Select additional content for the game"), contentConstraints);
-		contentList = new JPanel(new GridBagLayout());
-		contentList.setBorder(BorderFactory.createTitledBorder("Available game content"));
-		contentConstraints.anchor = GridBagConstraints.WEST;
-		contentGroup.add(noneContent);
-		contentGroup.add(mdContent);
-		contentList.add(noneContent, contentConstraints);
-		contentConstraints.gridy = 1;
-		contentList.add(mdContent, contentConstraints);
-		noneContent.setSelected(true);
-		
-		contentConstraints.insets = new Insets(2,2,2,2);
-		contentConstraints.gridy = 0;
-		contentNote.setBorder(BorderFactory.createTitledBorder(""));
-		contentNote.add(new JLabel("Note: In order to add Metropolis Dawn content properly,"), contentConstraints);
-		contentConstraints.gridy = 1;
-		contentNote.add(new JLabel("you have to decide which host station you want to play with "), contentConstraints);
-		contentConstraints.gridy = 2;
-		contentNote.add(new JLabel("then click on proper button in Options > Prototype Modifications."), contentConstraints);
-		contentConstraints.gridy = 3;
-		contentConstraints.insets = new Insets(10,2,2,2);
-		contentNote.add(new JLabel("For Ghorkov click \"Reset for metropolis dawn(Ghorkov)\""), contentConstraints);
-		contentConstraints.gridy = 4;
-		contentConstraints.insets = new Insets(2,2,2,2);
-		contentNote.add(new JLabel("or just change the first line to: include script:startupG.scr"), contentConstraints);
-		contentConstraints.gridy = 5;
-		contentConstraints.insets = new Insets(10,2,2,2);
-		contentNote.add(new JLabel("For Taerkasten click \"Reset for metropolis dawn(Taerkasten)\""), contentConstraints);
-		contentConstraints.gridy = 6;
-		contentConstraints.insets = new Insets(2,2,2,2);
-		contentNote.add(new JLabel("or just change the first line to: include script:startupT.scr"), contentConstraints);
-		
-		contentConstraints.gridy = 0;
-		contentButtons.add(saveContent, contentConstraints);
-		saveContent.addActionListener(listenToMenu);
-		contentConstraints.insets = new Insets(2,20,2,20);
-		contentConstraints.gridx = 1;
-		contentButtons.add(cancelContent, contentConstraints);
-		cancelContent.addActionListener(listenToMenu);
-		
-		contentConstraints.gridx = 0;
-		contentConstraints.anchor = GridBagConstraints.CENTER;
-		contentConstraints.gridy = 1;
-		contentConstraints.insets = new Insets(15,1,1,1);
-		contentDialog.add(contentList, contentConstraints);
-		contentConstraints.gridy = 2;
-		contentDialog.add(contentNote, contentConstraints);
-		contentConstraints.gridy = 3;
-		contentDialog.add(contentButtons, contentConstraints);
-		savedContent = 0;
 	}
 	public void initAbout() { 
 		aboutDialog.setSize(400,260);
@@ -890,7 +779,15 @@ public class MainWindow extends JFrame {
 		updateManagerSector(currentMap.getSelectedBorderSector(), currentMap.getSelectedSector(), currentMap.getHorizontalGrid(), currentMap.getVerticalGrid());
 		makeUnsaved();
 	}
-
+	public void updateGameContent() {
+		briefingAndDebriefingDialog.reset();
+		currentMap.removeAddUnits();
+		currentMap.initAddUnits();
+		currentMap.removeSpecialBuildings();
+		currentMap.initAddBuildings();
+		currentMap.resizeBuildingImg();
+		cleanManager();
+	}
 	public void saveLevel(File f) {
 		//TODO implement save
 	}
