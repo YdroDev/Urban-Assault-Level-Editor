@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -31,8 +29,6 @@ import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Dialogs.*;
@@ -48,76 +44,67 @@ import com.jtattoo.plaf.noire.NoireLookAndFeel;
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	private JPanel window;
-	private NewLevel newLevelDialog;
-	private LevelParameters levelParametersDialog;
-	private UnitEnabler unitEnablerDialog;
-	private BriefingAndDebriefing briefingAndDebriefingDialog;
-	private PlayerHostStation playerHostStationDialog;
-	private LevelDescription levelDescriptionDialog;
-	private LevelModifications levelModificationsDialog;
-	private TypMapGenerator typMapGenerator;
-	private GameContent gameContentDialog;
-	private CampaignMaps campaignMapsDialog;
-	private KeyboardShortcuts keyboardShortcutsDialog;
-	private About aboutDialog;
+	private final NewLevel newLevelDialog;
+	private final LevelParameters levelParametersDialog;
+	private final UnitEnabler unitEnablerDialog;
+	private final BriefingAndDebriefing briefingAndDebriefingDialog;
+	private final PlayerHostStation playerHostStationDialog;
+	private final LevelDescription levelDescriptionDialog;
+	private final LevelModifications levelModificationsDialog;
+	private final TypMapGenerator typMapGenerator;
+	private final GameContent gameContentDialog;
+	private final CampaignMaps campaignMapsDialog;
+	private final KeyboardShortcuts keyboardShortcutsDialog;
+	private final About aboutDialog;
 
-	private SingleplayerLevelSaver singleplayerLevelSaver = new SingleplayerLevelSaver();
+	private final SingleplayerLevelSaver singleplayerLevelSaver = new SingleplayerLevelSaver();
 
 	private MainMenuListener listenToMenu;
-	private int wWidth = 880;
-	private int wHeight = 720;
 	private static JFrame loadingScreen;
-	private JMenuBar mainMenu;
-	private JScrollPane mapscroller;
-	private JMenu fileMenu;
-	private JMenu viewMenu;
-	private JMenu optionsMenu;
-	private JMenu helpMenu;
-	private JMenuItem newMap, openMap, saveMap, saveAsMap, clear, exit;
+	private final JScrollPane mapscroller;
+	private final JMenuItem newMap, openMap, saveMap, saveAsMap, clear, exit;
 	private int savedMap;
 	private FileNameExtensionFilter ldfFilter;
 	private JFileChooser selectSaveFile;
 	private JFileChooser selectOpenFile;
 
-	private JMenuItem showManager;
-	private JMenuItem sectorImgSwitch;
-	private JMenuItem sectorHeight;
-	private JMenuItem sectorTyp;
-	private JMenuItem sectorOwner;
-	private JMenuItem sectorBlg;
-	private JMenu enabler;
-	private JMenuItem menuParams;
-	private JMenuItem resEnabler, ghorEnabler, taerEnabler, mykoEnabler, sulgEnabler, blasecEnabler, trainingEnabler;
-	private JMenuItem briefingMaps;
-	private JMenuItem playerHS;
+	private final JMenuItem showManager;
+	private final JMenuItem sectorImgSwitch;
+	private final JMenuItem sectorHeight;
+	private final JMenuItem sectorTyp;
+	private final JMenuItem sectorOwner;
+	private final JMenuItem sectorBlg;
+	private final JMenuItem menuParams;
+	private final JMenuItem resEnabler, ghorEnabler, taerEnabler, mykoEnabler, sulgEnabler, blasecEnabler, trainingEnabler;
+	private final JMenuItem briefingMaps;
+	private final JMenuItem playerHS;
 
-	private JMenuItem levelDescription;
-	private JMenuItem modifications;
-	private JMenuItem randomTypMap;
-	private JMenuItem gameContent;
+	private final JMenuItem levelDescription;
+	private final JMenuItem modifications;
+	private final JMenuItem randomTypMap;
+	private final JMenuItem gameContent;
 
-	private GridBagConstraints gridConstraints;
 	private boolean imageVisible;
 	private boolean heightVisible;
 	private boolean typVisible;
 	private boolean ownVisible;
 	private boolean blgVisible;
-	private BorderLayout layout;
 
-	private JMenuItem campaignInfo;
-	private JMenuItem shortcutsInfo;
-	private JMenuItem aboutInfo;
+	private final JMenuItem campaignInfo;
+	private final JMenuItem shortcutsInfo;
+	private final JMenuItem aboutInfo;
 	
-	private GameMap currentMap;
+	private final GameMap currentMap;
 	@SuppressWarnings("rawtypes")
-	private LevelManager manager;
+	private final LevelManager manager;
 	static Font font;
 	static Font mainFont;
 	static Font hgtFont;
 	
 	public static void main(final String[] args) {
 		initLoadingScreen();
-		
+
+		EditorState.resetState();
 		UAdata.addOriginalData();
 		try {
 			Properties props = new Properties();
@@ -128,20 +115,10 @@ public class MainWindow extends JFrame {
 			mainFont = font.deriveFont(font.getSize() * 12f);
 			hgtFont = font.deriveFont(font.getSize() * 9f);
 			setUIFont (new javax.swing.plaf.FontUIResource(mainFont));
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}catch (FontFormatException e) {
-			e.printStackTrace();
-		}catch (IOException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new MainWindow();
@@ -149,8 +126,8 @@ public class MainWindow extends JFrame {
         });
 	}
 	
-	MainWindow(){	
-		layout = new BorderLayout();
+	MainWindow(){
+		BorderLayout layout = new BorderLayout();
 		window = new JPanel(layout);
 		newLevelDialog = new NewLevel(this);
 		levelParametersDialog = new LevelParameters(this);
@@ -165,7 +142,9 @@ public class MainWindow extends JFrame {
 		keyboardShortcutsDialog = new KeyboardShortcuts(this);
 		aboutDialog = new About(this);
 
-		this.setSize(wWidth,wHeight);
+		int wHeight = 720;
+		int wWidth = 880;
+		this.setSize(wWidth, wHeight);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Urban Assault Level Editor");
@@ -176,7 +155,6 @@ public class MainWindow extends JFrame {
 		}
 
 		listenToMenu = new MainMenuListener();
-		gridConstraints = new GridBagConstraints();
 
 		imageVisible = false;
 		heightVisible = false;
@@ -184,13 +162,13 @@ public class MainWindow extends JFrame {
 		ownVisible = false;
 		blgVisible = false;
 
-		mainMenu = new JMenuBar();
+		JMenuBar mainMenu = new JMenuBar();
 		this.addWindowListener(listenToMenu);
-		
-		fileMenu = new JMenu("File");
-		viewMenu = new JMenu("View");
-		optionsMenu = new JMenu("Options");
-		helpMenu = new JMenu("Help");
+
+		JMenu fileMenu = new JMenu("File");
+		JMenu viewMenu = new JMenu("View");
+		JMenu optionsMenu = new JMenu("Options");
+		JMenu helpMenu = new JMenu("Help");
 		
 		newMap = new JMenuItem("New map");
 		mainMenu.add(fileMenu);
@@ -258,8 +236,8 @@ public class MainWindow extends JFrame {
 		menuParams = new JMenuItem("Set level parameters");
 		optionsMenu.add(menuParams);
 		menuParams.addActionListener(listenToMenu);
-		
-		enabler = new JMenu("Show enabler for");
+
+		JMenu enabler = new JMenu("Show enabler for");
 		optionsMenu.add(enabler);
 		enabler.addActionListener(listenToMenu);
 		
@@ -340,13 +318,7 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
-	private class MainMenuListener implements WindowListener, MenuListener, ActionListener, KeyListener{
-		@Override
-		public void keyTyped(KeyEvent e) {}
-		@Override
-		public void keyPressed(KeyEvent e) {}
-		@Override
-		public void keyReleased(KeyEvent e) {}
+	private class MainMenuListener implements WindowListener, ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == newMap) {
@@ -373,18 +345,18 @@ public class MainWindow extends JFrame {
 			}
 			if(e.getSource() == saveMap) {
 				if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
-				if(savedMap == JFileChooser.APPROVE_OPTION) save(selectSaveFile.getSelectedFile());
+				if(savedMap == JFileChooser.APPROVE_OPTION) saveLevel(selectSaveFile.getSelectedFile());
 			}
 			if(e.getSource() == saveAsMap) {
-				if(JFileChooser.APPROVE_OPTION == selectSaveFile.showSaveDialog(null)) 
-					save(selectSaveFile.getSelectedFile());
+				if(JFileChooser.APPROVE_OPTION == selectSaveFile.showSaveDialog(null))
+					saveLevel(selectSaveFile.getSelectedFile());
 			}
 			if(e.getSource() == clear) {
 				if(!EditorState.isSaved) {
 					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						savedMap = selectSaveFile.showSaveDialog(null);
-						if(JFileChooser.APPROVE_OPTION == savedMap) 
-							save(selectSaveFile.getSelectedFile());
+						if(JFileChooser.APPROVE_OPTION == savedMap)
+							saveLevel(selectSaveFile.getSelectedFile());
 						currentMap.closeMap();
 						setTitle("Urban Assault Level Editor");
 						savedMap = JFileChooser.CANCEL_OPTION;
@@ -405,8 +377,8 @@ public class MainWindow extends JFrame {
 				if(!EditorState.isSaved) {
 					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						savedMap = selectSaveFile.showSaveDialog(null);
-						if(JFileChooser.APPROVE_OPTION == savedMap) 
-							save(selectSaveFile.getSelectedFile());
+						if(JFileChooser.APPROVE_OPTION == savedMap)
+							saveLevel(selectSaveFile.getSelectedFile());
 						System.exit(0);
 						EditorState.isSaved = true;
 					}else System.exit(0);
@@ -458,12 +430,6 @@ public class MainWindow extends JFrame {
 			if(e.getSource() == showManager) manager.setVisible(true);
 		}
 		@Override
-		public void menuSelected(MenuEvent e) {}
-		@Override
-		public void menuDeselected(MenuEvent e) {}
-		@Override
-		public void menuCanceled(MenuEvent e) {}
-		@Override
 		public void windowOpened(WindowEvent e) {}
 		@Override
 		public void windowClosing(WindowEvent e) {
@@ -471,8 +437,8 @@ public class MainWindow extends JFrame {
 				if(!EditorState.isSaved) {
 					if(JOptionPane.showConfirmDialog(null,"Current level changes are not saved. Do you want to save the level now?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						savedMap = selectSaveFile.showSaveDialog(null);
-						if(JFileChooser.APPROVE_OPTION == savedMap) 
-							save(selectSaveFile.getSelectedFile());
+						if(JFileChooser.APPROVE_OPTION == savedMap)
+							saveLevel(selectSaveFile.getSelectedFile());
 						EditorState.isSaved = true;
 					}
 				}
@@ -489,6 +455,7 @@ public class MainWindow extends JFrame {
 		@Override
 		public void windowDeactivated(WindowEvent e) {}
 	}// end MainMenuListener class
+
 	public void createNewMap() {
 		currentMap.createMap(EditorState.horizontalSectors, EditorState.verticalSectors);
 		mapscroller.revalidate();
@@ -496,7 +463,7 @@ public class MainWindow extends JFrame {
 	}
 	public void savePrompt() {
 		if(savedMap == JFileChooser.CANCEL_OPTION) savedMap = selectSaveFile.showSaveDialog(null);
-		if(savedMap == JFileChooser.APPROVE_OPTION) save(selectSaveFile.getSelectedFile());
+		if(savedMap == JFileChooser.APPROVE_OPTION) saveLevel(selectSaveFile.getSelectedFile());
 	}
 	public void makeUnsaved() {
 		if(EditorState.isSaved)

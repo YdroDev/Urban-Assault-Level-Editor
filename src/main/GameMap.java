@@ -263,16 +263,7 @@ public class GameMap extends JComponent{
 		
 		bgList = new ArrayList<JMenuItem>();
 		bombList = new ArrayList<JMenuItem>();
-		
-		beamgates = new ArrayList<BeamGate>();
-		bombs = new ArrayList<StoudsonBomb>();
-		techupgrades = new ArrayList<TechUpgrade>();
-		hoststations = new ArrayList<Unit>();
-		units = new ArrayList<Unit>();
-		typ_map = new ArrayList<Integer>();
-		own_map = new ArrayList<Integer>();
-		hgt_map = new ArrayList<Integer>();
-		blg_map = new ArrayList<Integer>();
+
 		error_map = new ArrayList<Boolean>();
 		
 		borderSelectedSectors = new ArrayList<Integer>();
