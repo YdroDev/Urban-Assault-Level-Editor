@@ -57,10 +57,9 @@ public class MainWindow extends JFrame {
 	private final SingleplayerLevelOpener singleplayerLevelOpener = new SingleplayerLevelOpener();
 
 	private static JFrame loadingScreen;
-	private final JScrollPane mapscroller;
+	private final JScrollPane mapScroller;
 	private final JMenuItem newMap, openMap, saveMap, saveAsMap, clear, exit;
 	private int savedMap;
-	private FileNameExtensionFilter ldfFilter;
 	private final JFileChooser selectSaveFile;
 	private final JFileChooser selectOpenFile;
 
@@ -174,6 +173,8 @@ public class MainWindow extends JFrame {
 		saveMap = new JMenuItem("Save");
 		fileMenu.add(saveMap);
 		saveMap.addActionListener(listenToMenu);
+
+		FileNameExtensionFilter ldfFilter = new FileNameExtensionFilter("Urban Assault level file (.ldf)", "ldf");
 
 		selectSaveFile = new JFileChooser();
 		selectSaveFile.setFileFilter(ldfFilter);
@@ -304,8 +305,8 @@ public class MainWindow extends JFrame {
 		
 		currentMap.setPreferredSize(new Dimension(500, 500));
 
-		mapscroller = new JScrollPane(currentMap,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		window.add(mapscroller);
+		mapScroller = new JScrollPane(currentMap,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		window.add(mapScroller);
 
 		this.setJMenuBar(mainMenu);	
 		this.add(window);
@@ -449,11 +450,11 @@ public class MainWindow extends JFrame {
 		public void windowActivated(WindowEvent e) {}
 		@Override
 		public void windowDeactivated(WindowEvent e) {}
-	}// end MainMenuListener class
+	}
 
 	public void createNewMap() {
 		currentMap.createMap(EditorState.horizontalSectors, EditorState.verticalSectors);
-		mapscroller.revalidate();
+		mapScroller.revalidate();
 		setTitle("Urban Assault Level Editor");
 	}
 	public void savePrompt() {
@@ -465,17 +466,7 @@ public class MainWindow extends JFrame {
 			this.setTitle("*"+this.getTitle());
 		EditorState.isSaved = false;
 	}
-	public static void setUIFont (javax.swing.plaf.FontUIResource f){
-	    @SuppressWarnings("rawtypes")
-		java.util.Enumeration keys = UIManager.getDefaults().keys();
-	    while (keys.hasMoreElements()) {
-	      Object key = keys.nextElement();
-	      Object value = UIManager.get (key);
-	      if (value instanceof javax.swing.plaf.FontUIResource)
-	        UIManager.put (key, f);
-	      }
-	    }
-	
+
 	public boolean IsImgEnabled() {
 		return imageVisible;
 	}
@@ -558,7 +549,19 @@ public class MainWindow extends JFrame {
 		this.setTitle(f+" ("+EditorState.horizontalSectors+"x"+EditorState.verticalSectors+") - Urban Assault Level Editor");
 	}
 	public void openLevel(File f) {
+		currentMap.closeMap();
+		EditorState.resetState();
+		briefingAndDebriefingDialog.reset();
+		levelParametersDialog.reset();
+
 		singleplayerLevelOpener.open(f);
+		currentMap.removeAddUnits();
+		currentMap.initAddUnits();
+		currentMap.removeSpecialBuildings();
+		currentMap.initAddBuildings();
+		currentMap.openMap(EditorState.horizontalSectors, EditorState.horizontalSectors);
+		mapScroller.revalidate();
+		setTitle(f +" ("+EditorState.horizontalSectors+"x"+EditorState.horizontalSectors+") - Urban Assault Level Editor");
 	}
 	static void initLoadingScreen() {
 		loadingScreen = new JFrame();
@@ -579,5 +582,15 @@ public class MainWindow extends JFrame {
 		loadingScreen.pack();
 		loadingScreen.setLocationRelativeTo(null);
 		loadingScreen.setVisible(true);
+	}
+	public static void setUIFont (javax.swing.plaf.FontUIResource f){
+		@SuppressWarnings("rawtypes")
+		java.util.Enumeration keys = UIManager.getDefaults().keys();
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get (key);
+			if (value instanceof javax.swing.plaf.FontUIResource)
+				UIManager.put (key, f);
+		}
 	}
 }

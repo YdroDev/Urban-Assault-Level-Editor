@@ -19,7 +19,7 @@ public class StoudsonBomb {
 	private BufferedImage bomb;
 	private BufferedImage reactor;
 	
-	StoudsonBomb(int x, int y, int c){
+	public StoudsonBomb(int x, int y, int c){
 		this.sec_x = x;
 		this.sec_y = y;
 		this.inactiveType = 35; // 68

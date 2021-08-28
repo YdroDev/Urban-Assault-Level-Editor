@@ -210,17 +210,17 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
         MDpanel = new JPanel(new GridBagLayout());
 
         if(EditorState.gameContent == 0) {
-            mbList = new JComboBox<String>(mbMaps);
+            mbList = new JComboBox<>(mbMaps);
             mbList.setSelectedIndex(selectedMBIndex);
             mbList.addActionListener(this);
-            dbList = new JComboBox<String>(dbMaps);
+            dbList = new JComboBox<>(dbMaps);
             dbList.setSelectedIndex(selectedDBIndex);
             dbList.addActionListener(this);
         }else if(EditorState.gameContent == 1) {
-            mbList = new JComboBox<String>(mbMapsXp);
+            mbList = new JComboBox<>(mbMapsXp);
             mbList.setSelectedIndex(selectedMBIndex);
             mbList.addActionListener(this);
-            dbList = new JComboBox<String>(dbMapsXp);
+            dbList = new JComboBox<>(dbMapsXp);
             dbList.setSelectedIndex(selectedDBIndex);
             dbList.addActionListener(this);
         }

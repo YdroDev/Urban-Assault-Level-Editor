@@ -107,7 +107,7 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
         musicPanel = new JPanel();
         musicPanel.setLayout(new GridBagLayout());
         musicList = new JComboBox<String>(musics);
-        JButton playMusic = new JButton("Play");
+        playMusic = new JButton("Play");
         moviePanel = new JPanel();
         moviePanel.setLayout(new GridBagLayout());
         moviePanel.setBorder(BorderFactory.createTitledBorder("Select movie"));
@@ -241,6 +241,23 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
         constraints.insets = new Insets(0,0,0,0);
 
         dialog.setVisible(true);
+    }
+
+    public void reset() {
+        savedSkyIndex = 0;
+        savedMinBreak = 0;
+        savedMaxBreak = 0;
+        savedMovieIndex = 0;
+        savedEventLoopIndex = 0;
+        savedMusicIndex = 0;
+        savedSetIndex = 0;
+        selectedSkyIndex = 0;
+        selectedMinBreak = 0;
+        selectedMaxBreak = 0;
+        selectedMovieIndex = 0;
+        selectedEventLoopIndex = 0;
+        selectedMusicIndex = 0;
+        selectedSetIndex = 0;
     }
 
     @Override

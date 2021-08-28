@@ -28,7 +28,7 @@ public class TechUpgrade {
 	private ArrayList<Modify_building> buildings;
 	private boolean mb_status;
 	
-	TechUpgrade(int x, int y){
+	public TechUpgrade(int x, int y){
 		this.sec_x = x;
 		this.sec_y = y;
 		this.building = 4;

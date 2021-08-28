@@ -23,7 +23,7 @@ public class Hoststation extends Unit {
 	private int cpl_budget;
 	private int cpl_delay;
 	
-	Hoststation(int X, int Y, int own,int vehicle) {// Y is -Z in ldf file
+	public Hoststation(int X, int Y, int own, int vehicle) {// Y is -Z in ldf file
 		super(X, Y, own, vehicle);
 		this.height = 300; 
 		this.energy = 300000;

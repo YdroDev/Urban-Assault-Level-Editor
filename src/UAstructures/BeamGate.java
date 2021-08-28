@@ -19,7 +19,7 @@ public class BeamGate {
 	private BufferedImage keysector;
 	private boolean mb_status;
 	
-	BeamGate(int x, int y){
+	public BeamGate(int x, int y){
 		this.sec_x = x;
 		this.sec_y = y;
 		this.openedType = 1; // 1 with road, 2 without road

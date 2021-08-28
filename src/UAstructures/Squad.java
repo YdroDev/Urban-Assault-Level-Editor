@@ -5,7 +5,7 @@ public class Squad extends Unit {
 	private int quantity;
 	private boolean useable;
 	
-	Squad(int X, int Y, int own,int vehicle) {
+	public Squad(int X, int Y, int own, int vehicle) {
 		super(X, Y, own, vehicle);
 		this.quantity = 1;
 		this.useable = false;

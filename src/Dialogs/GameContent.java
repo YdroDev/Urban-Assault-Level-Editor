@@ -52,7 +52,11 @@ public class GameContent implements WindowListener, ActionListener {
         contentList.add(noneContent, constraints);
         constraints.gridy = 1;
         contentList.add(mdContent, constraints);
-        noneContent.setSelected(true);
+        if(EditorState.gameContent == 0) {
+            noneContent.setSelected(true);
+        } else if(EditorState.gameContent == 1){
+            mdContent.setSelected(true);
+        }
 
         constraints.insets = new Insets(2,2,2,2);
         constraints.gridy = 0;
@@ -109,11 +113,7 @@ public class GameContent implements WindowListener, ActionListener {
             this.window.makeUnsaved();
         }
         if(e.getSource() == cancelButton) {
-            if(EditorState.gameContent == 0)
-                noneContent.setSelected(true);
-            else if(EditorState.gameContent == 1)
-                mdContent.setSelected(true);
-            dialog.setVisible(false);
+            removeDialog();
         }
     }
     @Override
@@ -121,10 +121,7 @@ public class GameContent implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
-            if(EditorState.gameContent == 0)
-                noneContent.setSelected(true);
-            else if(EditorState.gameContent == 1)
-                mdContent.setSelected(true);
+            removeDialog();
         }
     }
     @Override
@@ -137,4 +134,7 @@ public class GameContent implements WindowListener, ActionListener {
     public void windowActivated(WindowEvent e) {}
     @Override
     public void windowDeactivated(WindowEvent e) {}
+    public void removeDialog() {
+        //TODO implement
+    }
 }

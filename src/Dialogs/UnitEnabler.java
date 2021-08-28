@@ -388,26 +388,6 @@ public class UnitEnabler implements WindowListener, ActionListener {
                 hsBuildings.add(UAdata.getBuildingIDfromName(blackSectBuildingBox.getText()));
         }
     }
-    void removeEnablerDialog() {
-        if(cancelEnabler != null) dialog.remove(cancelEnabler);
-        if(trainingSaveEnabler != null) dialog.remove(trainingSaveEnabler);
-        if(ghorSaveEnabler != null) dialog.remove(ghorSaveEnabler);
-        if(blasecSaveEnabler != null) dialog.remove(blasecSaveEnabler);
-        if(taerSaveEnabler != null) dialog.remove(taerSaveEnabler);
-        if(mykoSaveEnabler != null) dialog.remove(mykoSaveEnabler);
-        if(sulgSaveEnabler != null) dialog.remove(sulgSaveEnabler);
-        if(resSaveEnabler != null) dialog.remove(resSaveEnabler);
-        if(specialList.getGroup() != null) dialog.remove(specialList.getGroup());
-        if(trainingList.getGroup() != null) dialog.remove(trainingList.getGroup());
-        if(blackSectList.getGroup() != null) dialog.remove(blackSectList.getGroup());
-        if(sulgList.getGroup() != null) dialog.remove(sulgList.getGroup());
-        if(mykoList.getGroup() != null) dialog.remove(mykoList.getGroup());
-        if(taerList.getGroup() != null) dialog.remove(taerList.getGroup());
-        if(ghorList.getGroup() != null) dialog.remove(ghorList.getGroup());
-        if(resList.getGroup() != null) dialog.remove(resList.getGroup());
-        if(unlocker != null) dialog.remove(unlocker);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == resSaveEnabler) {
@@ -534,5 +514,24 @@ public class UnitEnabler implements WindowListener, ActionListener {
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+    void removeEnablerDialog() {
+        if(cancelEnabler != null) dialog.remove(cancelEnabler);
+        if(trainingSaveEnabler != null) dialog.remove(trainingSaveEnabler);
+        if(ghorSaveEnabler != null) dialog.remove(ghorSaveEnabler);
+        if(blasecSaveEnabler != null) dialog.remove(blasecSaveEnabler);
+        if(taerSaveEnabler != null) dialog.remove(taerSaveEnabler);
+        if(mykoSaveEnabler != null) dialog.remove(mykoSaveEnabler);
+        if(sulgSaveEnabler != null) dialog.remove(sulgSaveEnabler);
+        if(resSaveEnabler != null) dialog.remove(resSaveEnabler);
+        if(specialList.getGroup() != null) dialog.remove(specialList.getGroup());
+        if(trainingList.getGroup() != null) dialog.remove(trainingList.getGroup());
+        if(blackSectList.getGroup() != null) dialog.remove(blackSectList.getGroup());
+        if(sulgList.getGroup() != null) dialog.remove(sulgList.getGroup());
+        if(mykoList.getGroup() != null) dialog.remove(mykoList.getGroup());
+        if(taerList.getGroup() != null) dialog.remove(taerList.getGroup());
+        if(ghorList.getGroup() != null) dialog.remove(ghorList.getGroup());
+        if(resList.getGroup() != null) dialog.remove(resList.getGroup());
+        if(unlocker != null) dialog.remove(unlocker);
     }
 }
