@@ -30,7 +30,7 @@ public class LevelModifications implements WindowListener, ActionListener {
         dialog.addWindowListener(this);
     }
     public void render() {
-        removeModsDialog();
+        removeDialog();
         dialog.setSize(900, 720);
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
@@ -89,7 +89,7 @@ public class LevelModifications implements WindowListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == saveButton) {
             EditorState.prototypeModifications = modsData.getText();
-            removeModsDialog();
+            removeDialog();
             dialog.setVisible(false);
             this.window.makeUnsaved();
         }
@@ -103,7 +103,7 @@ public class LevelModifications implements WindowListener, ActionListener {
             modsData.setText("include script:startupT.scr");
         }
         if(e.getSource() == cancelButton) {
-            removeModsDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
     }
@@ -112,7 +112,7 @@ public class LevelModifications implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
-            removeModsDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
     }
@@ -126,7 +126,7 @@ public class LevelModifications implements WindowListener, ActionListener {
     public void windowActivated(WindowEvent e) {}
     @Override
     public void windowDeactivated(WindowEvent e) {}
-    void removeModsDialog() {
+    void removeDialog() {
         if(cancelButton != null) dialog.remove(cancelButton);
         if(resetMods != null) dialog.remove(resetMods);
         if(resetGhorMods != null) dialog.remove(resetGhorMods);

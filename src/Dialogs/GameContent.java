@@ -103,10 +103,14 @@ public class GameContent implements WindowListener, ActionListener {
             if(noneContent.isSelected()) {
                 EditorState.gameContent = 0;
                 UAdata.addOriginalData();
+                EditorState.mbmap = "mb.ilb";
+                EditorState.dbmap = "db_01.iff";
             }
             else if(mdContent.isSelected()) {
                 EditorState.gameContent = 1;
                 UAdata.addMetropolisDawnData();
+                EditorState.mbmap = "mb_06.iff";
+                EditorState.dbmap = "db_80.iff";
             }
             this.window.updateGameContent();
             dialog.setVisible(false);

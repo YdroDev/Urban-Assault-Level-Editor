@@ -85,10 +85,10 @@ public class EditorState {
         min_break = 0;
         max_break = 0;
 
-        mbmap = "mb";
+        mbmap = "mb.ilb";
         mbMapSizeX = 480;
         mbMapSizeY = 480;
-        dbmap = "db_01";
+        dbmap = "db_01.iff";
         dbMapSizeX = 480;
         dbMapSizeY = 480;
 

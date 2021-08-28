@@ -536,7 +536,6 @@ public class MainWindow extends JFrame {
 		makeUnsaved();
 	}
 	public void updateGameContent() {
-		briefingAndDebriefingDialog.reset();
 		currentMap.removeAddUnits();
 		currentMap.initAddUnits();
 		currentMap.removeSpecialBuildings();
@@ -551,17 +550,15 @@ public class MainWindow extends JFrame {
 	public void openLevel(File f) {
 		currentMap.closeMap();
 		EditorState.resetState();
-		briefingAndDebriefingDialog.reset();
-		levelParametersDialog.reset();
 
 		singleplayerLevelOpener.open(f);
 		currentMap.removeAddUnits();
 		currentMap.initAddUnits();
 		currentMap.removeSpecialBuildings();
 		currentMap.initAddBuildings();
-		currentMap.openMap(EditorState.horizontalSectors, EditorState.horizontalSectors);
+		currentMap.openMap(EditorState.horizontalSectors, EditorState.verticalSectors);
 		mapScroller.revalidate();
-		setTitle(f +" ("+EditorState.horizontalSectors+"x"+EditorState.horizontalSectors+") - Urban Assault Level Editor");
+		setTitle(f +" ("+EditorState.horizontalSectors+"x"+EditorState.verticalSectors+") - Urban Assault Level Editor");
 	}
 	static void initLoadingScreen() {
 		loadingScreen = new JFrame();

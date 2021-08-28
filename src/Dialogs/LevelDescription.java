@@ -28,7 +28,7 @@ public class LevelDescription implements WindowListener, ActionListener {
 
     }
     public void render() {
-        removeDescDialog();
+        removeDialog();
         dialog.setSize(900, 880);
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
@@ -63,12 +63,12 @@ public class LevelDescription implements WindowListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == saveButton) {
             EditorState.description = descData.getText();
-            removeDescDialog();
+            removeDialog();
             dialog.setVisible(false);
             this.window.makeUnsaved();
         }
         if(e.getSource() == cancelButton) {
-            removeDescDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
     }
@@ -77,7 +77,7 @@ public class LevelDescription implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
-            removeDescDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
     }
@@ -91,7 +91,7 @@ public class LevelDescription implements WindowListener, ActionListener {
     public void windowActivated(WindowEvent e) {}
     @Override
     public void windowDeactivated(WindowEvent e) {}
-    void removeDescDialog() {
+    void removeDialog() {
         if(cancelButton != null) dialog.remove(cancelButton);
         if(saveButton != null) dialog.remove(saveButton);
         if(descScroller != null) dialog.remove(descScroller);

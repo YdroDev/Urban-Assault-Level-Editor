@@ -48,17 +48,12 @@ public class SingleplayerLevelSaver extends LevelSaver {
         mapSaver.println(";--- Mission Briefing Maps                                ---");
         mapSaver.println(";------------------------------------------------------------");
         mapSaver.println("begin_mbmap");
-        if(EditorState.gameContent == 0) {
-            if(EditorState.mbmap == "mb") mapSaver.println("\tname = "+EditorState.mbmap+".ilb");
-            else mapSaver.println("\tname = "+EditorState.mbmap+".iff");
-        }else if(EditorState.gameContent == 1) {
-            mapSaver.println("\tname = "+EditorState.mbmap+".iff");
-        }
+        mapSaver.println("\tname = "+EditorState.mbmap);
         if(EditorState.mbMapSizeX > 0) mapSaver.println("\tsize_x = "+EditorState.mbMapSizeX);
         if(EditorState.mbMapSizeY > 0) mapSaver.println("\tsize_y = "+EditorState.mbMapSizeY);
         mapSaver.println("end");
         mapSaver.println("begin_dbmap");
-        mapSaver.println(" \tname = "+EditorState.dbmap+".iff");
+        mapSaver.println(" \tname = "+EditorState.dbmap);
         if(EditorState.dbMapSizeX > 0) mapSaver.println("\tsize_x = "+EditorState.dbMapSizeX);
         if(EditorState.dbMapSizeY > 0) mapSaver.println("\tsize_y = "+EditorState.dbMapSizeY);
         mapSaver.println("end");

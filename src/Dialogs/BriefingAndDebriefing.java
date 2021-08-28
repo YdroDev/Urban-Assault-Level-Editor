@@ -19,19 +19,14 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
     private final JDialog dialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
 
-    private Border MBborder, MDborder;
     private JPanel MBpanel, MDpanel;
     private JTextField MBsizeXField;
     private JTextField MBsizeYField;
     private JTextField MDsizeXField;
     private JTextField MDsizeYField;
-    private JLabel MBlabelX;
-    private JLabel MBlabelY;
-    private JLabel MDlabelX;
-    private JLabel MDlabelY;
     private JComboBox<String> mbList;
     private JComboBox<String> dbList;
-    private final String[] mbMaps = new String[74];;
+    private final String[] mbMaps = new String[74];
     private final String[] dbMaps = new String[114];
     private final String[] mbMapsXp = new String[31];
     private final String[] dbMapsXp = new String[71];
@@ -43,14 +38,12 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
     private final JLabel[] dbMapframe = new JLabel[114];
     private final JLabel[] mbMapframeXp = new JLabel[31];
     private final JLabel[] dbMapframeXp = new JLabel[71];
-
-    private int selectedMBIndex = 0;
-    private int selectedDBIndex = 0;
-    private int savedMBIndex = 0;
-    private int savedDBIndex = 0;
-
     private JButton saveBriefing;
     private JButton cancelBriefing;
+
+    private int selectedMBIndex;
+    private int selectedDBIndex;
+    private boolean closed = true;
 
     public BriefingAndDebriefing(MainWindow window) {
         this.window = window;
@@ -59,175 +52,197 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
 
         for(int i = 0, j= 0; i < 74; i++, j++) {
             if(j == 0) {
-                mbMaps[i] = "mb";
+                mbMaps[i] = "mb.ilb";
             }
             if(j > 0 && j < 9) {
-                mbMaps[i] = "mb_0" + j;
+                mbMaps[i] = "mb_0" + j + ".iff";
             }
             if(j == 9) j = 10;
             if(j > 9 && j < 24) {
-                mbMaps[i] = "mb_" + j;
+                mbMaps[i] = "mb_" + j + ".iff";
             }
             if(j == 24) j = 25;
             if(j > 24 && j < 27) {
-                mbMaps[i] = "mb_" + j;
+                mbMaps[i] = "mb_" + j + ".iff";
             }
             if(j == 27) j = 28;
             if(j > 27 && j < 49) {
-                mbMaps[i] = "mb_" + j;
+                mbMaps[i] = "mb_" + j + ".iff";
             }
             if(j == 49)j = 50;
             if(j > 49 && j < 59) {
-                mbMaps[i] = "mb_" + j;
+                mbMaps[i] = "mb_" + j + ".iff";
             }
             if(j == 59) j = 60;
             if(j > 59 && j < 76) {
-                mbMaps[i] = "mb_" + j;
+                mbMaps[i] = "mb_" + j + ".iff";
             }
             if(j == 76) j = 77;
             if(j > 76) {
-                mbMaps[i] = "mb_" + j;
+                mbMaps[i] = "mb_" + j + ".iff";
             }
         }
 
         for(int i = 0, j = 1; i < 114; i++, j++) {
             if(j < 6) {
-                dbMaps[i] = "db_0" + j;
+                dbMaps[i] = "db_0" + j + ".iff";
             }
             if(j == 6) j = 10;
             if(j > 9 && j < 13) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 13) j = 15;
             if(j == 15) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 16) j = 20;
             if(j > 19 && j < 24) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 24) j = 25;
             if(j > 24 && j < 27) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 27) j = 30;
             if(j > 29 && j < 35) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 35) j = 40;
             if(j > 39 && j < 45) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 45) j = 50;
             if(j > 49 && j < 55) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 55) j = 60;
             if(j > 59 && j < 65) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 65) j = 66;
             if(j == 66) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 67) j = 70;
             if(j > 69 && j < 76) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 76) j = 80;
             if(j > 79 && j < 97) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 97) j = 100;
             if(j > 99 && j < 136) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
             if(j == 136) j = 140;
             if(j > 139) {
-                dbMaps[i] = "db_" + j;
+                dbMaps[i] = "db_" + j + ".iff";
             }
         }
 
         for(int i = 0, j = 0; i < 31; i++, j++) {
             if(j == 0) j = 6;
             if(j > 5 && j < 9)
-                mbMapsXp[i] = "mb_0"+j;
+                mbMapsXp[i] = "mb_0"+j + ".iff";
             if(j == 9) j = 13;
             if(j > 12 && j < 15)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
             if(j == 15) j = 16;
             if(j > 15 && j < 20)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
             if(j == 20) j = 28;
             if(j > 27 && j < 30)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
             if(j == 30) j = 35;
             if(j > 34 && j < 40)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
             if(j == 40) j = 45;
             if(j > 44 && j < 49)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
             if(j == 49) j = 55;
             if(j > 54 && j < 59)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
             if(j == 59) j = 65;
             if(j == 65)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
             if(j == 66) j = 67;
             if(j > 66 && j < 70)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
             if(j == 70) j = 77;
             if(j > 76)
-                mbMapsXp[i] = "mb_"+j;
+                mbMapsXp[i] = "mb_"+j + ".iff";
         }
 
         for(int i = 0, j = 0; i < 71; i++, j++) {
             if(j == 0) j = 80;
             if(j > 79 && j < 97)
-                dbMapsXp[i] = "db_"+j;
+                dbMapsXp[i] = "db_"+j + ".iff";
             if(j == 97) j = 100;
             if(j > 99 && j < 121)
-                dbMapsXp[i] = "db_"+j;
+                dbMapsXp[i] = "db_"+j + ".iff";
             if(j == 121) j = 122;
             if(j > 121 && j < 136)
-                dbMapsXp[i] = "db_"+j;
+                dbMapsXp[i] = "db_"+j + ".iff";
             if(j == 136) j = 140;
             if(j > 139)
-                dbMapsXp[i] = "db_"+j;
+                dbMapsXp[i] = "db_"+j + ".iff";
         }
     }
 
     public void render() {
-        removeBriefingMapDialog();
+        removeDialog();
 
         dialog.setSize(500,880);
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
         dialog.setLayout(new GridBagLayout());
-        MBborder = BorderFactory.createTitledBorder("Select briefing map");
-        MDborder = BorderFactory.createTitledBorder("Select debriefing map");
+        Border MBborder = BorderFactory.createTitledBorder("Select briefing map");
+        Border MDborder = BorderFactory.createTitledBorder("Select debriefing map");
         MBpanel = new JPanel(new GridBagLayout());
         MDpanel = new JPanel(new GridBagLayout());
 
         if(EditorState.gameContent == 0) {
+            if(closed) {
+                for(int i = 0; i < mbMaps.length; i++){
+                    if(mbMaps[i] == EditorState.mbmap) selectedMBIndex = i;
+                }
+            }
             mbList = new JComboBox<>(mbMaps);
             mbList.setSelectedIndex(selectedMBIndex);
             mbList.addActionListener(this);
+            if(closed) {
+                for (int i = 0; i < dbMaps.length; i++) {
+                    if (dbMaps[i] == EditorState.dbmap) selectedDBIndex = i;
+                }
+            }
             dbList = new JComboBox<>(dbMaps);
             dbList.setSelectedIndex(selectedDBIndex);
             dbList.addActionListener(this);
         }else if(EditorState.gameContent == 1) {
+            if(closed) {
+                for (int i = 0; i < mbMapsXp.length; i++) {
+                    if (mbMapsXp[i] == EditorState.mbmap) selectedMBIndex = i;
+                }
+            }
             mbList = new JComboBox<>(mbMapsXp);
             mbList.setSelectedIndex(selectedMBIndex);
             mbList.addActionListener(this);
+            if(closed) {
+                for (int i = 0; i < dbMapsXp.length; i++) {
+                    if (dbMapsXp[i] == EditorState.dbmap) selectedDBIndex = i;
+                }
+            }
             dbList = new JComboBox<>(dbMapsXp);
             dbList.setSelectedIndex(selectedDBIndex);
             dbList.addActionListener(this);
         }
-        MBlabelX = new JLabel("Size x:");
-        MBlabelY = new JLabel("Size y:");
-        MDlabelX = new JLabel("Size x:");
-        MDlabelY = new JLabel("Size y:");
+        closed = false;
+
+        JLabel MBlabelX = new JLabel("Size x:");
+        JLabel MBlabelY = new JLabel("Size y:");
+        JLabel MDlabelX = new JLabel("Size x:");
+        JLabel MDlabelY = new JLabel("Size y:");
         MBsizeXField = new JTextField(4);
         MBsizeYField = new JTextField(4);
         MDsizeXField = new JTextField(4);
@@ -338,19 +353,7 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
 
         dialog.setVisible(true);
     }
-    public void reset() {
-        savedMBIndex = 0;
-        savedDBIndex = 0;
-        selectedMBIndex = 0;
-        selectedDBIndex = 0;
-        if(EditorState.gameContent == 0){
-            EditorState.mbmap = mbMaps[0];
-            EditorState.dbmap = dbMaps[0];
-        } else if (EditorState.gameContent == 1) {
-            EditorState.mbmap = mbMapsXp[0];
-            EditorState.dbmap = dbMapsXp[0];
-        }
-    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == mbList) {
@@ -363,13 +366,19 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
         }
         if(e.getSource() == saveBriefing) {
             try {
+                if(EditorState.gameContent == 0){
+                    EditorState.mbmap = mbMaps[selectedMBIndex];
+                    EditorState.dbmap = dbMaps[selectedDBIndex];
+                } else if(EditorState.gameContent == 1){
+                    EditorState.mbmap = mbMapsXp[selectedMBIndex];
+                    EditorState.dbmap = dbMapsXp[selectedDBIndex];
+                }
                 EditorState.mbMapSizeX = Integer.parseInt(MBsizeXField.getText());
                 EditorState.mbMapSizeY = Integer.parseInt(MBsizeYField.getText());
                 EditorState.dbMapSizeX = Integer.parseInt(MDsizeXField.getText());
                 EditorState.dbMapSizeY = Integer.parseInt(MDsizeYField.getText());
-                removeBriefingMapDialog();
-                savedMBIndex = selectedMBIndex;
-                savedDBIndex = selectedDBIndex;
+                removeDialog();
+                closed = true;
                 dialog.setVisible(false);
                 this.window.makeUnsaved();
             }catch(NumberFormatException ex) {
@@ -377,9 +386,8 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
             }
         }
         if(e.getSource() == cancelBriefing) {
-            removeBriefingMapDialog();
-            selectedMBIndex = savedMBIndex;
-            selectedDBIndex = savedDBIndex;
+            removeDialog();
+            closed = true;
             dialog.setVisible(false);
         }
     }
@@ -387,9 +395,8 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
     public void windowOpened(WindowEvent e) {}
     @Override
     public void windowClosing(WindowEvent e) {
-        removeBriefingMapDialog();
-        selectedMBIndex = savedMBIndex;
-        selectedDBIndex = savedDBIndex;
+        removeDialog();
+        closed = true;
         dialog.setVisible(false);
     }
     @Override
@@ -402,7 +409,7 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
     public void windowActivated(WindowEvent e) {}
     @Override
     public void windowDeactivated(WindowEvent e) {}
-    void removeBriefingMapDialog() {
+    void removeDialog() {
         if(cancelBriefing != null) dialog.remove(cancelBriefing);
         if(saveBriefing != null) dialog.remove(saveBriefing);
         if(MDpanel != null) dialog.remove(MDpanel);

@@ -52,13 +52,6 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
     private JButton saveParams;
     private JButton cancelParams;
 
-    private int savedSkyIndex = 0;
-    private int savedMinBreak = 0;
-    private int savedMaxBreak = 0;
-    private int savedMovieIndex = 0;
-    private int savedEventLoopIndex = 0;
-    private int savedMusicIndex = 0;
-    private int savedSetIndex = 0;
     private int selectedSkyIndex = 0;
     private int selectedMinBreak = 0;
     private int selectedMaxBreak = 0;
@@ -66,6 +59,7 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
     private int selectedEventLoopIndex = 0;
     private int selectedMusicIndex = 0;
     private int selectedSetIndex = 0;
+    private boolean closed = true;
 
     public LevelParameters(MainWindow owner) {
         this.owner = owner;
@@ -84,12 +78,10 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
         movies[0] = "none"; movies[1] = "Intro"; movies[2] = "Tutorial 1"; movies[3] = "Tutorial 2"; movies[4] = "Tutorial 3"; movies[5] = "Ghorkov"; movies[6] = "Taerkasten"; movies[7] = "Mykonian"; movies[8] = "Sulgogar"; movies[9] = "Black sect"; movies[10] = "Lose"; movies[11] = "Win";
 
         musics[0] = "none"; musics[1] = "Track 2"; musics[2] = "Track 3"; musics[3] = "Track 4"; musics[4] = "Track 5"; musics[5] = "Track 6";
-
-        this.render();
     }
 
     public void render(){
-        removeParamsDialog();
+        removeDialog();
         dialog.setSize(700,500);
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
@@ -128,6 +120,25 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
         maxBreakValue.setText(Integer.toString(selectedMaxBreak));
         saveParams = new JButton("Save");
         cancelParams = new JButton("Cancel");
+
+        if(closed){
+            selectedSetIndex = EditorState.set - 1;
+            selectedMovieIndex = 0;
+            for(int i = 0; i < movies.length; i++) {
+                if(movies[i] == EditorState.movie) selectedMovieIndex = i;
+            }
+            selectedEventLoopIndex = EditorState.eventLoop;
+            for(int i = 0; i < skies.length; i++) {
+                if(skies[i] == EditorState.sky) selectedSkyIndex = i;
+            }
+            selectedMusicIndex = 0;
+            if(EditorState.music > 0) selectedMusicIndex = EditorState.music - 1;
+            selectedMinBreak = 0;
+            if(EditorState.min_break > 0) selectedMinBreak = EditorState.min_break;
+            selectedMaxBreak = 0;
+            if(EditorState.max_break > 0) selectedMaxBreak = EditorState.max_break;
+        }
+        closed = false;
 
         constraints.insets = new Insets(2,20,2,4);
         constraints.gridx = 0;
@@ -242,24 +253,6 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
 
         dialog.setVisible(true);
     }
-
-    public void reset() {
-        savedSkyIndex = 0;
-        savedMinBreak = 0;
-        savedMaxBreak = 0;
-        savedMovieIndex = 0;
-        savedEventLoopIndex = 0;
-        savedMusicIndex = 0;
-        savedSetIndex = 0;
-        selectedSkyIndex = 0;
-        selectedMinBreak = 0;
-        selectedMaxBreak = 0;
-        selectedMovieIndex = 0;
-        selectedEventLoopIndex = 0;
-        selectedMusicIndex = 0;
-        selectedSetIndex = 0;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == setList) {
@@ -285,17 +278,12 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
         if(e.getSource() == saveParams) {
             try
             {
-                savedSetIndex = selectedSetIndex;
-                EditorState.set = savedSetIndex + 1;
-                savedMovieIndex = selectedMovieIndex;
-                if(savedMovieIndex > 0) EditorState.movie = movies[savedMovieIndex];
+                EditorState.set = selectedSetIndex + 1;
+                if(selectedMovieIndex > 0) EditorState.movie = movies[selectedMovieIndex];
                 else EditorState.movie = "";
-                savedEventLoopIndex = selectedEventLoopIndex;
-                EditorState.eventLoop = savedEventLoopIndex;
-                savedSkyIndex = selectedSkyIndex;
-                EditorState.sky = skies[savedSkyIndex];
-                savedMusicIndex = selectedMusicIndex;
-                if(savedMusicIndex > 0) EditorState.music = savedMusicIndex + 1;
+                EditorState.eventLoop = selectedEventLoopIndex;
+                EditorState.sky = skies[selectedSkyIndex];
+                if(selectedMusicIndex > 0) EditorState.music = selectedMusicIndex + 1;
                 else EditorState.music = 0;
                 selectedMinBreak = Integer.parseInt(minBreakValue.getText());
                 selectedMaxBreak = Integer.parseInt(maxBreakValue.getText());
@@ -303,12 +291,11 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
                 if(selectedMinBreak > 1000000) selectedMinBreak = 1000000;
                 if(selectedMaxBreak < 0) selectedMaxBreak = -selectedMaxBreak;
                 if(selectedMaxBreak > 1000000) selectedMaxBreak = 1000000;
-                savedMinBreak = selectedMinBreak;
-                EditorState.min_break = savedMinBreak;
-                savedMaxBreak = selectedMaxBreak;
-                EditorState.max_break = savedMaxBreak;
+                EditorState.min_break = selectedMinBreak;
+                EditorState.max_break = selectedMinBreak;
                 if(musicPlayer != null)musicPlayer.close();
-                removeParamsDialog();
+                removeDialog();
+                closed = true;
                 dialog.setVisible(false);
                 this.owner.updateEditor();
             }catch(NumberFormatException ex) {
@@ -316,65 +303,33 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
             }
         }
         if(e.getSource() == cancelParams) {
-            selectedSetIndex = savedSetIndex;
-            selectedMovieIndex = savedMovieIndex;
-            selectedEventLoopIndex = savedEventLoopIndex;
-            selectedSkyIndex = savedSkyIndex;
-            selectedMusicIndex = savedMusicIndex;
-            selectedMinBreak = savedMinBreak;
-            selectedMaxBreak = savedMaxBreak;
             if(musicPlayer != null)musicPlayer.close();
-            removeParamsDialog();
+            removeDialog();
+            closed = true;
             dialog.setVisible(false);
         }
     }
-
     @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
+    public void windowOpened(WindowEvent e) {}
     @Override
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
-            selectedSetIndex = savedSetIndex;
-            selectedMovieIndex = savedMovieIndex;
-            selectedEventLoopIndex = savedEventLoopIndex;
-            selectedSkyIndex = savedSkyIndex;
-            selectedMusicIndex = savedMusicIndex;
-            selectedMinBreak = savedMinBreak;
-            selectedMaxBreak = savedMaxBreak;
             if(musicPlayer != null)musicPlayer.close();
-            removeParamsDialog();
+            removeDialog();
+            closed = true;
             dialog.setVisible(false);
         }
     }
-
     @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
+    public void windowClosed(WindowEvent e) {}
     @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
+    public void windowIconified(WindowEvent e) {}
     @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
+    public void windowDeiconified(WindowEvent e) {}
     @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
+    public void windowActivated(WindowEvent e) {}
     @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
-
+    public void windowDeactivated(WindowEvent e) {}
     @Override
     public void stateChanged(ChangeEvent e) {
         if(e.getSource() == minBreakSlider) {
@@ -450,7 +405,7 @@ public class LevelParameters implements WindowListener, ActionListener, ChangeLi
 
         };
     }
-    void removeParamsDialog() {
+    void removeDialog() {
         if(cancelParams != null) dialog.remove(cancelParams);
         if(saveParams != null) dialog.remove(saveParams);
         if(musicPanel != null) dialog.remove(musicPanel);

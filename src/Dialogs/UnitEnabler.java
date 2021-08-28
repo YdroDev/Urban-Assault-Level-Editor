@@ -397,7 +397,7 @@ public class UnitEnabler implements WindowListener, ActionListener {
             enableUnits(EditorState.resistanceUnits);
             enableBuildings(EditorState.resistanceBuildings);
 
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
             window.makeUnsaved();
         }
@@ -408,7 +408,7 @@ public class UnitEnabler implements WindowListener, ActionListener {
             enableUnits(EditorState.ghorkovUnits);
             enableBuildings(EditorState.ghorkovBuildings);
 
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
             window.makeUnsaved();
         }
@@ -419,7 +419,7 @@ public class UnitEnabler implements WindowListener, ActionListener {
             enableUnits(EditorState.taerkastenUnits);
             enableBuildings(EditorState.taerkastenBuildings);
 
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
             window.makeUnsaved();
         }
@@ -430,7 +430,7 @@ public class UnitEnabler implements WindowListener, ActionListener {
             enableUnits(EditorState.mykonianUnits);
             enableBuildings(EditorState.mykonianBuildings);
 
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
             window.makeUnsaved();
         }
@@ -441,7 +441,7 @@ public class UnitEnabler implements WindowListener, ActionListener {
             enableUnits(EditorState.sulgogarUnits);
             enableBuildings(EditorState.sulgogarBuildings);
 
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
             window.makeUnsaved();
         }
@@ -452,7 +452,7 @@ public class UnitEnabler implements WindowListener, ActionListener {
             enableUnits(EditorState.blackSectUnits);
             enableBuildings(EditorState.blackSectBuildings);
 
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
             window.makeUnsaved();
         }
@@ -463,13 +463,13 @@ public class UnitEnabler implements WindowListener, ActionListener {
             enableUnits(EditorState.trainingUnits);
             enableBuildings(EditorState.trainingBuildings);
 
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
             window.makeUnsaved();
         }
 
         if(e.getSource() == cancelEnabler) {
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
         if(e.getSource() == unlocker) {
@@ -477,45 +477,26 @@ public class UnitEnabler implements WindowListener, ActionListener {
             else lock();
         }
     }
-
     @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
+    public void windowOpened(WindowEvent e) {}
     @Override
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
-            removeEnablerDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
     }
-
     @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
+    public void windowClosed(WindowEvent e) {}
     @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
+    public void windowIconified(WindowEvent e) {}
     @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
+    public void windowDeiconified(WindowEvent e) {}
     @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
+    public void windowActivated(WindowEvent e) {}
     @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
-    void removeEnablerDialog() {
+    public void windowDeactivated(WindowEvent e) {}
+    void removeDialog() {
         if(cancelEnabler != null) dialog.remove(cancelEnabler);
         if(trainingSaveEnabler != null) dialog.remove(trainingSaveEnabler);
         if(ghorSaveEnabler != null) dialog.remove(ghorSaveEnabler);

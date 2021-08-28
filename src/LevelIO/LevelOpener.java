@@ -16,7 +16,6 @@ public abstract class LevelOpener {
             stringData = "";
 
             do {
-                checkGameContentBasedOnHSvehicleID();
                 handleTypMap();
                 handleOwnMap();
                 handleHgtMap();
@@ -52,7 +51,6 @@ public abstract class LevelOpener {
         }
     }
 
-    abstract void checkGameContentBasedOnHSvehicleID();
     abstract void handleTypMap();
     abstract void handleOwnMap();
     abstract void handleHgtMap();

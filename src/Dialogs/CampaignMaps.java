@@ -84,6 +84,7 @@ public class CampaignMaps implements WindowListener, ActionListener {
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
             removeDialog();
+            dialog.setVisible(false);
         }
     }
     @Override

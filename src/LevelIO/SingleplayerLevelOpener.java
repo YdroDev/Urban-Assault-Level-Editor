@@ -9,42 +9,6 @@ import java.util.ArrayList;
 
 public class SingleplayerLevelOpener extends LevelOpener{
 
-    void checkGameContentBasedOnHSvehicleID() {
-        if(stringData.contains("begin_robo")) {
-            try{
-                if(stringData.contains(";")) {
-                    stringData = stringData.substring(0, stringData.indexOf(';'));
-                    stringData = stringData.trim();
-                }
-                if(stringData.equals("")) return;
-                int vehicle = 0;
-
-                while(!stringData.trim().contentEquals("end")) {
-
-                    if(stringData.contains("vehicle")) {
-                        stringData = stringData.replace("vehicle", "");
-                        stringData = stringData.trim();
-                        stringData = stringData.replace("=", "");
-                        stringData = stringData.trim();
-                        if(stringData.contains(";")) {
-                            stringData = stringData.substring(0, stringData.indexOf(';'));
-                            stringData = stringData.trim();
-                        }
-                        if(!stringData.equals("")) {
-                            vehicle = Integer.parseInt(stringData);
-                            if(vehicle == 176 || vehicle == 177 || vehicle == 178) {
-                                EditorState.gameContent = 1;
-                            }
-                        }
-                    }
-                    stringData = mapOpener.readLine();
-                    stringData = stringData.toLowerCase().trim();
-                }
-            }catch(IOException ex) {
-                JOptionPane.showMessageDialog(null,"An I/O Error Occurred while opening the file", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
     void handleTypMap() {
         if(stringData.contains("typ_map")) {
             try{
@@ -153,13 +117,13 @@ public class SingleplayerLevelOpener extends LevelOpener{
             stringData = mapOpener.readLine();
             stringData = mapOpener.readLine();
             stringData = mapOpener.readLine();
-            String descString = "";
+            StringBuilder descString = new StringBuilder();
             while(stringData.length() > 0 && stringData.charAt(0) == ';') {
-                descString += stringData.substring(1);
-                descString += "\n";
+                descString.append(stringData.substring(1));
+                descString.append("\n");
                 stringData = mapOpener.readLine();
             }
-            EditorState.description = descString;
+            EditorState.description = descString.toString();
         }catch(IOException ex) {
             JOptionPane.showMessageDialog(null,"An I/O Error Occurred while opening the file", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -370,9 +334,9 @@ public class SingleplayerLevelOpener extends LevelOpener{
                 int secY = 0;
                 int closedBG = 0;
                 int openedBG = 0;
-                ArrayList<Integer> keysecX = new ArrayList<Integer>();
-                ArrayList<Integer> keysecY = new ArrayList<Integer>();
-                ArrayList<Integer> targetLevels = new ArrayList<Integer>();
+                ArrayList<Integer> keysecX = new ArrayList<>();
+                ArrayList<Integer> keysecY = new ArrayList<>();
+                ArrayList<Integer> targetLevels = new ArrayList<>();
                 boolean mbStatus = true;
 
                 while(!stringData.trim().contentEquals("end")) {
@@ -475,7 +439,7 @@ public class SingleplayerLevelOpener extends LevelOpener{
                 newBeamGate.setClosedType(closedBG);
                 newBeamGate.setOpenedType(openedBG);
                 for(int i = 0; i < keysecX.size(); i++) newBeamGate.addKeysector(keysecX.get(i), keysecY.get(i));
-                for(int i = 0; i < targetLevels.size(); i++) newBeamGate.getTargetLevel().add(targetLevels.get(i));
+                for (Integer targetLevel : targetLevels) newBeamGate.getTargetLevel().add(targetLevel);
                 if(!mbStatus) newBeamGate.setVisibility(false);
                 EditorState.beamGates.add(newBeamGate);
             }catch(IOException ex) {
@@ -1120,14 +1084,14 @@ public class SingleplayerLevelOpener extends LevelOpener{
     void handleModifications() {
         if(stringData.contains("include")) {
             try{
-                String modsString = "";
+                StringBuilder modsString = new StringBuilder();
                 if(stringData.contains(";")) {
                     stringData = stringData.substring(0, stringData.indexOf(';'));
                     stringData = stringData.trim();
                 }
                 if(!stringData.equals("")) {
-                    modsString = "";
-                    modsString += stringData;
+                    modsString = new StringBuilder();
+                    modsString.append(stringData);
                 }
                 stringData = mapOpener.readLine();
                 if(stringData.contains(";")) {
@@ -1135,8 +1099,8 @@ public class SingleplayerLevelOpener extends LevelOpener{
                     stringData = stringData.trim();
                 }
                 while(true) {
-                    modsString += "\n";
-                    modsString += stringData;
+                    modsString.append("\n");
+                    modsString.append(stringData);
 
 
                     stringData = mapOpener.readLine();
@@ -1148,7 +1112,7 @@ public class SingleplayerLevelOpener extends LevelOpener{
                         stringData = stringData.trim();
                     }
                 }
-                EditorState.prototypeModifications = modsString;
+                EditorState.prototypeModifications = modsString.toString();
             }catch(IOException ex) {
                 JOptionPane.showMessageDialog(null,"An I/O Error Occurred while opening the file", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1158,7 +1122,7 @@ public class SingleplayerLevelOpener extends LevelOpener{
     void handlePrototypeEnabling() {
         if(stringData.contains("begin_enable")) {
             try{
-                int enabler = 0;
+                int enabler;
                 if(stringData.contains(";")) {
                     stringData = stringData.substring(0, stringData.indexOf(';'));
                     stringData = stringData.trim();
@@ -1299,8 +1263,8 @@ public class SingleplayerLevelOpener extends LevelOpener{
                             stringData = stringData.trim();
                         }
                         if(!stringData.equals("")) {
-                            ArrayList<Integer> modifyVehicle = new ArrayList<Integer>();
-                            ArrayList<Integer> modifyBuilding = new ArrayList<Integer>();
+                            ArrayList<Integer> modifyVehicle = new ArrayList<>();
+                            ArrayList<Integer> modifyBuilding = new ArrayList<>();
 
                             while(!stringData.trim().contentEquals("end_action")) {
 

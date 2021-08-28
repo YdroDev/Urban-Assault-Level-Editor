@@ -16,11 +16,9 @@ public class PlayerHostStation implements WindowListener, ActionListener {
     private final JDialog dialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
 
-    private int playerGridy;
     private JLabel playerHSLabel;
     private JPanel hsListPanel;
-    private ArrayList<JRadioButton> availableHS;
-    private ButtonGroup playerHSgroup;
+    private final ArrayList<JRadioButton> availableHS;
     private JLabel noHSavailable;
     private JButton savePlayer;
     private JButton cancelPlayer;
@@ -30,10 +28,10 @@ public class PlayerHostStation implements WindowListener, ActionListener {
         dialog = new JDialog(this.window, "Select Host Station for player", Dialog.ModalityType.DOCUMENT_MODAL);
         dialog.addWindowListener(this);
 
-        availableHS = new ArrayList<JRadioButton>();
+        availableHS = new ArrayList<>();
     }
     public void render() {
-        removePlayerHSDialog();
+        removeDialog();
         dialog.setSize(300, 400);
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
@@ -46,9 +44,9 @@ public class PlayerHostStation implements WindowListener, ActionListener {
         dialog.add(playerHSLabel, constraints);
         constraints.gridwidth = 1;
         hsListPanel = new JPanel(new GridBagLayout());
-        playerHSgroup = new ButtonGroup();
+        ButtonGroup playerHSgroup = new ButtonGroup();
         constraints.insets = new Insets(10,1,10,1);
-        playerGridy = 1;
+        int playerGridy = 1;
         constraints.gridy = playerGridy;
         if(EditorState.hostStations.isEmpty()) {
             noHSavailable = new JLabel("No Host Station available");
@@ -108,13 +106,13 @@ public class PlayerHostStation implements WindowListener, ActionListener {
                 if(availableHS.get(i).isSelected())
                     EditorState.playerSelected = i;
             }
-            removePlayerHSDialog();
+            removeDialog();
             dialog.setVisible(false);
             this.window.makeUnsaved();
         }
 
         if(e.getSource() == cancelPlayer) {
-            removePlayerHSDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
     }
@@ -126,7 +124,7 @@ public class PlayerHostStation implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
-            removePlayerHSDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
     }
@@ -155,7 +153,7 @@ public class PlayerHostStation implements WindowListener, ActionListener {
     public void windowDeactivated(WindowEvent e) {
 
     }
-    void removePlayerHSDialog() {
+    void removeDialog() {
         if(cancelPlayer != null) dialog.remove(cancelPlayer);
         if(savePlayer != null) dialog.remove(savePlayer);
         if(noHSavailable != null) dialog.remove(noHSavailable);
