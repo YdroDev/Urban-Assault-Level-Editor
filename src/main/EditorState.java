@@ -64,6 +64,13 @@ public class EditorState {
     public static ArrayList<Integer> hgt_map = new ArrayList<>();
     public static ArrayList<Integer> blg_map = new ArrayList<>();
 
+    public static BeamGate getBeamGate(int x, int y) {
+        for(BeamGate bg : beamGates) {
+            if(bg.getX() == x && bg.getY() == y) return bg;
+        }
+        return null;
+    }
+
     public static void resetState() {
         isSaved = true;
         playerSelected = 0;

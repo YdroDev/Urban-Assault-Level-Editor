@@ -395,201 +395,201 @@ public class GameMap extends JComponent{
 		for(int i = 0;i < verticalGrid; i++) {
 			hSize = leftCorner;
 			for(int j = 0;j < horizontalGrid; j++) {
-				sector = new Rectangle2D.Float(hSize, vSize, size, size);
-				if(own_map.get(sectorCounter) == 0) {
+				sector = new Rectangle2D.Float(hSize, vSize, EditorState.sectorSize, EditorState.sectorSize);
+				if(EditorState.own_map.get(sectorCounter) == 0) {
 					drawMap.setColor(Color.BLACK);
-				}else if(own_map.get(sectorCounter) == 1) {
+				}else if(EditorState.own_map.get(sectorCounter) == 1) {
 					drawMap.setColor(Color.BLUE);
-				}else if(own_map.get(sectorCounter) == 2) {
+				}else if(EditorState.own_map.get(sectorCounter) == 2) {
 					drawMap.setColor(Color.GREEN);
-				}else if(own_map.get(sectorCounter) == 3) {
+				}else if(EditorState.own_map.get(sectorCounter) == 3) {
 					drawMap.setColor(Color.WHITE);
-				}else if(own_map.get(sectorCounter) == 4) {
+				}else if(EditorState.own_map.get(sectorCounter) == 4) {
 					drawMap.setColor(Color.YELLOW);
-				}else if(own_map.get(sectorCounter) == 5) {
+				}else if(EditorState.own_map.get(sectorCounter) == 5) {
 					drawMap.setColor(Color.GRAY);
-				}else if(own_map.get(sectorCounter) == 6) {
+				}else if(EditorState.own_map.get(sectorCounter) == 6) {
 					drawMap.setColor(Color.RED);
-				}else if(own_map.get(sectorCounter) == 7) {
+				}else if(EditorState.own_map.get(sectorCounter) == 7) {
 					drawMap.setColor(Color.BLACK);
 				}
 				
 				
-				if(getMapSet() == 0) {
-					if(typ_map.get(sectorCounter) > 53 && typ_map.get(sectorCounter) < 59) 
+				if(EditorState.set == 1) {
+					if(EditorState.typ_map.get(sectorCounter) > 53 && EditorState.typ_map.get(sectorCounter) < 59)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 59 && typ_map.get(sectorCounter) < 66) 
+					if(EditorState.typ_map.get(sectorCounter) > 59 && EditorState.typ_map.get(sectorCounter) < 66)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 82 && typ_map.get(sectorCounter) < 95) 
+					if(EditorState.typ_map.get(sectorCounter) > 82 && EditorState.typ_map.get(sectorCounter) < 95)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 104 && typ_map.get(sectorCounter) < 110) 
+					if(EditorState.typ_map.get(sectorCounter) > 104 && EditorState.typ_map.get(sectorCounter) < 110)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 113 && typ_map.get(sectorCounter) < 120) 
+					if(EditorState.typ_map.get(sectorCounter) > 113 && EditorState.typ_map.get(sectorCounter) < 120)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 121 && typ_map.get(sectorCounter) < 130) 
+					if(EditorState.typ_map.get(sectorCounter) > 121 && EditorState.typ_map.get(sectorCounter) < 130)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 141 && typ_map.get(sectorCounter) < 150) 
+					if(EditorState.typ_map.get(sectorCounter) > 141 && EditorState.typ_map.get(sectorCounter) < 150)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 189 && typ_map.get(sectorCounter) < 198) 
+					if(EditorState.typ_map.get(sectorCounter) > 189 && EditorState.typ_map.get(sectorCounter) < 198)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 205 && typ_map.get(sectorCounter) < 207) 
+					if(EditorState.typ_map.get(sectorCounter) > 205 && EditorState.typ_map.get(sectorCounter) < 207)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 208 && typ_map.get(sectorCounter) < 228) 
+					if(EditorState.typ_map.get(sectorCounter) > 208 && EditorState.typ_map.get(sectorCounter) < 228)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 236 && typ_map.get(sectorCounter) < 239) 
-						error_map.set(sectorCounter, true);
-					
-					if(!error_map.get(sectorCounter) && mainwindow.IsImgEnabled())
-						drawMap.drawImage(set1Images[typ_map.get(sectorCounter)], hSize, vSize, this);
-				}else if(getMapSet() == 1) {
-					if(typ_map.get(sectorCounter) > 24 && typ_map.get(sectorCounter) < 27) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 104 && typ_map.get(sectorCounter) < 110) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 113 && typ_map.get(sectorCounter) < 118) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 131 && typ_map.get(sectorCounter) < 133) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 133 && typ_map.get(sectorCounter) < 150) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 195 && typ_map.get(sectorCounter) < 198) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 205 && typ_map.get(sectorCounter) < 207) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 208 && typ_map.get(sectorCounter) < 210) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 225 && typ_map.get(sectorCounter) < 228) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 230 && typ_map.get(sectorCounter) < 239) 
+					if(EditorState.typ_map.get(sectorCounter) > 236 && EditorState.typ_map.get(sectorCounter) < 239)
 						error_map.set(sectorCounter, true);
 					
 					if(!error_map.get(sectorCounter) && mainwindow.IsImgEnabled())
-						drawMap.drawImage(set2Images[typ_map.get(sectorCounter)], hSize, vSize, this);
-				}else if(getMapSet() == 2) {
-					if(typ_map.get(sectorCounter) > 49 && typ_map.get(sectorCounter) < 59) 
+						drawMap.drawImage(set1Images[EditorState.typ_map.get(sectorCounter)], hSize, vSize, this);
+				}else if(EditorState.set == 2) {
+					if(EditorState.typ_map.get(sectorCounter) > 24 && EditorState.typ_map.get(sectorCounter) < 27)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 59 && typ_map.get(sectorCounter) < 66) 
+					if(EditorState.typ_map.get(sectorCounter) > 104 && EditorState.typ_map.get(sectorCounter) < 110)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 82 && typ_map.get(sectorCounter) < 100) 
+					if(EditorState.typ_map.get(sectorCounter) > 113 && EditorState.typ_map.get(sectorCounter) < 118)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 104 && typ_map.get(sectorCounter) < 110) 
+					if(EditorState.typ_map.get(sectorCounter) > 131 && EditorState.typ_map.get(sectorCounter) < 133)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 113 && typ_map.get(sectorCounter) < 121) 
+					if(EditorState.typ_map.get(sectorCounter) > 133 && EditorState.typ_map.get(sectorCounter) < 150)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 121 && typ_map.get(sectorCounter) < 130) 
+					if(EditorState.typ_map.get(sectorCounter) > 195 && EditorState.typ_map.get(sectorCounter) < 198)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 141 && typ_map.get(sectorCounter) < 150) 
+					if(EditorState.typ_map.get(sectorCounter) > 205 && EditorState.typ_map.get(sectorCounter) < 207)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 189 && typ_map.get(sectorCounter) < 198) 
+					if(EditorState.typ_map.get(sectorCounter) > 208 && EditorState.typ_map.get(sectorCounter) < 210)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 205 && typ_map.get(sectorCounter) < 207) 
+					if(EditorState.typ_map.get(sectorCounter) > 225 && EditorState.typ_map.get(sectorCounter) < 228)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 208 && typ_map.get(sectorCounter) < 228) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 230 && typ_map.get(sectorCounter) < 239) 
+					if(EditorState.typ_map.get(sectorCounter) > 230 && EditorState.typ_map.get(sectorCounter) < 239)
 						error_map.set(sectorCounter, true);
 					
 					if(!error_map.get(sectorCounter) && mainwindow.IsImgEnabled())
-						drawMap.drawImage(set3Images[typ_map.get(sectorCounter)], hSize, vSize, this);
-				}else if(getMapSet() == 3) {
-					if(typ_map.get(sectorCounter) > 49 && typ_map.get(sectorCounter) < 59) 
+						drawMap.drawImage(set2Images[EditorState.typ_map.get(sectorCounter)], hSize, vSize, this);
+				}else if(EditorState.set == 3) {
+					if(EditorState.typ_map.get(sectorCounter) > 49 && EditorState.typ_map.get(sectorCounter) < 59)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 60 && typ_map.get(sectorCounter) < 66) 
+					if(EditorState.typ_map.get(sectorCounter) > 59 && EditorState.typ_map.get(sectorCounter) < 66)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 82 && typ_map.get(sectorCounter) < 100) 
+					if(EditorState.typ_map.get(sectorCounter) > 82 && EditorState.typ_map.get(sectorCounter) < 100)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 104 && typ_map.get(sectorCounter) < 110) 
+					if(EditorState.typ_map.get(sectorCounter) > 104 && EditorState.typ_map.get(sectorCounter) < 110)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 113 && typ_map.get(sectorCounter) < 121) 
+					if(EditorState.typ_map.get(sectorCounter) > 113 && EditorState.typ_map.get(sectorCounter) < 121)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 121 && typ_map.get(sectorCounter) < 130) 
+					if(EditorState.typ_map.get(sectorCounter) > 121 && EditorState.typ_map.get(sectorCounter) < 130)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 141 && typ_map.get(sectorCounter) < 150) 
+					if(EditorState.typ_map.get(sectorCounter) > 141 && EditorState.typ_map.get(sectorCounter) < 150)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 189 && typ_map.get(sectorCounter) < 198) 
+					if(EditorState.typ_map.get(sectorCounter) > 189 && EditorState.typ_map.get(sectorCounter) < 198)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 205 && typ_map.get(sectorCounter) < 207) 
+					if(EditorState.typ_map.get(sectorCounter) > 205 && EditorState.typ_map.get(sectorCounter) < 207)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 208 && typ_map.get(sectorCounter) < 228) 
+					if(EditorState.typ_map.get(sectorCounter) > 208 && EditorState.typ_map.get(sectorCounter) < 228)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 230 && typ_map.get(sectorCounter) < 239) 
-						error_map.set(sectorCounter, true);
-					
-					if(!error_map.get(sectorCounter) && mainwindow.IsImgEnabled())
-						drawMap.drawImage(set4Images[typ_map.get(sectorCounter)], hSize, vSize, this);
-				}else if(getMapSet() == 4) {
-					if(typ_map.get(sectorCounter) > 95 && typ_map.get(sectorCounter) < 97) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 116 && typ_map.get(sectorCounter) < 118) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 131 && typ_map.get(sectorCounter) < 133) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 137 && typ_map.get(sectorCounter) < 150) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 191 && typ_map.get(sectorCounter) < 198) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 205 && typ_map.get(sectorCounter) < 207) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 208 && typ_map.get(sectorCounter) < 210) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 225 && typ_map.get(sectorCounter) < 228) 
-						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 230 && typ_map.get(sectorCounter) < 239) 
+					if(EditorState.typ_map.get(sectorCounter) > 230 && EditorState.typ_map.get(sectorCounter) < 239)
 						error_map.set(sectorCounter, true);
 					
 					if(!error_map.get(sectorCounter) && mainwindow.IsImgEnabled())
-						drawMap.drawImage(set5Images[typ_map.get(sectorCounter)], hSize, vSize, this);
-				}else if(getMapSet() == 5) {
-					if(typ_map.get(sectorCounter) > 49 && typ_map.get(sectorCounter) < 59) 
+						drawMap.drawImage(set3Images[EditorState.typ_map.get(sectorCounter)], hSize, vSize, this);
+				}else if(EditorState.set == 4) {
+					if(EditorState.typ_map.get(sectorCounter) > 49 && EditorState.typ_map.get(sectorCounter) < 59)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 59 && typ_map.get(sectorCounter) < 66) 
+					if(EditorState.typ_map.get(sectorCounter) > 60 && EditorState.typ_map.get(sectorCounter) < 66)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 82 && typ_map.get(sectorCounter) < 95) 
+					if(EditorState.typ_map.get(sectorCounter) > 82 && EditorState.typ_map.get(sectorCounter) < 100)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 104 && typ_map.get(sectorCounter) < 110) 
+					if(EditorState.typ_map.get(sectorCounter) > 104 && EditorState.typ_map.get(sectorCounter) < 110)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 113 && typ_map.get(sectorCounter) < 121) 
+					if(EditorState.typ_map.get(sectorCounter) > 113 && EditorState.typ_map.get(sectorCounter) < 121)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 121 && typ_map.get(sectorCounter) < 130) 
+					if(EditorState.typ_map.get(sectorCounter) > 121 && EditorState.typ_map.get(sectorCounter) < 130)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 141 && typ_map.get(sectorCounter) < 150) 
+					if(EditorState.typ_map.get(sectorCounter) > 141 && EditorState.typ_map.get(sectorCounter) < 150)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 189 && typ_map.get(sectorCounter) < 198) 
+					if(EditorState.typ_map.get(sectorCounter) > 189 && EditorState.typ_map.get(sectorCounter) < 198)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 205 && typ_map.get(sectorCounter) < 207) 
+					if(EditorState.typ_map.get(sectorCounter) > 205 && EditorState.typ_map.get(sectorCounter) < 207)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 208 && typ_map.get(sectorCounter) < 228) 
+					if(EditorState.typ_map.get(sectorCounter) > 208 && EditorState.typ_map.get(sectorCounter) < 228)
 						error_map.set(sectorCounter, true);
-					if(typ_map.get(sectorCounter) > 235 && typ_map.get(sectorCounter) < 239) 
+					if(EditorState.typ_map.get(sectorCounter) > 230 && EditorState.typ_map.get(sectorCounter) < 239)
 						error_map.set(sectorCounter, true);
 					
 					if(!error_map.get(sectorCounter) && mainwindow.IsImgEnabled())
-						drawMap.drawImage(set6Images[typ_map.get(sectorCounter)], hSize, vSize, this);
+						drawMap.drawImage(set4Images[EditorState.typ_map.get(sectorCounter)], hSize, vSize, this);
+				}else if(EditorState.set == 5) {
+					if(EditorState.typ_map.get(sectorCounter) > 95 && EditorState.typ_map.get(sectorCounter) < 97)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 116 && EditorState.typ_map.get(sectorCounter) < 118)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 131 && EditorState.typ_map.get(sectorCounter) < 133)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 137 && EditorState.typ_map.get(sectorCounter) < 150)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 191 && EditorState.typ_map.get(sectorCounter) < 198)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 205 && EditorState.typ_map.get(sectorCounter) < 207)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 208 && EditorState.typ_map.get(sectorCounter) < 210)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 225 && EditorState.typ_map.get(sectorCounter) < 228)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 230 && EditorState.typ_map.get(sectorCounter) < 239)
+						error_map.set(sectorCounter, true);
+					
+					if(!error_map.get(sectorCounter) && mainwindow.IsImgEnabled())
+						drawMap.drawImage(set5Images[EditorState.typ_map.get(sectorCounter)], hSize, vSize, this);
+				}else if(EditorState.set == 6) {
+					if(EditorState.typ_map.get(sectorCounter) > 49 && EditorState.typ_map.get(sectorCounter) < 59)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 59 && EditorState.typ_map.get(sectorCounter) < 66)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 82 && EditorState.typ_map.get(sectorCounter) < 95)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 104 && EditorState.typ_map.get(sectorCounter) < 110)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 113 && EditorState.typ_map.get(sectorCounter) < 121)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 121 && EditorState.typ_map.get(sectorCounter) < 130)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 141 && EditorState.typ_map.get(sectorCounter) < 150)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 189 && EditorState.typ_map.get(sectorCounter) < 198)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 205 && EditorState.typ_map.get(sectorCounter) < 207)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 208 && EditorState.typ_map.get(sectorCounter) < 228)
+						error_map.set(sectorCounter, true);
+					if(EditorState.typ_map.get(sectorCounter) > 235 && EditorState.typ_map.get(sectorCounter) < 239)
+						error_map.set(sectorCounter, true);
+					
+					if(!error_map.get(sectorCounter) && mainwindow.IsImgEnabled())
+						drawMap.drawImage(set6Images[EditorState.typ_map.get(sectorCounter)], hSize, vSize, this);
 				}
 				
 				for(UAitem building : UAdata.allBuildings) {
-					if(blg_map.get(sectorCounter) == building.getID())
+					if(EditorState.blg_map.get(sectorCounter) == building.getID())
 						drawMap.drawImage(building.getImg(), hSize, vSize, this);
 				}
 				for(UAitem building : UAdata.fallbackBuildings) {
-					if(blg_map.get(sectorCounter) == building.getID())
+					if(EditorState.blg_map.get(sectorCounter) == building.getID())
 						drawMap.drawImage(building.getImg(), hSize, vSize, this);
 				}
 				
-				if(getBeamGate(j+1, i+1) != null) {
-					if(getBeamGate(j+1, i+1).getTargetLevel().size() == 0)
+				if(EditorState.getBeamGate(j+1, i+1) != null) {
+					if(EditorState.getBeamGate(j+1, i+1).getTargetLevel().size() == 0)
 						error_map.set(sectorCounter, true);
 				}	
 				
 				sectorCounter++;
 				drawMap.draw(sector);
-				hSize += size;
-				hSize += mapIndent;
+				hSize += EditorState.sectorSize;
+				hSize += EditorState.sectorIndent;
 			}
 
 			hSize = 0;
-			vSize += size;
-			vSize += mapIndent;
+			vSize += EditorState.sectorSize;
+			vSize += EditorState.sectorIndent;
 		}
 
 		borderSectorCounter = 0;
@@ -599,61 +599,61 @@ public class GameMap extends JComponent{
 			for(int i = 0; i < (verticalGrid + 2); i++) {
 				for(int j = 0; j < (horizontalGrid + 2); j++) {
 					if((borderSectorCounter - (horizontalGrid+2)) >= 0) {
-						if(this.hgt_map.get(borderSectorCounter) - this.hgt_map.get(borderSectorCounter - (horizontalGrid+2)) > 4) {
+						if(EditorState.hgt_map.get(borderSectorCounter) - EditorState.hgt_map.get(borderSectorCounter - (horizontalGrid+2)) > 4) {
 							drawMap.setColor(Color.CYAN);
 							drawMap.setStroke(new BasicStroke(4));
-							drawMap.drawLine((int)(hSize + (size * 0.07)), (int)(vSize + (size * 0.07)), (int)(hSize + (size * 0.93)), (int)(vSize + (size * 0.07)));
+							drawMap.drawLine((int)(hSize + (EditorState.sectorSize * 0.07)), (int)(vSize + (EditorState.sectorSize * 0.07)), (int)(hSize + (EditorState.sectorSize * 0.93)), (int)(vSize + (EditorState.sectorSize * 0.07)));
 						}
 					}
-					if((borderSectorCounter + 1) < hgt_map.size() && ((horizontalGrid + 2) - j) != 1) {
-						if(this.hgt_map.get(borderSectorCounter) - this.hgt_map.get(borderSectorCounter+1) > 4) {
+					if((borderSectorCounter + 1) < EditorState.hgt_map.size() && ((horizontalGrid + 2) - j) != 1) {
+						if(EditorState.hgt_map.get(borderSectorCounter) - EditorState.hgt_map.get(borderSectorCounter+1) > 4) {
 							drawMap.setColor(Color.CYAN);
 							drawMap.setStroke(new BasicStroke(4));
-							drawMap.drawLine((int)(hSize + (size * 0.93)), (int)(vSize + (size * 0.07)), (int)(hSize + (size * 0.93)), (int)(vSize + (size * 0.93)));
+							drawMap.drawLine((int)(hSize + (EditorState.sectorSize * 0.93)), (int)(vSize + (EditorState.sectorSize * 0.07)), (int)(hSize + (EditorState.sectorSize * 0.93)), (int)(vSize + (EditorState.sectorSize * 0.93)));
 						}
 					}
-					if(borderSectorCounter + (horizontalGrid + 2) < hgt_map.size()) {
-						if(this.hgt_map.get(borderSectorCounter) - this.hgt_map.get(borderSectorCounter+(horizontalGrid + 2)) > 4) {
+					if(borderSectorCounter + (horizontalGrid + 2) < EditorState.hgt_map.size()) {
+						if(EditorState.hgt_map.get(borderSectorCounter) - EditorState.hgt_map.get(borderSectorCounter+(horizontalGrid + 2)) > 4) {
 							drawMap.setColor(Color.CYAN);
 							drawMap.setStroke(new BasicStroke(4));
-							drawMap.drawLine((int)(hSize + (size * 0.07)), (int)(vSize + (size * 0.93)), (int)(hSize + (size * 0.93)), (int)(vSize + (size * 0.93)));
+							drawMap.drawLine((int)(hSize + (EditorState.sectorSize * 0.07)), (int)(vSize + (EditorState.sectorSize * 0.93)), (int)(hSize + (EditorState.sectorSize * 0.93)), (int)(vSize + (EditorState.sectorSize * 0.93)));
 						}
 					}
 					if((borderSectorCounter - 1) >= 0 && j != 0) {
-						if(this.hgt_map.get(borderSectorCounter) - this.hgt_map.get(borderSectorCounter-1) > 4) {
+						if(EditorState.hgt_map.get(borderSectorCounter) - EditorState.hgt_map.get(borderSectorCounter-1) > 4) {
 							drawMap.setColor(Color.CYAN);
 							drawMap.setStroke(new BasicStroke(4));
-							drawMap.drawLine((int)(hSize + (size * 0.07)), (int)(vSize + (size * 0.07)), (int)(hSize + (size * 0.07)), (int)(vSize + (size * 0.93)));
+							drawMap.drawLine((int)(hSize + (EditorState.sectorSize * 0.07)), (int)(vSize + (EditorState.sectorSize * 0.07)), (int)(hSize + (EditorState.sectorSize * 0.07)), (int)(vSize + (EditorState.sectorSize * 0.93)));
 						}
 					}
 					
 					borderSectorCounter++;
-					hSize += size;
-					hSize += mapIndent;
+					hSize += EditorState.sectorSize;
+					hSize += EditorState.sectorIndent;
 				}
-				vSize += size;
-				vSize += mapIndent;
+				vSize += EditorState.sectorSize;
+				vSize += EditorState.sectorIndent;
 				hSize = 0;
 			}
 		}
 		
-		for(BeamGate bg : beamgates) {
+		for(BeamGate bg : EditorState.beamGates) {
 			hSize = leftCorner;
 			vSize = topCorner;
 			if(bg.getX() > 1) {
 				for(int i = 2;i <= bg.getX(); i++) {
-					hSize += size;
-					hSize += mapIndent;
+					hSize += EditorState.sectorSize;
+					hSize += EditorState.sectorIndent;
 				}
 			}
 			if(bg.getY() > 1) {
 				for(int i = 2;i <= bg.getY(); i++) {
-					vSize += size;
-					vSize += mapIndent;
+					vSize += EditorState.sectorSize;
+					vSize += EditorState.sectorIndent;
 				}
 			}
 
-			bg.resize(size, size);
+			bg.resize(EditorState.sectorSize, EditorState.sectorSize);
 			drawMap.drawImage(bg.getImage(), hSize, vSize, this);
 			
 			for(SpecialBuilding keysector : bg.getKeysectors()) {
@@ -661,39 +661,39 @@ public class GameMap extends JComponent{
 				vSize = topCorner;
 				if(keysector.getX() > 1) {
 					for(int i = 2;i <= keysector.getX(); i++) {
-						hSize += size;
-						hSize += mapIndent;
+						hSize += EditorState.sectorSize;
+						hSize += EditorState.sectorIndent;
 					}
 				}
 				if(keysector.getY() > 1) {
 					for(int i = 2;i <= keysector.getY(); i++) {
-						vSize += size;
-						vSize += mapIndent;
+						vSize += EditorState.sectorSize;
+						vSize += EditorState.sectorIndent;
 					}
 				}
 				
-				keysector.resize(size, size);
+				keysector.resize(EditorState.sectorSize, EditorState.sectorSize);
 				drawMap.drawImage(keysector.getImg(), hSize, vSize, this);
 			}
 		}
 		
-		for(StoudsonBomb bomb : bombs) {
+		for(StoudsonBomb bomb : EditorState.bombs) {
 			hSize = leftCorner;
 			vSize = topCorner;
 			if(bomb.getX() > 1) {
 				for(int i = 2;i <= bomb.getX(); i++) {
-					hSize += size;
-					hSize += mapIndent;
+					hSize += EditorState.sectorSize;
+					hSize += EditorState.sectorIndent;
 				}
 			}
 			if(bomb.getY() > 1) {
 				for(int i = 2;i <= bomb.getY(); i++) {
-					vSize += size;
-					vSize += mapIndent;
+					vSize += EditorState.sectorSize;
+					vSize += EditorState.sectorIndent;
 				}
 			}
 
-			bomb.resize(size, size);
+			bomb.resize(EditorState.sectorSize, EditorState.sectorSize);
 			drawMap.drawImage(bomb.getImage(), hSize, vSize, this);
 			
 			for(SpecialBuilding reactor: bomb.getReactors()) {
@@ -701,88 +701,88 @@ public class GameMap extends JComponent{
 				vSize = topCorner;
 				if(reactor.getX() > 1) {
 					for(int i = 2;i <= reactor.getX(); i++) {
-						hSize += size;
-						hSize += mapIndent;
+						hSize += EditorState.sectorSize;
+						hSize += EditorState.sectorIndent;
 					}
 				}
 				if(reactor.getY() > 1) {
 					for(int i = 2;i <= reactor.getY(); i++) {
-						vSize += size;
-						vSize += mapIndent;
+						vSize += EditorState.sectorSize;
+						vSize += EditorState.sectorIndent;
 					}
 				}
 				
-				reactor.resize(size, size);
+				reactor.resize(EditorState.sectorSize, EditorState.sectorSize);
 				drawMap.drawImage(reactor.getImg(), hSize, vSize, this);
 			}
 		}
 		
-		for(TechUpgrade tu : techupgrades) {
+		for(TechUpgrade tu : EditorState.techUpgrades) {
 			hSize = leftCorner;
 			vSize = topCorner;
 			if(tu.getX() > 1) {
 				for(int i = 2;i <= tu.getX(); i++) {
-					hSize += size;
-					hSize += mapIndent;
+					hSize += EditorState.sectorSize;
+					hSize += EditorState.sectorIndent;
 				}
 			}
 			if(tu.getY() > 1) {
 				for(int i = 2;i <= tu.getY(); i++) {
-					vSize += size;
-					vSize += mapIndent;
+					vSize += EditorState.sectorSize;
+					vSize += EditorState.sectorIndent;
 				}
 			}
-			tu.resize(size, size);
+			tu.resize(EditorState.sectorSize, EditorState.sectorSize);
 			drawMap.drawImage(tu.getImg(), hSize, vSize, this);
 		}
 		
-		for(Unit hs : hoststations) {
-			hs.resize((int)(size * 0.5), (int)(size * 0.5));
+		for(Unit hs : EditorState.hostStations) {
+			hs.resize((int)(EditorState.sectorSize * 0.5), (int)(EditorState.sectorSize * 0.5));
 			drawMap.drawImage(hs.getImage(), hs.getUnitX(), hs.getUnitY(), this);
 		}
 		
-		for(Unit squad : units) {
-			squad.resize((int)(size * 0.14), (int)(size * 0.14));
+		for(Unit squad : EditorState.predefinedSquads) {
+			squad.resize((int)(EditorState.sectorSize * 0.14), (int)(EditorState.sectorSize * 0.14));
 			drawMap.drawImage(squad.getImage(), squad.getUnitX(), squad.getUnitY(), this);
 		}
 		
 		sectorCounter = 0;
-		hSize = size;
-		vSize = size;
+		hSize = EditorState.sectorSize;
+		vSize = EditorState.sectorSize;
 		if(verticalGrid > 0 && horizontalGrid > 0) {
 			for(int i = 0; i < verticalGrid ; i++) {
 				for(int j = 0; j < horizontalGrid; j++) {
 					if(mainwindow.IsTypEnabled()) {
-						hInfo = "Typ: " + this.typ_map.get(sectorCounter);
+						hInfo = "Typ: " + EditorState.typ_map.get(sectorCounter);
 						drawMap.setColor(Color.BLACK);
-						drawMap.fillRect((int)(hSize + (size * 0.1)),(int)(vSize + (size * 0.1)), (int)(size * 0.9) , (int)(size * 0.3));
+						drawMap.fillRect((int)(hSize + (EditorState.sectorSize * 0.1)),(int)(vSize + (EditorState.sectorSize * 0.1)), (int)(EditorState.sectorSize * 0.9) , (int)(EditorState.sectorSize * 0.3));
 						drawMap.setColor(Color.WHITE);
-						drawMap.drawString(hInfo, (int)(hSize + (size * 0.1)), (int)(vSize + (size * 0.3)));
+						drawMap.drawString(hInfo, (int)(hSize + (EditorState.sectorSize * 0.1)), (int)(vSize + (EditorState.sectorSize * 0.3)));
 					}
 					
 					if(mainwindow.IsBlgEnabled()) {
-						hInfo = "Blg: " + this.blg_map.get(sectorCounter);
+						hInfo = "Blg: " + EditorState.blg_map.get(sectorCounter);
 						drawMap.setColor(Color.BLACK);
-						drawMap.fillRect((int)(hSize + (size * 0.1)),(int)(vSize + (size * 0.35)), (int)(size * 0.9) , (int)(size * 0.27));
+						drawMap.fillRect((int)(hSize + (EditorState.sectorSize * 0.1)),(int)(vSize + (EditorState.sectorSize * 0.35)), (int)(EditorState.sectorSize * 0.9) , (int)(EditorState.sectorSize * 0.27));
 						drawMap.setColor(Color.WHITE);
-						drawMap.drawString(hInfo, (int)(hSize + (size * 0.1)), (int)(vSize + (size * 0.5)));
+						drawMap.drawString(hInfo, (int)(hSize + (EditorState.sectorSize * 0.1)), (int)(vSize + (EditorState.sectorSize * 0.5)));
 					}
 					
 					if(mainwindow.IsOwnEnabled()) {
-						hInfo = "Own: " + this.own_map.get(sectorCounter);
+						hInfo = "Own: " + EditorState.own_map.get(sectorCounter);
 						drawMap.setColor(Color.BLACK);
-						drawMap.fillRect((int)(hSize + (size * 0.1)),(int)(vSize + (size * 0.5)), (int)(size * 0.9) , (int)(size * 0.3));
+						drawMap.fillRect((int)(hSize + (EditorState.sectorSize * 0.1)),(int)(vSize + (EditorState.sectorSize * 0.5)), (int)(EditorState.sectorSize * 0.9) , (int)(EditorState.sectorSize * 0.3));
 						drawMap.setColor(Color.WHITE);
-						drawMap.drawString(hInfo, (int)(hSize + (size * 0.1)), (int)(vSize + (size * 0.7)));
+						drawMap.drawString(hInfo, (int)(hSize + (EditorState.sectorSize * 0.1)), (int)(vSize + (EditorState.sectorSize * 0.7)));
 					}
 					
 					sectorCounter++;
-					hSize += size;
-					hSize += mapIndent;
+					hSize += EditorState.sectorSize;
+					hSize += EditorState.sectorIndent;
 				}
-				vSize += size;
-				vSize += mapIndent;
-				hSize = size;
+				vSize += EditorState.sectorSize;
+				vSize += EditorState.sectorIndent;
+				hSize = EditorState.sectorSize;
 			}
 		}
 		
@@ -796,26 +796,26 @@ public class GameMap extends JComponent{
 						for(int sect : borderSelectedSectors) {
 							if(sect == borderSectorCounter) {
 								drawMap.setColor(new Color(255,255,255,54));
-								drawMap.fillRect(hSize+1, vSize+1, size-1, size-1);
+								drawMap.fillRect(hSize+1, vSize+1, EditorState.sectorSize-1, EditorState.sectorSize-1);
 							}
 						}
 					} else
 					if(borderSelectedSector == borderSectorCounter) {
 						drawMap.setColor(new Color(255,255,255,54));
-						drawMap.fillRect(hSize+1, vSize+1, size-1, size-1);
+						drawMap.fillRect(hSize+1, vSize+1, EditorState.sectorSize-1, EditorState.sectorSize-1);
 					}
 					
 					if(mainwindow.IsHeightEnabled()) {
-						hInfo = "Hgt: " + this.hgt_map.get(borderSectorCounter);
+						hInfo = "Hgt: " + EditorState.hgt_map.get(borderSectorCounter);
 						drawMap.setColor(Color.WHITE);
-						drawMap.drawString(hInfo, (int)(hSize + (size * 0.1)), (int)(vSize + (size * 0.85)));
+						drawMap.drawString(hInfo, (int)(hSize + (EditorState.sectorSize * 0.1)), (int)(vSize + (EditorState.sectorSize * 0.85)));
 					}
 					borderSectorCounter++;
-					hSize += size;
-					hSize += mapIndent;
+					hSize += EditorState.sectorSize;
+					hSize += EditorState.sectorIndent;
 				}
-				vSize += size;
-				vSize += mapIndent;
+				vSize += EditorState.sectorSize;
+				vSize += EditorState.sectorIndent;
 				hSize = 0;
 			}
 		}
@@ -828,12 +828,12 @@ public class GameMap extends JComponent{
 				if(error_map.get(this.sectorCounter) == true) {
 					drawMap.drawImage(errorimg, hSize, vSize, this);
 				}
-				hSize += size;
-				hSize += mapIndent;
+				hSize += EditorState.sectorSize;
+				hSize += EditorState.sectorIndent;
 				this.sectorCounter++;
 			}
-			vSize += size;
-			vSize += mapIndent;
+			vSize += EditorState.sectorSize;
+			vSize += EditorState.sectorIndent;
 			hSize = leftCorner;
 		}
 		
@@ -842,50 +842,41 @@ public class GameMap extends JComponent{
 	void createMap(int hGrid, int vGrid) {
 		this.horizontalGrid = hGrid;
 		this.verticalGrid = vGrid;
-		this.typ_map.clear();
-		this.own_map.clear();
-		this.hgt_map.clear();
-		this.blg_map.clear();
 		this.error_map.clear();
 		for(int i = 0;i < this.horizontalGrid * this.verticalGrid; i++) {
-			this.typ_map.add(0);
-			this.own_map.add(0);
-			this.blg_map.add(0);
+			EditorState.typ_map.add(0);
+			EditorState.own_map.add(0);
+			EditorState.blg_map.add(0);
 			this.error_map.add(false);
 		}
 		for(int i = 0;i < (this.horizontalGrid + 2) * (this.verticalGrid + 2); i++) {
-			this.hgt_map.add(127);
+			EditorState.hgt_map.add(127);
 			
 		}
 		
-		this.sumIndentX = (hGrid -1) * this.mapIndent;
-		this.sumIndentY = (vGrid -1) * this.mapIndent;
-		this.topCorner = size + this.mapIndent;
-		this.downCorner = this.topCorner + this.verticalGrid * size + sumIndentY;
-		this.leftCorner = size + this.mapIndent;
-		this.rightCorner = this.leftCorner + this.horizontalGrid * size + sumIndentX;
-		this.setPreferredSize(new Dimension((horizontalGrid + 2) * size + sumIndentX + 6, (verticalGrid + 2) * size + sumIndentY + 6));
+		this.sumIndentX = (hGrid -1) * EditorState.sectorIndent;
+		this.sumIndentY = (vGrid -1) * EditorState.sectorIndent;
+		this.topCorner = EditorState.sectorSize + EditorState.sectorIndent;
+		this.downCorner = this.topCorner + this.verticalGrid * EditorState.sectorSize + sumIndentY;
+		this.leftCorner = EditorState.sectorSize + EditorState.sectorIndent;
+		this.rightCorner = this.leftCorner + this.horizontalGrid * EditorState.sectorSize + sumIndentX;
+		this.setPreferredSize(new Dimension((horizontalGrid + 2) * EditorState.sectorSize + sumIndentX + 6, (verticalGrid + 2) * EditorState.sectorSize + sumIndentY + 6));
 		
 		this.mainwindow.updateManagerUnit(null,-1);
 		this.mainwindow.updateManagerSector(-1, 0, 0, 0);
-		this.beamgates.clear();
-		this.bombs.clear();
-		this.techupgrades.clear();
-		this.hoststations.clear();
-		this.units.clear();
 		this.repaint();
 	}
 
 	void openMap(int hGrid, int vGrid) {
 		this.horizontalGrid = hGrid;
 		this.verticalGrid = vGrid;
-		this.sumIndentX = (hGrid -1) * this.mapIndent;
-		this.sumIndentY = (vGrid -1) * this.mapIndent;
-		this.topCorner = size + this.mapIndent;
-		this.downCorner = this.topCorner + this.verticalGrid * size + sumIndentY;
-		this.leftCorner = size + this.mapIndent;
-		this.rightCorner = this.leftCorner + this.horizontalGrid * size + sumIndentX;
-		this.setPreferredSize(new Dimension((horizontalGrid + 2) * size + sumIndentX + 6, (verticalGrid + 2) * size + sumIndentY + 6));
+		this.sumIndentX = (hGrid -1) * EditorState.sectorIndent;
+		this.sumIndentY = (vGrid -1) * EditorState.sectorIndent;
+		this.topCorner = EditorState.sectorSize + EditorState.sectorIndent;
+		this.downCorner = this.topCorner + this.verticalGrid * EditorState.sectorSize + sumIndentY;
+		this.leftCorner = EditorState.sectorSize + EditorState.sectorIndent;
+		this.rightCorner = this.leftCorner + this.horizontalGrid * EditorState.sectorSize + sumIndentX;
+		this.setPreferredSize(new Dimension((horizontalGrid + 2) * EditorState.sectorSize + sumIndentX + 6, (verticalGrid + 2) * EditorState.sectorSize + sumIndentY + 6));
 		for(int i = 0;i < this.horizontalGrid * this.verticalGrid; i++) 
 			this.error_map.add(false);
 
@@ -894,14 +885,14 @@ public class GameMap extends JComponent{
 		
 		bgList.clear();
 		bgKeySector.removeAll();
-		for(int i = 0; i < beamgates.size(); i++) {
+		for(int i = 0; i < EditorState.beamGates.size(); i++) {
 			this.bgList.add(new JMenuItem("Beam Gate " + (i+1) ));
 			this.bgKeySector.add(bgList.get(i));
 			this.bgList.get(i).addActionListener(mouselisten);
 		}
 		bombList.clear(); 
 		bombReactors.removeAll();
-		for(int i = 0; i < bombs.size(); i++) {
+		for(int i = 0; i < EditorState.bombs.size(); i++) {
 			bombList.add(new JMenuItem("Stoudson Bomb " + (i+1) ));
 			bombReactors.add(bombList.get(i));
 			bombList.get(i).addActionListener(mouselisten);
@@ -912,10 +903,6 @@ public class GameMap extends JComponent{
 	void closeMap() {
 		this.horizontalGrid = 0;
 		this.verticalGrid = 0;
-		this.typ_map.clear();
-		this.own_map.clear();
-		this.hgt_map.clear();
-		this.blg_map.clear();
 		this.error_map.clear();
 		this.sumIndentX = 0;
 		this.sumIndentY = 0;
@@ -927,11 +914,6 @@ public class GameMap extends JComponent{
 		
 		this.mainwindow.updateManagerUnit(null,-1);
 		this.mainwindow.updateManagerSector(-1, 0, 0, 0);
-		this.beamgates.clear();
-		this.bombs.clear();
-		this.techupgrades.clear();
-		this.hoststations.clear();
-		this.units.clear();
 		this.bgKeySector.removeAll();
 		this.repaint();
 	}
@@ -969,7 +951,7 @@ public class GameMap extends JComponent{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if(e.getButton() == MouseEvent.BUTTON3) {
-				if(e.getX() <= rightCorner + size + mapIndent && e.getY() <= downCorner + size + mapIndent && verticalGrid > 0 && horizontalGrid > 0) {
+				if(e.getX() <= rightCorner + EditorState.sectorSize + EditorState.sectorIndent && e.getY() <= downCorner + EditorState.sectorSize + EditorState.sectorIndent && verticalGrid > 0 && horizontalGrid > 0) {
 					currentClickedX = e.getX();
 					currentClickedY = e.getY();
 					
@@ -1000,123 +982,112 @@ public class GameMap extends JComponent{
 			}
 		}
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			
-		}
-
+		public void mouseReleased(MouseEvent e) {}
 		@Override
-		public void mouseEntered(MouseEvent e) {
-
-			
-		}
-
+		public void mouseEntered(MouseEvent e) {}
 		@Override
-		public void mouseExited(MouseEvent e) {
-
-			
-		}
-
+		public void mouseExited(MouseEvent e) {}
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
 			for(JMenuItem addUnit : resUnitsMenu) {
 				if(e.getSource() == addUnit) {
-					CreateSquad(currentClickedX - (int)(size * 0.14/ 2), currentClickedY - (int)(size * 0.14/ 2), 1, UAdata.getUnitIDfromName(addUnit.getText()));
+					CreateSquad(currentClickedX - (int)(EditorState.sectorSize * 0.14/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.14/ 2), 1, UAdata.getUnitIDfromName(addUnit.getText()));
 				}
 			}
 			for(JMenuItem addUnit : ghorUnitsMenu) {
 				if(e.getSource() == addUnit) {
-					CreateSquad(currentClickedX - (int)(size * 0.14/ 2), currentClickedY - (int)(size * 0.14/ 2), 6, UAdata.getUnitIDfromName(addUnit.getText()));
+					CreateSquad(currentClickedX - (int)(EditorState.sectorSize * 0.14/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.14/ 2), 6, UAdata.getUnitIDfromName(addUnit.getText()));
 				}
 			}
 			for(JMenuItem addUnit : taerUnitsMenu) {
 				if(e.getSource() == addUnit) {
-					CreateSquad(currentClickedX - (int)(size * 0.14/ 2), currentClickedY - (int)(size * 0.14/ 2), 4, UAdata.getUnitIDfromName(addUnit.getText()));
+					CreateSquad(currentClickedX - (int)(EditorState.sectorSize * 0.14/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.14/ 2), 4, UAdata.getUnitIDfromName(addUnit.getText()));
 				}
 			}
 			for(JMenuItem addUnit : mykoUnitsMenu) {
 				if(e.getSource() == addUnit) {
-					CreateSquad(currentClickedX - (int)(size * 0.14/ 2), currentClickedY - (int)(size * 0.14/ 2), 3, UAdata.getUnitIDfromName(addUnit.getText()));
+					CreateSquad(currentClickedX - (int)(EditorState.sectorSize * 0.14/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.14/ 2), 3, UAdata.getUnitIDfromName(addUnit.getText()));
 				}
 			}
 			for(JMenuItem addUnit : sulgUnitsMenu) {
 				if(e.getSource() == addUnit) {
-					CreateSquad(currentClickedX - (int)(size * 0.14/ 2), currentClickedY - (int)(size * 0.14/ 2), 2, UAdata.getUnitIDfromName(addUnit.getText()));
+					CreateSquad(currentClickedX - (int)(EditorState.sectorSize * 0.14/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.14/ 2), 2, UAdata.getUnitIDfromName(addUnit.getText()));
 				}
 			}
 			for(JMenuItem addUnit : trainingUnitsMenu) {
 				if(e.getSource() == addUnit) {
-					CreateSquad(currentClickedX - (int)(size * 0.14/ 2), currentClickedY - (int)(size * 0.14/ 2), 7, UAdata.getUnitIDfromName(addUnit.getText()));
+					CreateSquad(currentClickedX - (int)(EditorState.sectorSize * 0.14/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.14/ 2), 7, UAdata.getUnitIDfromName(addUnit.getText()));
 				}
 			}
 			for(JMenuItem addUnit : specialUnitsMenu) {
 				if(e.getSource() == addUnit) {
-					CreateSquad(currentClickedX - (int)(size * 0.14/ 2), currentClickedY - (int)(size * 0.14/ 2), 1, UAdata.getUnitIDfromName(addUnit.getText()));
+					CreateSquad(currentClickedX - (int)(EditorState.sectorSize * 0.14/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.14/ 2), 1, UAdata.getUnitIDfromName(addUnit.getText()));
 				}
 			}			
 			
 			if(e.getSource() == removeSquad) {
-				units.remove(selected);
+				EditorState.predefinedSquads.remove(selected);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				selected = null;
 				mainwindow.updateManagerUnit(null,-1);
 			}else if(e.getSource() == removeHS) {
-				hoststations.remove(selected);
+				EditorState.hostStations.remove(selected);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				selected = null;
 				mainwindow.updateManagerUnit(null,-1);
-				if(hoststations.size() <= mainwindow.getPlayerSelected() && hoststations.size() > 0) mainwindow.setPlayerSelected(hoststations.size()-1);
+				if(EditorState.hostStations.size() <= EditorState.playerSelected && EditorState.hostStations.size() > 0) EditorState.playerSelected = EditorState.hostStations.size()-1;
 			} else 
 				
 			if(e.getSource() == sectorResistance && horizontalGrid * verticalGrid > selectedSector) {
-				own_map.set(selectedSector, 1);
+				EditorState.own_map.set(selectedSector, 1);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				mainwindow.cleanManager();
 				mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			}else if(e.getSource() == sectorGhorkov && horizontalGrid * verticalGrid > selectedSector) {
-				own_map.set(selectedSector, 6);
+				EditorState.own_map.set(selectedSector, 6);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				mainwindow.cleanManager();
 				mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			}else if(e.getSource() == sectorTaerkasten && horizontalGrid * verticalGrid > selectedSector) {
-				own_map.set(selectedSector, 4);
+				EditorState.own_map.set(selectedSector, 4);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				mainwindow.cleanManager();
 				mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			}else if(e.getSource() == sectorMykonian && horizontalGrid * verticalGrid > selectedSector) {
-				own_map.set(selectedSector, 3);
+				EditorState.own_map.set(selectedSector, 3);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				mainwindow.cleanManager();
 				mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			}else if(e.getSource() == sectorSulgogar && horizontalGrid * verticalGrid > selectedSector) {
-				own_map.set(selectedSector, 2);
+				EditorState.own_map.set(selectedSector, 2);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				mainwindow.cleanManager();
 				mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			}else if(e.getSource() == sectorBlacksect && horizontalGrid * verticalGrid > selectedSector) {
-				own_map.set(selectedSector, 5);
+				EditorState.own_map.set(selectedSector, 5);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				mainwindow.cleanManager();
 				mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			}else if(e.getSource() == sectorTrainingHS && horizontalGrid * verticalGrid > selectedSector) {
-				own_map.set(selectedSector, 7);
+				EditorState.own_map.set(selectedSector, 7);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				mainwindow.cleanManager();
 				mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			}else if(e.getSource() == sectorNeutral && horizontalGrid * verticalGrid > selectedSector) {
-				if(blg_map.get(selectedSector) != 0)
-					own_map.set(selectedSector, 7);
+				if(EditorState.blg_map.get(selectedSector) != 0)
+					EditorState.own_map.set(selectedSector, 7);
 				else
-					own_map.set(selectedSector, 0);
+					EditorState.own_map.set(selectedSector, 0);
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 				mainwindow.cleanManager();
@@ -1125,7 +1096,7 @@ public class GameMap extends JComponent{
 				try {
 					hgt = Integer.parseInt(JOptionPane.showInputDialog("Enter height value from 0 to 255"));
 					if(hgt >= 0 && hgt < 256) {
-						hgt_map.set(borderSelectedSector, hgt);
+						EditorState.hgt_map.set(borderSelectedSector, hgt);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 					}else JOptionPane.showMessageDialog(mainwindow,"Entered height value is not valid", "Wrong value", JOptionPane.ERROR_MESSAGE);
@@ -1167,20 +1138,20 @@ public class GameMap extends JComponent{
 			}
 			
 			if(e.getSource() == clearSector && horizontalGrid * verticalGrid > selectedSector) {
-				typ_map.set(selectedSector, 0);
-				blg_map.set(selectedSector, 0);
-				beamgates.remove(selectedBG);
+				EditorState.typ_map.set(selectedSector, 0);
+				EditorState.blg_map.set(selectedSector, 0);
+				EditorState.beamGates.remove(selectedBG);
 				selectedBG = null;
-				bombs.remove(selectedBomb);
+				EditorState.bombs.remove(selectedBomb);
 				selectedBomb = null;
-				techupgrades.remove(selectedTU);
+				EditorState.techUpgrades.remove(selectedTU);
 				selectedTU = null;
 				
-				for(int i = 0; i < beamgates.size(); i++) {
+				for(int i = 0; i < EditorState.beamGates.size(); i++) {
 					if(selectedKS != null) {
-						for(SpecialBuilding keysector : beamgates.get(i).getKeysectors()) {
+						for(SpecialBuilding keysector : EditorState.beamGates.get(i).getKeysectors()) {
 							if(keysector == selectedKS) {
-								beamgates.get(i).removeKeysector(selectedKS);
+								EditorState.beamGates.get(i).removeKeysector(selectedKS);
 								selectedKS = null;
 								break;
 							}
@@ -1188,11 +1159,11 @@ public class GameMap extends JComponent{
 					}
 				}
 				
-				for(int i = 0; i < bombs.size(); i++) {
+				for(int i = 0; i < EditorState.bombs.size(); i++) {
 					if(selectedReactor != null) {
-						for(SpecialBuilding reactor : bombs.get(i).getReactors()) {
+						for(SpecialBuilding reactor : EditorState.bombs.get(i).getReactors()) {
 							if(reactor == selectedReactor) {
-								bombs.get(i).removeReactor(selectedReactor);
+								EditorState.bombs.get(i).removeReactor(selectedReactor);
 								selectedReactor = null;
 								break;
 							}
@@ -1202,7 +1173,7 @@ public class GameMap extends JComponent{
 				
 				bgList.clear();
 				bgKeySector.removeAll();
-				for(int i = 0; i < beamgates.size(); i++) {
+				for(int i = 0; i < EditorState.beamGates.size(); i++) {
 					bgList.add(new JMenuItem("Beam Gate " + (i+1) ));
 					bgKeySector.add(bgList.get(i));
 					bgList.get(i).addActionListener(this);
@@ -1210,7 +1181,7 @@ public class GameMap extends JComponent{
 				
 				bombList.clear();
 				bombReactors.removeAll();
-				for(int i = 0; i < bombs.size(); i++) {
+				for(int i = 0; i < EditorState.bombs.size(); i++) {
 					bombList.add(new JMenuItem("Stoudson Bomb " + (i+1) ));
 					bombReactors.add(bombList.get(i));
 					bombList.get(i).addActionListener(this);
@@ -1226,7 +1197,7 @@ public class GameMap extends JComponent{
 				try {
 					typ = Integer.parseInt(JOptionPane.showInputDialog("Enter value from 0 to 255"));
 					if(typ >= 0 && typ < 256) {
-						typ_map.set(selectedSector, typ);
+						EditorState.typ_map.set(selectedSector, typ);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.cleanManager();
@@ -1237,12 +1208,12 @@ public class GameMap extends JComponent{
 				}
 			}else if(e.getSource() == newBeamGate) {
 				if(selectedBG == null && horizontalGrid * verticalGrid > selectedSector) {
-					beamgates.add(new BeamGate(selectedSectorX, selectedSectorY));
-					typ_map.set(selectedSector, 202);
-					blg_map.set(selectedSector, 0);
+					EditorState.beamGates.add(new BeamGate(selectedSectorX, selectedSectorY));
+					EditorState.typ_map.set(selectedSector, 202);
+					EditorState.blg_map.set(selectedSector, 0);
 					bgKeySector.removeAll();
 					bgList.clear();
-					for(int i = 0; i < beamgates.size(); i++) {
+					for(int i = 0; i < EditorState.beamGates.size(); i++) {
 						bgList.add(new JMenuItem("Beam Gate " + (i+1)));
 						bgList.get(i).addActionListener(this);
 						bgKeySector.add(bgList.get(i));
@@ -1259,12 +1230,12 @@ public class GameMap extends JComponent{
 						int count = Integer.parseInt(JOptionPane.showInputDialog("Enter bomb countdown in seconds"));
 						if(count > 0) {
 							count *= 1024;
-							bombs.add(new StoudsonBomb(selectedSectorX, selectedSectorY, count));
-							typ_map.set(selectedSector, 245);
-							blg_map.set(selectedSector, 0);
+							EditorState.bombs.add(new StoudsonBomb(selectedSectorX, selectedSectorY, count));
+							EditorState.typ_map.set(selectedSector, 245);
+							EditorState.blg_map.set(selectedSector, 0);
 							bombReactors.removeAll();
 							bombList.clear();
-							for(int i = 0; i < bombs.size(); i++) {
+							for(int i = 0; i < EditorState.bombs.size(); i++) {
 								bombList.add(new JMenuItem("Stoudson Bomb " + (i+1)));
 								bombList.get(i).addActionListener(this);
 								bombReactors.add(bombList.get(i));
@@ -1281,9 +1252,9 @@ public class GameMap extends JComponent{
 				
 			}else if(e.getSource() == newTechUpgrade) {
 				if(horizontalGrid * verticalGrid > selectedSector) {
-					techupgrades.add(new TechUpgrade(selectedSectorX, selectedSectorY));
-					typ_map.set(selectedSector, 100);
-					blg_map.set(selectedSector, 0);
+					EditorState.techUpgrades.add(new TechUpgrade(selectedSectorX, selectedSectorY));
+					EditorState.typ_map.set(selectedSector, 100);
+					EditorState.blg_map.set(selectedSector, 0);
 					mainwindow.makeUnsaved();
 					mainwindow.repaint();
 					mainwindow.showManager(1);
@@ -1293,44 +1264,44 @@ public class GameMap extends JComponent{
 			}else
 				
 				if(e.getSource() == addResistance) {
-					if(hoststations.size() < 8) {
-						CreateHoststation(currentClickedX - (int)(size * 0.5/ 2), currentClickedY - (int)(size * 0.5/ 2), 1, 56);
+					if(EditorState.hostStations.size() < 8) {
+						CreateHoststation(currentClickedX - (int)(EditorState.sectorSize * 0.5/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.5/ 2), 1, 56);
 					}else {
 						JOptionPane.showMessageDialog(mainwindow,"You cannot create more than 8 host stations in one level", "Host station's limit reached", JOptionPane.ERROR_MESSAGE);
 					}
 				}else if(e.getSource() == addGhorkov) {
-					if(hoststations.size() < 8) {
-						CreateHoststation(currentClickedX - (int)(size * 0.5/ 2), currentClickedY - (int)(size * 0.5/ 2), 6, 59);
+					if(EditorState.hostStations.size() < 8) {
+						CreateHoststation(currentClickedX - (int)(EditorState.sectorSize * 0.5/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.5/ 2), 6, 59);
 					}else {
 						JOptionPane.showMessageDialog(mainwindow,"You cannot create more than 8 host stations in one level", "Host station's limit reached", JOptionPane.ERROR_MESSAGE);
 					}
 				}else if(e.getSource() == addTaerkasten) {
-					if(hoststations.size() < 8) {
-						CreateHoststation(currentClickedX - (int)(size * 0.5/ 2), currentClickedY - (int)(size * 0.5/ 2), 4, 60);
+					if(EditorState.hostStations.size() < 8) {
+						CreateHoststation(currentClickedX - (int)(EditorState.sectorSize * 0.5/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.5/ 2), 4, 60);
 					}else {
 						JOptionPane.showMessageDialog(mainwindow,"You cannot create more than 8 host stations in one level", "Host station's limit reached", JOptionPane.ERROR_MESSAGE);
 					}
 				}else if(e.getSource() == addMykonian) {
-					if(hoststations.size() < 8) {
-						CreateHoststation(currentClickedX - (int)(size * 0.5/ 2), currentClickedY - (int)(size * 0.5/ 2), 3, 58);
+					if(EditorState.hostStations.size() < 8) {
+						CreateHoststation(currentClickedX - (int)(EditorState.sectorSize * 0.5/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.5/ 2), 3, 58);
 					}else {
 						JOptionPane.showMessageDialog(mainwindow,"You cannot create more than 8 host stations in one level", "Host station's limit reached", JOptionPane.ERROR_MESSAGE);
 					}
 				}else if(e.getSource() == addSulgogar) {
-					if(hoststations.size() < 8) {
-						CreateHoststation(currentClickedX - (int)(size * 0.5/ 2), currentClickedY - (int)(size * 0.5/ 2), 2, 61);
+					if(EditorState.hostStations.size() < 8) {
+						CreateHoststation(currentClickedX - (int)(EditorState.sectorSize * 0.5/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.5/ 2), 2, 61);
 					}else {
 						JOptionPane.showMessageDialog(mainwindow,"You cannot create more than 8 host stations in one level", "Host station's limit reached", JOptionPane.ERROR_MESSAGE);
 					}
 				}else if(e.getSource() == addBlacksect) {
-					if(hoststations.size() < 8) {
-						CreateHoststation(currentClickedX - (int)(size * 0.5/ 2), currentClickedY - (int)(size * 0.5/ 2), 5, 62);
+					if(EditorState.hostStations.size() < 8) {
+						CreateHoststation(currentClickedX - (int)(EditorState.sectorSize * 0.5/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.5/ 2), 5, 62);
 					}else {
 						JOptionPane.showMessageDialog(mainwindow,"You cannot create more than 8 host stations in one level", "Host station's limit reached", JOptionPane.ERROR_MESSAGE);
 					}
 				}else if(e.getSource() == addTrainingHS) {
-					if(hoststations.size() < 8) {
-						CreateHoststation(currentClickedX - (int)(size * 0.5/ 2), currentClickedY - (int)(size * 0.5/ 2), 7, 132);
+					if(EditorState.hostStations.size() < 8) {
+						CreateHoststation(currentClickedX - (int)(EditorState.sectorSize * 0.5/ 2), currentClickedY - (int)(EditorState.sectorSize * 0.5/ 2), 7, 132);
 					}else {
 						JOptionPane.showMessageDialog(mainwindow,"You cannot create more than 8 host stations in one level", "Host station's limit reached", JOptionPane.ERROR_MESSAGE);
 					}
@@ -1339,8 +1310,8 @@ public class GameMap extends JComponent{
 			for(int i = 0;i < bgList.size(); i++) {
 				if(horizontalGrid * verticalGrid > selectedSector) {
 					if(bgList.get(i) == e.getSource()) {
-						if(!(beamgates.get(i).getKeysectors().size() > 15)) {
-							beamgates.get(i).addKeysector(selectedSectorX, selectedSectorY);
+						if(!(EditorState.beamGates.get(i).getKeysectors().size() > 15)) {
+							EditorState.beamGates.get(i).addKeysector(selectedSectorX, selectedSectorY);
 							mainwindow.makeUnsaved();
 							mainwindow.repaint();
 							mainwindow.cleanManager();
@@ -1354,9 +1325,9 @@ public class GameMap extends JComponent{
 			for(int i = 0;i < bombList.size(); i++) {
 				if(horizontalGrid * verticalGrid > selectedSector) {
 					if(bombList.get(i) == e.getSource()) {
-						if(!(bombs.get(i).getReactors().size() > 15)) {
-							bombs.get(i).addReactor(selectedSectorX, selectedSectorY);
-							typ_map.set(selectedSector, 243);
+						if(!(EditorState.bombs.get(i).getReactors().size() > 15)) {
+							EditorState.bombs.get(i).addReactor(selectedSectorX, selectedSectorY);
+							EditorState.typ_map.set(selectedSector, 243);
 							mainwindow.makeUnsaved();
 							mainwindow.repaint();
 							mainwindow.cleanManager();
@@ -1374,19 +1345,19 @@ public class GameMap extends JComponent{
 				diffY = e.getY() - diffY;
 					
 				if(selected instanceof Hoststation) {
-					if((selected.getUnitX() + (int)(size * 0.5/ 2) < leftCorner && diffX < 0) || ((selected.getUnitX() + (int)(size * 0.5 / 2) > rightCorner) && diffX > 0)){
+					if((selected.getUnitX() + (int)(EditorState.sectorSize * 0.5/ 2) < leftCorner && diffX < 0) || ((selected.getUnitX() + (int)(EditorState.sectorSize * 0.5 / 2) > rightCorner) && diffX > 0)){
 						diffX = 0;
 					}else if(e.getX() < leftCorner || e.getX() > rightCorner)diffX = 0;
 					
-					if((selected.getUnitY() + (int)(size * 0.5/ 2) < topCorner && diffY < 0) || ((selected.getUnitY() + (int)(size * 0.5 / 2) > downCorner) && diffY > 0)){
+					if((selected.getUnitY() + (int)(EditorState.sectorSize * 0.5/ 2) < topCorner && diffY < 0) || ((selected.getUnitY() + (int)(EditorState.sectorSize * 0.5 / 2) > downCorner) && diffY > 0)){
 						diffY = 0;
 					}else if(e.getY() < topCorner || e.getY() > downCorner)diffY = 0;
 				}else if(selected instanceof Squad) {
-					if((selected.getUnitX() + (int)(size * 0.14/ 2) < leftCorner && diffX < 0) || ((selected.getUnitX() + (int)(size * 0.14 / 2) > rightCorner) && diffX > 0)){
+					if((selected.getUnitX() + (int)(EditorState.sectorSize * 0.14/ 2) < leftCorner && diffX < 0) || ((selected.getUnitX() + (int)(EditorState.sectorSize * 0.14 / 2) > rightCorner) && diffX > 0)){
 						diffX = 0;
 					}else if(e.getX() < leftCorner || e.getX() > rightCorner)diffX = 0;
 					
-					if((selected.getUnitY() + (int)(size * 0.14/ 2) < topCorner && diffY < 0) || ((selected.getUnitY() + (int)(size * 0.14 / 2) > downCorner) && diffY > 0)){
+					if((selected.getUnitY() + (int)(EditorState.sectorSize * 0.14/ 2) < topCorner && diffY < 0) || ((selected.getUnitY() + (int)(EditorState.sectorSize * 0.14 / 2) > downCorner) && diffY > 0)){
 						diffY = 0;
 					}else if(e.getY() < topCorner || e.getY() > downCorner)diffY = 0;
 				}
@@ -1394,8 +1365,8 @@ public class GameMap extends JComponent{
 				selected.setUnitX(selected.getUnitX() + diffX);
 				selected.setUnitY(selected.getUnitY() + diffY);
 				
-				if(selected instanceof Hoststation) mainwindow.refreshHoststationManager(hoststations.indexOf(selected));
-				if(selected instanceof Squad) mainwindow.refreshSquadManager(units.indexOf(selected));
+				if(selected instanceof Hoststation) mainwindow.refreshHoststationManager(EditorState.hostStations.indexOf(selected));
+				if(selected instanceof Squad) mainwindow.refreshSquadManager(EditorState.predefinedSquads.indexOf(selected));
 				mainwindow.makeUnsaved();
 				mainwindow.repaint();
 			}
@@ -1421,17 +1392,17 @@ public class GameMap extends JComponent{
 				if(e.getKeyChar() == '+') {
 					if(borderSelectedSectors.size() > 1) {
 						for(int sectorHeight : borderSelectedSectors) {
-							currentHeight = hgt_map.get(sectorHeight);
+							currentHeight = EditorState.hgt_map.get(sectorHeight);
 							if(currentHeight < 255) {
 								currentHeight++;
-								hgt_map.set(sectorHeight, currentHeight);
+								EditorState.hgt_map.set(sectorHeight, currentHeight);
 							}
 						}
 					} else {
 						if(currentHeight < 255) {
-							currentHeight = hgt_map.get(borderSelectedSector);
+							currentHeight = EditorState.hgt_map.get(borderSelectedSector);
 							currentHeight++;
-							hgt_map.set(borderSelectedSector, currentHeight);
+							EditorState.hgt_map.set(borderSelectedSector, currentHeight);
 						}
 					}
 					mainwindow.makeUnsaved();
@@ -1439,17 +1410,17 @@ public class GameMap extends JComponent{
 				}else if(e.getKeyChar() == '-') {
 					if(borderSelectedSectors.size() > 1) {
 						for(int sectorHeight : borderSelectedSectors) {
-							currentHeight = hgt_map.get(sectorHeight);
+							currentHeight = EditorState.hgt_map.get(sectorHeight);
 							if(currentHeight > 0) {
 								currentHeight--;
-								hgt_map.set(sectorHeight, currentHeight);
+								EditorState.hgt_map.set(sectorHeight, currentHeight);
 							}
 						}
 					} else {
 						if(currentHeight > 0) {
-							currentHeight = hgt_map.get(borderSelectedSector);
+							currentHeight = EditorState.hgt_map.get(borderSelectedSector);
 							currentHeight--;
-							hgt_map.set(borderSelectedSector, currentHeight);
+							EditorState.hgt_map.set(borderSelectedSector, currentHeight);
 						}
 					}
 					mainwindow.makeUnsaved();
@@ -1457,45 +1428,45 @@ public class GameMap extends JComponent{
 				}
 				if((horizontalGrid * verticalGrid) > selectedSector) {
 					if(e.getKeyChar() == '1') {
-						own_map.set(selectedSector, 1);
+						EditorState.own_map.set(selectedSector, 1);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 					}else if(e.getKeyChar() == '2') {
-						own_map.set(selectedSector, 2);
+						EditorState.own_map.set(selectedSector, 2);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 					}else if(e.getKeyChar() == '3') {
-						own_map.set(selectedSector, 3);
+						EditorState.own_map.set(selectedSector, 3);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 					}else if(e.getKeyChar() == '4') {
-						own_map.set(selectedSector, 4);
+						EditorState.own_map.set(selectedSector, 4);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 					}else if(e.getKeyChar() == '5') {
-						own_map.set(selectedSector, 5);
+						EditorState.own_map.set(selectedSector, 5);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 					}else if(e.getKeyChar() == '6') {
-						own_map.set(selectedSector, 6);
+						EditorState.own_map.set(selectedSector, 6);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 					}else if(e.getKeyChar() == '7') {
-						own_map.set(selectedSector, 7);
+						EditorState.own_map.set(selectedSector, 7);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 					}else if(e.getKeyChar() == '0') {
-						if(blg_map.get(selectedSector) != 0)
-							own_map.set(selectedSector, 7);
+						if(EditorState.blg_map.get(selectedSector) != 0)
+							EditorState.own_map.set(selectedSector, 7);
 						else
-							own_map.set(selectedSector, 0);
+							EditorState.own_map.set(selectedSector, 0);
 						mainwindow.makeUnsaved();
 						mainwindow.repaint();
 						mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
@@ -1506,7 +1477,7 @@ public class GameMap extends JComponent{
 							try {
 								typ = Integer.parseInt(JOptionPane.showInputDialog("Enter value from 0 to 255"));
 								if(typ >= 0 && typ < 256) {
-									typ_map.set(selectedSector, typ);
+									EditorState.typ_map.set(selectedSector, typ);
 									mainwindow.makeUnsaved();
 									mainwindow.repaint();
 									mainwindow.cleanManager();
@@ -1525,10 +1496,10 @@ public class GameMap extends JComponent{
 							if(hgt >= 0 && hgt < 256) {
 								if(borderSelectedSectors.size() > 1) {
 									for(int sectorHeight : borderSelectedSectors) {
-										hgt_map.set(sectorHeight, hgt);
+										EditorState.hgt_map.set(sectorHeight, hgt);
 									}
 								}else
-									hgt_map.set(borderSelectedSector, hgt);
+									EditorState.hgt_map.set(borderSelectedSector, hgt);
 								mainwindow.makeUnsaved();
 								mainwindow.repaint();
 							}else JOptionPane.showMessageDialog(mainwindow,"Entered height value is not valid", "Wrong value", JOptionPane.ERROR_MESSAGE);
@@ -1580,20 +1551,20 @@ public class GameMap extends JComponent{
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_DELETE && horizontalGrid * verticalGrid > selectedSector) {
-				typ_map.set(selectedSector, 0);
-				blg_map.set(selectedSector, 0);
-				beamgates.remove(selectedBG);
+				EditorState.typ_map.set(selectedSector, 0);
+				EditorState.blg_map.set(selectedSector, 0);
+				EditorState.beamGates.remove(selectedBG);
 				selectedBG = null;
-				bombs.remove(selectedBomb);
+				EditorState.bombs.remove(selectedBomb);
 				selectedBomb = null;
-				techupgrades.remove(selectedTU);
+				EditorState.techUpgrades.remove(selectedTU);
 				selectedTU = null;
 				
-				for(int i = 0; i < beamgates.size(); i++) {
+				for(int i = 0; i < EditorState.beamGates.size(); i++) {
 					if(selectedKS != null) {
-						for(SpecialBuilding keysector : beamgates.get(i).getKeysectors()) {
+						for(SpecialBuilding keysector : EditorState.beamGates.get(i).getKeysectors()) {
 							if(keysector == selectedKS) {
-								beamgates.get(i).removeKeysector(selectedKS);
+								EditorState.beamGates.get(i).removeKeysector(selectedKS);
 								selectedKS = null;
 								break;
 							}
@@ -1601,11 +1572,11 @@ public class GameMap extends JComponent{
 					}
 				}
 				
-				for(int i = 0; i < bombs.size(); i++) {
+				for(int i = 0; i < EditorState.bombs.size(); i++) {
 					if(selectedReactor != null) {
-						for(SpecialBuilding reactor : bombs.get(i).getReactors()) {
+						for(SpecialBuilding reactor : EditorState.bombs.get(i).getReactors()) {
 							if(reactor == selectedReactor) {
-								bombs.get(i).removeReactor(selectedReactor);
+								EditorState.bombs.get(i).removeReactor(selectedReactor);
 								selectedReactor = null;
 								break;
 							}
@@ -1615,7 +1586,7 @@ public class GameMap extends JComponent{
 				
 				bgList.clear();
 				bgKeySector.removeAll();
-				for(int i = 0; i < beamgates.size(); i++) {
+				for(int i = 0; i < EditorState.beamGates.size(); i++) {
 					bgList.add(new JMenuItem("Beam Gate " + (i+1) ));
 					bgKeySector.add(bgList.get(i));
 					bgList.get(i).addActionListener(this);
@@ -1623,7 +1594,7 @@ public class GameMap extends JComponent{
 				
 				bombList.clear();
 				bombReactors.removeAll();
-				for(int i = 0; i < bombs.size(); i++) {
+				for(int i = 0; i < EditorState.bombs.size(); i++) {
 					bombList.add(new JMenuItem("Stoudson Bomb " + (i+1) ));
 					bombReactors.add(bombList.get(i));
 					bombList.get(i).addActionListener(this);
@@ -1649,16 +1620,16 @@ public class GameMap extends JComponent{
 				diffX = clickX;
 				diffY = clickY;
 				borderSelectedSectors.clear();
-				for(Unit check : hoststations) {
-					if((clickX > check.getUnitX()) && (clickX < (check.getUnitX() + (int)(size * 0.5))) && (clickY > check.getUnitY()) && (clickY < (check.getUnitY() + (int)(size * 0.5))) ) {
+				for(Unit check : EditorState.hostStations) {
+					if((clickX > check.getUnitX()) && (clickX < (check.getUnitX() + (int)(EditorState.sectorSize * 0.5))) && (clickY > check.getUnitY()) && (clickY < (check.getUnitY() + (int)(EditorState.sectorSize * 0.5))) ) {
 						selected = check;
 						break;
 					}else selected = null;
 				}
-				if(hoststations.size() == 0) selected = null;
+				if(EditorState.hostStations.size() == 0) selected = null;
 				if(selected == null) {
-					for(Unit check : units) {
-						if((clickX > check.getUnitX()) && (clickX < (check.getUnitX() + (int)(size * 0.14))) && (clickY > check.getUnitY()) && (clickY < (check.getUnitY() + (int)(size * 0.14))) ) {
+					for(Unit check : EditorState.predefinedSquads) {
+						if((clickX > check.getUnitX()) && (clickX < (check.getUnitX() + (int)(EditorState.sectorSize * 0.14))) && (clickY > check.getUnitY()) && (clickY < (check.getUnitY() + (int)(EditorState.sectorSize * 0.14))) ) {
 							selected = check;
 							break;
 						}else selected = null;
@@ -1671,12 +1642,12 @@ public class GameMap extends JComponent{
 				sectorCounter = 0;
 				for(int i = 0; i < verticalGrid + 2; i++) {
 					for(int j = 0; j < horizontalGrid + 2; j++) {
-						if(clickX > hSize && clickX < (hSize + size) && clickY > vSize && clickY < (vSize + size) ) {
+						if(clickX > hSize && clickX < (hSize + EditorState.sectorSize) && clickY > vSize && clickY < (vSize + EditorState.sectorSize) ) {
 								selectedSector = sectorCounter;
 								borderSelectedSector = borderSectorCounter;
 								borderSelectedSectors.add(borderSelectedSector);
 							break;
-						}else if(clickX > (horizontalGrid + 2) *(size + mapIndent) || clickY > (verticalGrid + 2) *(size + mapIndent)){
+						}else if(clickX > (horizontalGrid + 2) *(EditorState.sectorSize + EditorState.sectorIndent) || clickY > (verticalGrid + 2) *(EditorState.sectorSize + EditorState.sectorIndent)){
 							borderSelectedSector = -1;
 							borderSelectedSectors.clear();
 							break;
@@ -1686,13 +1657,13 @@ public class GameMap extends JComponent{
 							borderSectorCounter++;
 						}else borderSectorCounter++;
 						
-						hSize += size;
-						hSize += mapIndent;
+						hSize += EditorState.sectorSize;
+						hSize += EditorState.sectorIndent;
 					}
 	
 					hSize = 0;
-					vSize += size;
-					vSize += mapIndent;
+					vSize += EditorState.sectorSize;
+					vSize += EditorState.sectorIndent;
 				}
 				
 				for(int i = 0,x = 1,y = 1;i <= selectedSector; i++) {
@@ -1707,7 +1678,7 @@ public class GameMap extends JComponent{
 					}
 				}
 				selectedKS = null;
-				for(BeamGate bg : beamgates) {
+				for(BeamGate bg : EditorState.beamGates) {
 					if(bg.getX() == selectedSectorX && bg.getY() == selectedSectorY) {
 						selectedBG = bg;
 						break;
@@ -1724,7 +1695,7 @@ public class GameMap extends JComponent{
 	
 				}
 				selectedBomb = null;
-				for(StoudsonBomb bomb : bombs) {
+				for(StoudsonBomb bomb : EditorState.bombs) {
 					if(bomb.getX() == selectedSectorX && bomb.getY() == selectedSectorY) {
 						selectedBomb = bomb;
 						break;
@@ -1740,15 +1711,15 @@ public class GameMap extends JComponent{
 					}
 				}
 				selectedTU = null;
-				for(TechUpgrade tu : techupgrades) {
+				for(TechUpgrade tu : EditorState.techUpgrades) {
 					if(tu.getX() == selectedSectorX && tu.getY() == selectedSectorY) {
 						selectedTU = tu;
 						break;
 					}
 				}
 				mainwindow.cleanManager();
-				if(selected instanceof Hoststation) mainwindow.updateManagerUnit(selected, hoststations.indexOf(selected));
-				else if(selected instanceof Squad) mainwindow.updateManagerUnit(selected, units.indexOf(selected));
+				if(selected instanceof Hoststation) mainwindow.updateManagerUnit(selected, EditorState.hostStations.indexOf(selected));
+				else if(selected instanceof Squad) mainwindow.updateManagerUnit(selected, EditorState.predefinedSquads.indexOf(selected));
 				else mainwindow.updateManagerUnit(null,-1);
 				mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 				mainwindow.repaint();
@@ -1759,13 +1730,13 @@ public class GameMap extends JComponent{
 				sectorCounter = 0;
 				for(int i = 0; i < verticalGrid + 2; i++) {
 					for(int j = 0; j < horizontalGrid + 2; j++) {
-						if(clickX > hSize && clickX < (hSize + size) && clickY > vSize && clickY < (vSize + size) ) {
+						if(clickX > hSize && clickX < (hSize + EditorState.sectorSize) && clickY > vSize && clickY < (vSize + EditorState.sectorSize) ) {
 								selectedSector = sectorCounter;
 								borderSelectedSector = borderSectorCounter;
 								if(!borderSelectedSectors.contains(borderSelectedSector))
 									borderSelectedSectors.add(borderSelectedSector);
 							break;
-						}else if(clickX > (horizontalGrid + 2) *(size + mapIndent) || clickY > (verticalGrid + 2) *(size + mapIndent)){
+						}else if(clickX > (horizontalGrid + 2) *(EditorState.sectorSize + EditorState.sectorIndent) || clickY > (verticalGrid + 2) *(EditorState.sectorSize + EditorState.sectorIndent)){
 							borderSelectedSector = -1;
 							break;
 						}
@@ -1774,13 +1745,13 @@ public class GameMap extends JComponent{
 							borderSectorCounter++;
 						}else borderSectorCounter++;
 						
-						hSize += size;
-						hSize += mapIndent;
+						hSize += EditorState.sectorSize;
+						hSize += EditorState.sectorIndent;
 					}
 	
 					hSize = 0;
-					vSize += size;
-					vSize += mapIndent;
+					vSize += EditorState.sectorSize;
+					vSize += EditorState.sectorIndent;
 				}
 				mainwindow.cleanManager();
 				mainwindow.updateManagerSector(borderSelectedSectors, horizontalGrid, verticalGrid);
@@ -1789,60 +1760,63 @@ public class GameMap extends JComponent{
 		}
 	}// TODO EditorMouseListener ends here
 	private void CreateHoststation(int x, int y, int own, int vehicle) {
-		hoststations.add(new Hoststation(x, y, own, vehicle));
-		if(hoststations.get(hoststations.size() - 1).getUnitX()  < leftCorner) {
-			hoststations.get(hoststations.size() - 1).setUnitX(leftCorner - (int)(size * 0.5/ 2));
+		Hoststation newHostStation = new Hoststation(x, y, own, vehicle);
+		if(newHostStation.getUnitX()  < leftCorner) {
+			newHostStation.setUnitX(leftCorner - (int)(EditorState.sectorSize * 0.5/ 2));
 		}
-		if(hoststations.get(hoststations.size() - 1).getUnitX()  > rightCorner) {
-			hoststations.get(hoststations.size() - 1).setUnitX(rightCorner - (int)(size * 0.5/ 2));
+		if(newHostStation.getUnitX()  > rightCorner) {
+			newHostStation.setUnitX(rightCorner - (int)(EditorState.sectorSize * 0.5/ 2));
 		}
-		if(hoststations.get(hoststations.size() - 1).getUnitY()  < topCorner) {
-			hoststations.get(hoststations.size() - 1).setUnitY(topCorner - (int)(size * 0.5/ 2));
+		if(newHostStation.getUnitY()  < topCorner) {
+			newHostStation.setUnitY(topCorner - (int)(EditorState.sectorSize * 0.5/ 2));
 		}
-		if(hoststations.get(hoststations.size() - 1).getUnitY()  > downCorner) {
-			hoststations.get(hoststations.size() - 1).setUnitY(downCorner - (int)(size * 0.5/ 2));
+		if(newHostStation.getUnitY()  > downCorner) {
+			newHostStation.setUnitY(downCorner - (int)(EditorState.sectorSize * 0.5/ 2));
 		}
-		selected = hoststations.get(hoststations.size() - 1);
+		selected = newHostStation;
+		EditorState.hostStations.add(newHostStation);
+		mainwindow.updateManagerUnit(selected, EditorState.hostStations.size() - 1);
+		mainwindow.showManager(0);
 		mainwindow.makeUnsaved();
 		mainwindow.repaint();
-		mainwindow.updateManagerUnit(selected, hoststations.size() - 1);
-		mainwindow.showManager(0);
 	}
 	private void CreateSquad(int x, int y, int own, int vehicle) {
-		units.add(new Squad(x, y, own, vehicle));
-		if(units.get(units.size() - 1).getUnitX()  < leftCorner) {
-			units.get(units.size() - 1).setUnitX(leftCorner - (int)(size * 0.14/ 2));
+		Squad newSquad = new Squad(x, y, own, vehicle);
+
+		if(newSquad.getUnitX()  < leftCorner) {
+			newSquad.setUnitX(leftCorner - (int)(EditorState.sectorSize * 0.14/ 2));
 		}
-		if(units.get(units.size() - 1).getUnitX()  > rightCorner) {
-			units.get(units.size() - 1).setUnitX(rightCorner - (int)(size * 0.14/ 2));
+		if(newSquad.getUnitX()  > rightCorner) {
+			newSquad.setUnitX(rightCorner - (int)(EditorState.sectorSize * 0.14/ 2));
 		}
-		if(units.get(units.size() - 1).getUnitY()  < topCorner) {
-			units.get(units.size() - 1).setUnitY(topCorner - (int)(size * 0.14/ 2));
+		if(newSquad.getUnitY()  < topCorner) {
+			newSquad.setUnitY(topCorner - (int)(EditorState.sectorSize * 0.14/ 2));
 		}
-		if(units.get(units.size() - 1).getUnitY()  > downCorner) {
-			units.get(units.size() - 1).setUnitY(downCorner - (int)(size * 0.14/ 2));
+		if(newSquad.getUnitY()  > downCorner) {
+			newSquad.setUnitY(downCorner - (int)(EditorState.sectorSize * 0.14/ 2));
 		}
-		selected = units.get(units.size() - 1);
-		mainwindow.updateManagerUnit(selected, units.size() - 1);
+		selected = newSquad;
+		EditorState.predefinedSquads.add(newSquad);
+		mainwindow.updateManagerUnit(selected, EditorState.predefinedSquads.size() - 1);
 		mainwindow.makeUnsaved();
 		mainwindow.repaint();
 	}
 	private void AddSpecialBuilding(int typ, int own, int blg) {
 		if(selectedBG != null) {
-			beamgates.remove(selectedBG);
+			EditorState.beamGates.remove(selectedBG);
 			selectedBG = null;
 		}
 		if(selectedBomb != null) {
-			bombs.remove(selectedBomb);
+			EditorState.bombs.remove(selectedBomb);
 			selectedBomb = null;
 		}
 		if(selectedTU != null) {
-			techupgrades.remove(selectedTU);
+			EditorState.techUpgrades.remove(selectedTU);
 			selectedTU = null;
 		}
-		typ_map.set(selectedSector, typ);
-		own_map.set(selectedSector, own);
-		blg_map.set(selectedSector, blg);
+		EditorState.typ_map.set(selectedSector, typ);
+		EditorState.own_map.set(selectedSector, own);
+		EditorState.blg_map.set(selectedSector, blg);
 		mainwindow.makeUnsaved();
 		mainwindow.repaint();
 		mainwindow.cleanManager();
@@ -1851,10 +1825,10 @@ public class GameMap extends JComponent{
 	
 	public void previousTypMap() {
 		if(horizontalGrid * verticalGrid > selectedSector) {
-			temp = typ_map.get(selectedSector);
+			temp = EditorState.typ_map.get(selectedSector);
 			temp--;
 			if(temp < 0) temp = 255;
-			if(getMapSet() == 0) {
+			if(EditorState.set == 1) {
 				if(temp > 53 && temp < 59) temp = 53;
 				if(temp > 59 && temp < 66) temp = 59;
 				if(temp > 82 && temp < 95) temp = 82;
@@ -1866,7 +1840,7 @@ public class GameMap extends JComponent{
 				if(temp > 205 && temp < 207) temp = 205;
 				if(temp > 208 && temp < 228) temp = 208;
 				if(temp > 236 && temp < 239) temp = 236;
-			}else if(getMapSet() == 1) {
+			}else if(EditorState.set == 2) {
 				if(temp > 24 && temp < 27) temp = 24;
 				if(temp > 104 && temp < 110) temp = 104;
 				if(temp > 113 && temp < 118) temp = 113;
@@ -1877,7 +1851,7 @@ public class GameMap extends JComponent{
 				if(temp > 208 && temp < 210) temp = 208;
 				if(temp > 225 && temp < 228) temp = 225;
 				if(temp > 230 && temp < 239)  temp = 230;
-			}else if(getMapSet() == 2) {
+			}else if(EditorState.set == 3) {
 				if(temp > 49 && temp < 59) temp = 49;
 				if(temp > 59 && temp < 66) temp = 59;
 				if(temp > 82 && temp < 100) temp = 82;
@@ -1889,7 +1863,7 @@ public class GameMap extends JComponent{
 				if(temp > 205 && temp < 207) temp = 205;
 				if(temp > 208 && temp < 228) temp = 208;
 				if(temp > 230 && temp < 239) temp = 230;
-			}else if(getMapSet() == 3) {
+			}else if(EditorState.set == 4) {
 				if(temp > 49 && temp < 59) temp = 49;
 				if(temp > 60 && temp < 66) temp = 60;
 				if(temp > 82 && temp < 100) temp = 82;
@@ -1901,7 +1875,7 @@ public class GameMap extends JComponent{
 				if(temp > 205 && temp < 207) temp = 205;
 				if(temp > 208 && temp < 228) temp = 208;
 				if(temp > 230 && temp < 239) temp = 230;
-			}else if(getMapSet() == 4) {
+			}else if(EditorState.set == 5) {
 				if(temp > 95 && temp < 97) temp = 95;
 				if(temp > 116 && temp < 118) temp = 116;
 				if(temp > 131 && temp < 133) temp = 131;
@@ -1911,7 +1885,7 @@ public class GameMap extends JComponent{
 				if(temp > 208 && temp < 210) temp = 208;
 				if(temp > 225 && temp < 228) temp = 225;
 				if(temp > 230 && temp < 239) temp = 230;
-			}else if(getMapSet() == 5) {
+			}else if(EditorState.set == 6) {
 				if(temp > 49 && temp < 59) temp = 49;
 				if(temp > 59 && temp < 66) temp = 59;
 				if(temp > 82 && temp < 95) temp = 82;
@@ -1924,7 +1898,7 @@ public class GameMap extends JComponent{
 				if(temp > 208 && temp < 228) temp = 208;
 				if(temp > 235 && temp < 239) temp = 235;
 			}
-			typ_map.set(selectedSector, temp);
+			EditorState.typ_map.set(selectedSector, temp);
 			mainwindow.cleanManager();
 			mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			mainwindow.makeUnsaved();
@@ -1934,9 +1908,9 @@ public class GameMap extends JComponent{
 	
 	public void nextTypMap() { 
 		if(horizontalGrid * verticalGrid > selectedSector) {
-			temp = typ_map.get(selectedSector);
+			temp = EditorState.typ_map.get(selectedSector);
 			temp++;
-			if(getMapSet() == 0) {
+			if(EditorState.set == 1) {
 				if(temp > 53 && temp < 59) temp = 59;
 				if(temp > 59 && temp < 66) temp = 66;
 				if(temp > 82 && temp < 95) temp = 95;
@@ -1948,7 +1922,7 @@ public class GameMap extends JComponent{
 				if(temp > 205 && temp < 207) temp = 207;
 				if(temp > 208 && temp < 228) temp = 228;
 				if(temp > 236 && temp < 239) temp = 239;
-			}else if(getMapSet() == 1) {
+			}else if(EditorState.set == 2) {
 				if(temp > 24 && temp < 27) temp = 27;
 				if(temp > 104 && temp < 110) temp = 110;
 				if(temp > 113 && temp < 118) temp = 118;
@@ -1959,7 +1933,7 @@ public class GameMap extends JComponent{
 				if(temp > 208 && temp < 210) temp = 210;
 				if(temp > 225 && temp < 228) temp = 228;
 				if(temp > 230 && temp < 239)  temp = 239;
-			}else if(getMapSet() == 2) {
+			}else if(EditorState.set == 3) {
 				if(temp > 49 && temp < 59) temp = 59;
 				if(temp > 59 && temp < 66) temp = 66;
 				if(temp > 82 && temp < 100) temp = 100;
@@ -1971,7 +1945,7 @@ public class GameMap extends JComponent{
 				if(temp > 205 && temp < 207) temp = 207;
 				if(temp > 208 && temp < 228) temp = 228;
 				if(temp > 230 && temp < 239) temp = 239;
-			}else if(getMapSet() == 3) {
+			}else if(EditorState.set == 4) {
 				if(temp > 49 && temp < 59) temp = 59;
 				if(temp > 60 && temp < 66) temp = 66;
 				if(temp > 82 && temp < 100) temp = 100;
@@ -1983,7 +1957,7 @@ public class GameMap extends JComponent{
 				if(temp > 205 && temp < 207) temp = 207;
 				if(temp > 208 && temp < 228) temp = 228;
 				if(temp > 230 && temp < 239) temp = 239;
-			}else if(getMapSet() == 4) {
+			}else if(EditorState.set == 5) {
 				if(temp > 95 && temp < 97) temp = 97;
 				if(temp > 116 && temp < 118) temp = 118;
 				if(temp > 131 && temp < 133) temp = 133;
@@ -1993,7 +1967,7 @@ public class GameMap extends JComponent{
 				if(temp > 208 && temp < 210) temp = 210;
 				if(temp > 225 && temp < 228) temp = 228;
 				if(temp > 230 && temp < 239) temp = 239;
-			}else if(getMapSet() == 5) {
+			}else if(EditorState.set == 6) {
 				if(temp > 49 && temp < 59) temp = 59;
 				if(temp > 59 && temp < 66) temp = 66;
 				if(temp > 82 && temp < 95) temp = 95;
@@ -2007,7 +1981,7 @@ public class GameMap extends JComponent{
 				if(temp > 235 && temp < 239) temp = 239;
 			}
 			if(temp > 255) temp = 0;
-			typ_map.set(selectedSector, temp);
+			EditorState.typ_map.set(selectedSector, temp);
 			mainwindow.cleanManager();
 			mainwindow.updateManagerSector(borderSelectedSector, selectedSector, horizontalGrid, verticalGrid);
 			mainwindow.makeUnsaved();
@@ -2140,10 +2114,10 @@ public class GameMap extends JComponent{
 	
 	public void resizeBuildingImg() {
 		for(UAitem building : UAdata.allBuildings) {
-			building.resizeImg(size, size);
+			building.resizeImg(EditorState.sectorSize, EditorState.sectorSize);
 		}
 		for(UAitem building : UAdata.fallbackBuildings) {
-			building.resizeImg(size, size);
+			building.resizeImg(EditorState.sectorSize, EditorState.sectorSize);
 		}
 	}
 	

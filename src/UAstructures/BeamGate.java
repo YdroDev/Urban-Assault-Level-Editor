@@ -13,8 +13,8 @@ public class BeamGate {
 	private int closedType;
 	private int sec_x;
 	private int sec_y;
-	private ArrayList<SpecialBuilding> keysectors;
-	private ArrayList<Integer> target_level;
+	private final ArrayList<SpecialBuilding> keysectors;
+	private final ArrayList<Integer> target_level;
 	private BufferedImage beamgate;
 	private BufferedImage keysector;
 	private boolean mb_status;
@@ -25,8 +25,8 @@ public class BeamGate {
 		this.openedType = 1; // 1 with road, 2 without road
 		this.closedType = 1; // 1 with road, 2 without road
 		this.mb_status = true;
-		this.keysectors = new ArrayList<SpecialBuilding>();
-		this.target_level = new ArrayList<Integer>();
+		this.keysectors = new ArrayList<>();
+		this.target_level = new ArrayList<>();
 		try {
 			this.beamgate = ImageIO.read(this.getClass().getResourceAsStream("/img/sectorItems/beamgate.png"));
 			this.keysector = ImageIO.read(this.getClass().getResourceAsStream("/img/sectorItems/keysector.png"));
