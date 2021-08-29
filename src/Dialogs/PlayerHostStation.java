@@ -56,9 +56,7 @@ public class PlayerHostStation implements WindowListener, ActionListener {
             constraints.anchor = GridBagConstraints.WEST;
             hsListPanel.setBorder(BorderFactory.createTitledBorder("Available Host Stations"));
 
-            for(int i = 0;;i++) {
-                if(EditorState.hostStations.get(i) == null) break;
-
+            for(int i = 0; i < EditorState.hostStations.size();i++) {
                 switch (EditorState.hostStations.get(i).getOwner()) {
                     case 1 -> availableHS.add(new JRadioButton("Host Station " + (i + 1) + ": Resistance"));
                     case 2 -> availableHS.add(new JRadioButton("Host Station " + (i + 1) + ": Sulgogar"));
@@ -159,7 +157,7 @@ public class PlayerHostStation implements WindowListener, ActionListener {
         if(noHSavailable != null) dialog.remove(noHSavailable);
         if(hsListPanel != null) dialog.remove(hsListPanel);
         availableHS.clear();
-        hsListPanel.setBorder(null);
+//        hsListPanel.setBorder(null);
         if(playerHSLabel != null) dialog.remove(playerHSLabel);
     }
 }

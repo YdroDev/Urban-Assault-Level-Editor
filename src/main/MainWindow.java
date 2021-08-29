@@ -356,17 +356,20 @@ public class MainWindow extends JFrame {
 						if(JFileChooser.APPROVE_OPTION == savedMap)
 							saveLevel(selectSaveFile.getSelectedFile());
 						currentMap.closeMap();
+						EditorState.resetState();
 						setTitle("Urban Assault Level Editor");
 						savedMap = JFileChooser.CANCEL_OPTION;
 						EditorState.isSaved = true;
 					}else {
 						currentMap.closeMap();
+						EditorState.resetState();
 						setTitle("Urban Assault Level Editor");
 						savedMap = JFileChooser.CANCEL_OPTION;
 						EditorState.isSaved = true;
 					}
 				}else {
 					currentMap.closeMap();
+					EditorState.resetState();
 					setTitle("Urban Assault Level Editor");
 					savedMap = JFileChooser.CANCEL_OPTION;
 				}

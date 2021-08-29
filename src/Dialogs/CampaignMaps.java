@@ -35,6 +35,15 @@ public class CampaignMaps implements WindowListener, ActionListener {
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
 
+        originalLabel = new JLabel();
+        MDghorLabel = new JLabel();
+        MDtaerLabel = new JLabel();
+        originalMap = new JPanel();
+        MDghorMap = new JPanel();
+        MDtaerMap = new JPanel();
+        mapsTabs = new JTabbedPane();
+        mapsPanel = new JPanel(new GridBagLayout());
+        mapsClose = new JButton("Close");
         try {
             originalImg = ImageIO.read(this.getClass().getResource("/img/campaignMaps/originalMap.jpg"));
             originalLabel.setIcon(new ImageIcon(originalImg));
@@ -45,15 +54,6 @@ public class CampaignMaps implements WindowListener, ActionListener {
         }catch(IOException ex) {
             System.out.println("campaign map could not load");
         }
-        originalLabel = new JLabel();
-        MDghorLabel = new JLabel();
-        MDtaerLabel = new JLabel();
-        originalMap = new JPanel();
-        MDghorMap = new JPanel();
-        MDtaerMap = new JPanel();
-        mapsTabs = new JTabbedPane();
-        mapsPanel = new JPanel(new GridBagLayout());
-        mapsClose = new JButton("Close");
 
         mapsClose.addActionListener(this);
         originalMap.add(originalLabel);
