@@ -1,4 +1,4 @@
-package main;
+package State;
 
 import UAstructures.UAitem;
 
@@ -6,25 +6,25 @@ import java.util.ArrayList;
 
 public class UAdata {
 
-	public static ArrayList<UAitem> resUnits = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> ghorUnits = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> taerUnits = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> mykoUnits = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> sulgUnits = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> trainingUnits = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> specialUnits = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> allUnits = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> techUpgradeItems = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> fallbackUnits = new ArrayList<UAitem>();
+	public static ArrayList<UAitem> resUnits = new ArrayList<>();
+	public static ArrayList<UAitem> ghorUnits = new ArrayList<>();
+	public static ArrayList<UAitem> taerUnits = new ArrayList<>();
+	public static ArrayList<UAitem> mykoUnits = new ArrayList<>();
+	public static ArrayList<UAitem> sulgUnits = new ArrayList<>();
+	public static ArrayList<UAitem> trainingUnits = new ArrayList<>();
+	public static ArrayList<UAitem> specialUnits = new ArrayList<>();
+	public static ArrayList<UAitem> allUnits = new ArrayList<>();
+	public static ArrayList<UAitem> techUpgradeItems = new ArrayList<>();
+	public static ArrayList<UAitem> fallbackUnits = new ArrayList<>();
 	
-	public static ArrayList<UAitem> resBuildings = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> ghorBuildings = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> taerBuildings = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> mykoBuildings = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> blackSectBuildings = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> miscBuildings = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> allBuildings = new ArrayList<UAitem>();
-	public static ArrayList<UAitem> fallbackBuildings = new ArrayList<UAitem>();
+	public static ArrayList<UAitem> resBuildings = new ArrayList<>();
+	public static ArrayList<UAitem> ghorBuildings = new ArrayList<>();
+	public static ArrayList<UAitem> taerBuildings = new ArrayList<>();
+	public static ArrayList<UAitem> mykoBuildings = new ArrayList<>();
+	public static ArrayList<UAitem> blackSectBuildings = new ArrayList<>();
+	public static ArrayList<UAitem> miscBuildings = new ArrayList<>();
+	public static ArrayList<UAitem> allBuildings = new ArrayList<>();
+	public static ArrayList<UAitem> fallbackBuildings = new ArrayList<>();
 	
 	public static void addOriginalData() {
 		clearData();
@@ -286,46 +286,20 @@ public class UAdata {
 	}
 	
 	static void addAllData() {
-		for(UAitem resUnit : resUnits) {
-			allUnits.add(resUnit);
-		}
-		for(UAitem ghorUnit : ghorUnits) {
-			allUnits.add(ghorUnit);
-		}
-		for(UAitem taerUnit : taerUnits) {
-			allUnits.add(taerUnit);
-		}
-		for(UAitem mykoUnit : mykoUnits) {
-			allUnits.add(mykoUnit);
-		}
-		for(UAitem sulgUnit : sulgUnits) {
-			allUnits.add(sulgUnit);
-		}
-		for(UAitem trainingUnit : trainingUnits) {
-			allUnits.add(trainingUnit);
-		}
-		for(UAitem specialUnit : specialUnits) {
-			allUnits.add(specialUnit);
-		}
-		
-		for(UAitem resBuilding : resBuildings) {
-			allBuildings.add(resBuilding);
-		}
-		for(UAitem ghorBuilding : ghorBuildings) {
-			allBuildings.add(ghorBuilding);
-		}
-		for(UAitem taerBuilding : taerBuildings) {
-			allBuildings.add(taerBuilding);
-		}
-		for(UAitem mykoBuilding : mykoBuildings) {
-			allBuildings.add(mykoBuilding);
-		}
-		for(UAitem blackSectBuilding : blackSectBuildings) {
-			allBuildings.add(blackSectBuilding);
-		}
-		for(UAitem miscBuilding : miscBuildings) {
-			allBuildings.add(miscBuilding);
-		}
+		allUnits.addAll(resUnits);
+		allUnits.addAll(ghorUnits);
+		allUnits.addAll(taerUnits);
+		allUnits.addAll(mykoUnits);
+		allUnits.addAll(sulgUnits);
+		allUnits.addAll(trainingUnits);
+		allUnits.addAll(specialUnits);
+
+		allBuildings.addAll(resBuildings);
+		allBuildings.addAll(ghorBuildings);
+		allBuildings.addAll(taerBuildings);
+		allBuildings.addAll(mykoBuildings);
+		allBuildings.addAll(blackSectBuildings);
+		allBuildings.addAll(miscBuildings);
 	}
 
 	public static UAitem getUnit(int id) {

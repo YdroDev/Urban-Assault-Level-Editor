@@ -1,7 +1,7 @@
 package LevelIO;
 
+import State.EditorState;
 import UAstructures.*;
-import main.*;
 
 public class SingleplayerLevelSaver extends LevelSaver {
 
@@ -14,7 +14,7 @@ public class SingleplayerLevelSaver extends LevelSaver {
         mapSaver.println(";");
     }
     void handleDescription(){
-        mapSaver.println(";"+EditorState.description.replace("\n", "\n;"));
+        mapSaver.println(";"+ EditorState.description.replace("\n", "\n;"));
         mapSaver.println();
     }
     void handleLevelParameters() {

@@ -2,7 +2,7 @@ package Dialogs;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
-import main.EditorState;
+import State.EditorState;
 import main.MainWindow;
 
 import javax.imageio.ImageIO;

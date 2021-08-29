@@ -1,5 +1,7 @@
 package main;
 
+import State.EditorState;
+import State.UAdata;
 import UAstructures.*;
 
 import java.awt.BasicStroke;

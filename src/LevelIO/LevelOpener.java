@@ -1,6 +1,6 @@
 package LevelIO;
 
-import main.EditorState;
+import State.EditorState;
 
 import javax.swing.*;
 import java.io.*;

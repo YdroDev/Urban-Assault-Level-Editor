@@ -1,8 +1,8 @@
 package Dialogs;
 
-import main.EditorState;
+import State.EditorState;
 import main.MainWindow;
-import main.UAdata;
+import State.UAdata;
 
 import javax.swing.*;
 import java.awt.*;

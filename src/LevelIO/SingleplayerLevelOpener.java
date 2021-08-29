@@ -1,7 +1,7 @@
 package LevelIO;
 
 import UAstructures.*;
-import main.EditorState;
+import State.EditorState;
 
 import javax.swing.*;
 import java.io.*;

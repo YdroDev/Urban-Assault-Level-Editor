@@ -42,6 +42,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import State.EditorState;
+import State.UAdata;
 import UAstructures.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -757,7 +759,7 @@ public class LevelManager extends JFrame{
 			}
 			index--;
 
-			Hoststation hoststation = (Hoststation)EditorState.hostStations.get(index);
+			Hoststation hoststation = (Hoststation) EditorState.hostStations.get(index);
 			try {
 				if(hoststation.getVehicle() == 56) {
 					this.hsTypeSelected = 0;

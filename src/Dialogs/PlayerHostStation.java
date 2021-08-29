@@ -1,6 +1,6 @@
 package Dialogs;
 
-import main.EditorState;
+import State.EditorState;
 import main.MainWindow;
 
 import javax.swing.*;

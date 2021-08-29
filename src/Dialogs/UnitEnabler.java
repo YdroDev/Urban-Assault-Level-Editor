@@ -1,9 +1,9 @@
 package Dialogs;
 
 import UAstructures.CheckList;
-import main.EditorState;
+import State.EditorState;
 import main.MainWindow;
-import main.UAdata;
+import State.UAdata;
 
 import javax.swing.*;
 import java.awt.*;

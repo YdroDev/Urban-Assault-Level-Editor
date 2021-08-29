@@ -34,6 +34,8 @@ import Dialogs.*;
 
 import LevelIO.SingleplayerLevelOpener;
 import LevelIO.SingleplayerLevelSaver;
+import State.EditorState;
+import State.UAdata;
 import UAstructures.Hoststation;
 import UAstructures.Squad;
 import UAstructures.Unit;
