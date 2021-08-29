@@ -148,7 +148,7 @@ public class MainWindow extends JFrame {
 
 		MainMenuListener listenToMenu = new MainMenuListener();
 
-		imageVisible = false;
+		imageVisible = true;
 		heightVisible = false;
 		typVisible = false;
 		ownVisible = false;

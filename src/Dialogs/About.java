@@ -53,6 +53,7 @@ public class About implements WindowListener, ActionListener {
         constraints.gridwidth = 5;
         constraints.insets = new Insets(20,1,1,1);
         dialog.add(aboutClose, constraints);
+        dialog.setVisible(true);
     }
     @Override
     public void actionPerformed(ActionEvent e) {

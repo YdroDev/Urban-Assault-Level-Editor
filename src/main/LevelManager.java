@@ -478,7 +478,7 @@ public class LevelManager extends JFrame{
 		
 		this.numLabel = new JLabel("Number of units: ");
 		this.numField = new JTextField(2);
-		this.ownLabel = new JLabel("UAstructures.Unit faction: ");
+		this.ownLabel = new JLabel("Unit faction: ");
 		this.hsStrings = new String[7];
 		this.hsStrings[0] = "Resistance"; this.hsStrings[1] = "Ghorkov"; this.hsStrings[2] = "Taerkasten"; this.hsStrings[3] = "Mykonian"; this.hsStrings[4] = "Sulgogar"; this.hsStrings[5] = "Black Sect"; this.hsStrings[6] = "Target faction";
 		this.ownList = new JComboBox<String>(hsStrings);
@@ -497,13 +497,13 @@ public class LevelManager extends JFrame{
 		this.typMapLabel = new JLabel();
 		this.beamGateLabel = new JLabel();
 		this.bgKeysectorInfo = new JLabel();
-		this.keysectorList = new ArrayList<JLabel>();
+		this.keysectorList = new ArrayList<>();
 		this.openedBgLabel = new JLabel();
 		this.bgString = new String[2];
 		this.bgString[0] = "With road"; this.bgString[1] = "Without road";
-		this.openedBgList = new JComboBox<String>(this.bgString);
+		this.openedBgList = new JComboBox<>(this.bgString);
 		this.closedBgLabel = new JLabel();
-		this.closedBgList = new JComboBox<String>(this.bgString);
+		this.closedBgList = new JComboBox<>(this.bgString);
 		this.bgMbStatus = new JCheckBox("");
 		this.levelTargetLabel = new JLabel();
 		this.levelTargetLabel.setText("Unlock new level: ");
@@ -561,41 +561,41 @@ public class LevelManager extends JFrame{
 			this.selectModifier.addItem(buildingName.getName());
 		}
 		
-		this.vehicleAdded = new ArrayList<JPanel>();
-		this.vehicleIDs = new ArrayList<Integer>();
-		this.resEnabler = new ArrayList<JCheckBox>();
-		this.ghorEnabler = new ArrayList<JCheckBox>();
-		this.taerEnabler = new ArrayList<JCheckBox>();
-		this.mykoEnabler = new ArrayList<JCheckBox>();
-		this.sulgEnabler = new ArrayList<JCheckBox>();
-		this.blasecEnabler = new ArrayList<JCheckBox>();
-		this.targetHSEnabler = new ArrayList<JCheckBox>();
-		this.addEnergyLabel = new ArrayList<JLabel>();
-		this.addEnergyField = new ArrayList<JTextField>();
-		this.addShieldLabel = new ArrayList<JLabel>();
-		this.addShieldField = new ArrayList<JTextField>();
-		this.addWeaponLabel = new ArrayList<JLabel>();
-		this.addWeaponField = new ArrayList<JTextField>();
-		this.addRadarLabel = new ArrayList<JLabel>();
-		this.addRadarField = new ArrayList<JTextField>();
-		this.addDamageLabel = new ArrayList<JLabel>();
-		this.addDamageField = new ArrayList<JTextField>();
-		this.addShotTimeLabel = new ArrayList<JLabel>();
-		this.addShotTimeField = new ArrayList<JTextField>();
-		this.addShotTimeUserLabel = new ArrayList<JLabel>();
-		this.addShotTimeUserField = new ArrayList<JTextField>();
-		this.removeVehicle = new ArrayList<JButton>();
+		this.vehicleAdded = new ArrayList<>();
+		this.vehicleIDs = new ArrayList<>();
+		this.resEnabler = new ArrayList<>();
+		this.ghorEnabler = new ArrayList<>();
+		this.taerEnabler = new ArrayList<>();
+		this.mykoEnabler = new ArrayList<>();
+		this.sulgEnabler = new ArrayList<>();
+		this.blasecEnabler = new ArrayList<>();
+		this.targetHSEnabler = new ArrayList<>();
+		this.addEnergyLabel = new ArrayList<>();
+		this.addEnergyField = new ArrayList<>();
+		this.addShieldLabel = new ArrayList<>();
+		this.addShieldField = new ArrayList<>();
+		this.addWeaponLabel = new ArrayList<>();
+		this.addWeaponField = new ArrayList<>();
+		this.addRadarLabel = new ArrayList<>();
+		this.addRadarField = new ArrayList<>();
+		this.addDamageLabel = new ArrayList<>();
+		this.addDamageField = new ArrayList<>();
+		this.addShotTimeLabel = new ArrayList<>();
+		this.addShotTimeField = new ArrayList<>();
+		this.addShotTimeUserLabel = new ArrayList<>();
+		this.addShotTimeUserField = new ArrayList<>();
+		this.removeVehicle = new ArrayList<>();
 		
-		this.buildingAdded = new ArrayList<JPanel>();
-		this.buildingIDs = new ArrayList<Integer>();
-		this.removeBuilding = new ArrayList<JButton>();
-		this.resBuildingEnabler = new ArrayList<JCheckBox>();
-		this.ghorBuildingEnabler = new ArrayList<JCheckBox>();
-		this.taerBuildingEnabler = new ArrayList<JCheckBox>();
-		this.mykoBuildingEnabler = new ArrayList<JCheckBox>();
-		this.sulgBuildingEnabler = new ArrayList<JCheckBox>();
-		this.blasecBuildingEnabler = new ArrayList<JCheckBox>();
-		this.targetHSBuildingEnabler = new ArrayList<JCheckBox>();
+		this.buildingAdded = new ArrayList<>();
+		this.buildingIDs = new ArrayList<>();
+		this.removeBuilding = new ArrayList<>();
+		this.resBuildingEnabler = new ArrayList<>();
+		this.ghorBuildingEnabler = new ArrayList<>();
+		this.taerBuildingEnabler = new ArrayList<>();
+		this.mykoBuildingEnabler = new ArrayList<>();
+		this.sulgBuildingEnabler = new ArrayList<>();
+		this.blasecBuildingEnabler = new ArrayList<>();
+		this.targetHSBuildingEnabler = new ArrayList<>();
 
 		this.bombLabel = new JLabel();
 		this.bombString = new String[2];
@@ -720,7 +720,7 @@ public class LevelManager extends JFrame{
 		this.unitScroller.setPreferredSize(new Dimension(300,300));
 		this.sectorScroller = new JScrollPane(this.sectorWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.sectorScroller.setPreferredSize(new Dimension(300,300));
-		this.tabs.addTab("Host Station / UAstructures.Squad", this.unitScroller);
+		this.tabs.addTab("Host Station / Squad", this.unitScroller);
 		this.tabs.addTab("Sector", this.sectorScroller);
 		
 		this.add(this.tabs);
@@ -734,28 +734,14 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridx = 0;
 			this.managerConstraints.gridy = 0;
 			this.managerConstraints.insets = new Insets(1,1,1,1);
-			switch(own) {
-			case 1:
-				this.unitName.setText("UAstructures.Hoststation "+index+": Resistance");
-				break;
-			case 2:
-				this.unitName.setText("UAstructures.Hoststation "+index+": Sulgogar");
-				break;
-			case 3:
-				this.unitName.setText("UAstructures.Hoststation "+index+": Mykonian");
-				break;
-			case 4:
-				this.unitName.setText("UAstructures.Hoststation "+index+": Taerkasten");
-				break;
-			case 5:
-				this.unitName.setText("UAstructures.Hoststation "+index+": Black sect");
-				break;
-			case 6:
-				this.unitName.setText("UAstructures.Hoststation "+index+": Ghorkov");
-				break;
-			case 7:
-				this.unitName.setText("UAstructures.Hoststation "+index+": Target Host Station");
-				break;
+			switch (own) {
+				case 1 -> this.unitName.setText("Hoststation " + index + ": Resistance");
+				case 2 -> this.unitName.setText("Hoststation " + index + ": Sulgogar");
+				case 3 -> this.unitName.setText("Hoststation " + index + ": Mykonian");
+				case 4 -> this.unitName.setText("Hoststation " + index + ": Taerkasten");
+				case 5 -> this.unitName.setText("Hoststation " + index + ": Black sect");
+				case 6 -> this.unitName.setText("Hoststation " + index + ": Ghorkov");
+				case 7 -> this.unitName.setText("Hoststation " + index + ": Target Host Station");
 			}
 			index--;
 
@@ -1067,7 +1053,7 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 0;
 			this.managerConstraints.gridx = 0;
 			this.imgLabel.setIcon(new ImageIcon(this.hsVehicle));
-			this.imgPanel.setBorder(BorderFactory.createTitledBorder("UAstructures.Hoststation type"));
+			this.imgPanel.setBorder(BorderFactory.createTitledBorder("Hoststation type"));
 			this.imgPanel.add(this.imgLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
 			this.hsType.setSelectedIndex(this.hsTypeSelected);
@@ -1097,13 +1083,13 @@ public class LevelManager extends JFrame{
 				for(UAitem unit : UAdata.allUnits) {
 					if(unit.getID() == vehicle) {
 						this.unitImg.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/img/icons/"+unit.getIconName()+".png"))));
-						this.unitName.setText("UAstructures.Unit: "+ unit.getName());
+						this.unitName.setText("Unit: "+ unit.getName());
 					}
 				}
 				for(UAitem unit : UAdata.fallbackUnits) {
 					if(unit.getID() == vehicle) {
 						this.unitImg.setIcon(new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream("/img/icons/"+unit.getIconName()+".png"))));
-						this.unitName.setText("UAstructures.Unit: "+ unit.getName());
+						this.unitName.setText("Unit: "+ unit.getName());
 					}
 				}
 			}catch(FileNotFoundException ex) {
@@ -1176,12 +1162,12 @@ public class LevelManager extends JFrame{
 		this.sectorInfo.setText("Sector x:"+selectedSectorX+" y:"+selectedSectorY);
 		if(selectedSectorX == 0 || selectedSectorY == 0) isBorder = true;
 		if(selectedSectorX > hGrid || selectedSectorY > vGrid) isBorder = true;
-		if(isBorder == true) {
+		if(isBorder) {
 			this.borderLabel.setText("This sector is border");
 			this.borderPanel.add(this.borderLabel);
 		}
 		this.managerConstraints.insets = new Insets(5,25,5,25);
-		if(isBorder == false) {
+		if(!isBorder) {
 			this.ownMapPanel.setBorder(BorderFactory.createTitledBorder("Sector owner"));
 			if(EditorState.own_map.get(sector) == 0) {
 				this.ownMapLabel.setText("This sector is neutral");
@@ -1219,7 +1205,7 @@ public class LevelManager extends JFrame{
 			
 			boolean error = true;
 			try {
-				if(set == 0) {
+				if(EditorState.set == 1) {
 					for(int i = 0; i < 256; i++) {
 						if(i == 54) i = 59;
 						if(i == 60) i = 66;
@@ -1251,7 +1237,7 @@ public class LevelManager extends JFrame{
 						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
-				}else if(set == 1) {
+				}else if(EditorState.set == 2) {
 					for(int i = 0; i < 256; i++) {
 						if(i == 25) i = 27;
 						if(i == 105) i = 110;
@@ -1275,14 +1261,14 @@ public class LevelManager extends JFrame{
 							break;
 						}	
 					}
-					if(error == true) {
+					if(error) {
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
 						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
-				}else if(set == 2) {
+				}else if(EditorState.set == 3) {
 					for(int i = 0; i < 256; i++) {
 						if(i == 50) i = 59;
 						if(i == 60) i = 66;
@@ -1308,14 +1294,14 @@ public class LevelManager extends JFrame{
 							break;
 						}
 					}
-					if(error == true) {
+					if(error) {
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
 						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
-				}else if(set == 3) {
+				}else if(EditorState.set == 4) {
 					for(int i = 0; i < 256; i++) {
 						if(i == 50) i = 59;
 						if(i == 61) i = 66;
@@ -1341,14 +1327,14 @@ public class LevelManager extends JFrame{
 							break;
 						}
 					}
-					if(error == true) {
+					if(error) {
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
 						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
-				}else if(set == 4) {
+				}else if(EditorState.set == 5) {
 					for(int i = 0; i < 256; i++) {
 						if(i == 96) i = 97;
 						if(i == 117) i = 118;
@@ -1371,14 +1357,14 @@ public class LevelManager extends JFrame{
 							break;
 						}
 					}
-					if(error == true) {
+					if(error) {
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
 						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
-				}else if(set == 5) {
+				}else if(EditorState.set == 6) {
 					for(int i = 0; i < 256; i++) {
 						if(i == 50) i = 59;
 						if(i == 60) i = 66;
@@ -1404,7 +1390,7 @@ public class LevelManager extends JFrame{
 							break;
 						}
 					}
-					if(error == true) {
+					if(error) {
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
