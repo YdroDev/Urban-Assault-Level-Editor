@@ -42,7 +42,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import UAstructures.UAitem;
+import UAstructures.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -757,29 +757,30 @@ public class LevelManager extends JFrame{
 			}
 			index--;
 
+			Hoststation hoststation = (Hoststation)EditorState.hostStations.get(index);
 			try {
-				if(this.map.getHoststation(index).getVehicle() == 56) {
+				if(hoststation.getVehicle() == 56) {
 					this.hsTypeSelected = 0;
 					this.hsVehicle = ImageIO.read(this.getClass().getResourceAsStream("/img/hsImg/resistanceHS.png"));
-				}else if(this.map.getHoststation(index).getVehicle() == 59 || this.map.getHoststation(index).getVehicle() == 176) {
+				}else if(hoststation.getVehicle() == 59 || hoststation.getVehicle() == 176) {
 					this.hsTypeSelected = 1;
 					this.hsVehicle = ImageIO.read(this.getClass().getResourceAsStream("/img/hsImg/ghorkov1HS.png"));
-				}else if(this.map.getHoststation(index).getVehicle() == 57 || this.map.getHoststation(index).getVehicle() == 177) {
+				}else if(hoststation.getVehicle() == 57 || hoststation.getVehicle() == 177) {
 					this.hsTypeSelected = 2;
 					this.hsVehicle = ImageIO.read(this.getClass().getResourceAsStream("/img/hsImg/ghorkov2HS.png"));
-				}else if(this.map.getHoststation(index).getVehicle() == 60 || this.map.getHoststation(index).getVehicle() == 178) {
+				}else if(hoststation.getVehicle() == 60 || hoststation.getVehicle() == 178) {
 					this.hsTypeSelected = 3;
 					this.hsVehicle = ImageIO.read(this.getClass().getResourceAsStream("/img/hsImg/taerkastenHS.png"));
-				}else if(this.map.getHoststation(index).getVehicle() == 58) {
+				}else if(hoststation.getVehicle() == 58) {
 					this.hsTypeSelected = 4;
 					this.hsVehicle = ImageIO.read(this.getClass().getResourceAsStream("/img/hsImg/mykonianHS.png"));
-				}else if(this.map.getHoststation(index).getVehicle() == 61) {
+				}else if(hoststation.getVehicle() == 61) {
 					this.hsTypeSelected = 5;
 					this.hsVehicle = ImageIO.read(this.getClass().getResourceAsStream("/img/hsImg/sulgogarHS.png"));
-				}else if(this.map.getHoststation(index).getVehicle() == 62) {
+				}else if(hoststation.getVehicle() == 62) {
 					this.hsTypeSelected = 6;
 					this.hsVehicle = ImageIO.read(this.getClass().getResourceAsStream("/img/hsImg/blackSectHS.png"));
-				}else if(this.map.getHoststation(index).getVehicle() == 132) {
+				}else if(hoststation.getVehicle() == 132) {
 					this.hsTypeSelected = 7;
 					this.hsVehicle = ImageIO.read(this.getClass().getResourceAsStream("/img/hsImg/targetHS.png"));
 				}
@@ -789,33 +790,33 @@ public class LevelManager extends JFrame{
 
 			this.energyPanel.add(this.energyLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.energyField.setText(Integer.toString(this.map.getHoststation(index).getEnergy()) );
+			this.energyField.setText(Integer.toString(hoststation.getEnergy()) );
 			this.energyPanel.add(this.energyField, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
 			this.viewAnglePanel.add(this.viewAngleLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
-			this.viewAngleField.setText(Integer.toString(this.map.getHoststation(index).getViewAngle()) );
+			this.viewAngleField.setText(Integer.toString(hoststation.getViewAngle()) );
 			this.viewAnglePanel.add(this.viewAngleField, this.managerConstraints);
 			this.reloadConstPanel.add(this.reloadConstLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 4;
-			this.reloadConstField.setText(Integer.toString(this.map.getHoststation(index).getReloadConst()) );
+			this.reloadConstField.setText(Integer.toString(hoststation.getReloadConst()) );
 			this.reloadConstPanel.add(this.reloadConstField, this.managerConstraints);
-			
+			double fullSectorSize = EditorState.sectorSize + EditorState.sectorIndent;
 			this.managerConstraints.gridx = 0;
 			this.managerConstraints.gridy = 0;
 			this.positionPanel.add(this.xPosLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.xField.setText(Integer.toString(this.map.getHoststation(index).getUnitX()+ (int)(this.map.getMapSize() * 0.5/ 2)));
+			this.xField.setText(Integer.toString(hoststation.getUnitX()+ (int)(fullSectorSize * 0.5/ 2)));
 			this.positionPanel.add(this.xField, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
 			this.positionPanel.add(this.yPosLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
-			this.yField.setText(Integer.toString(this.map.getHoststation(index).getUnitY()+ (int)(this.map.getMapSize() * 0.5/ 2)));
+			this.yField.setText(Integer.toString(hoststation.getUnitY()+ (int)(fullSectorSize * 0.5/ 2)));
 			this.positionPanel.add(this.yField, this.managerConstraints);
 			this.managerConstraints.gridx = 4;
 			this.positionPanel.add(this.zPosLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 5;
-			this.zField.setText(Integer.toString(this.map.getHoststation(index).getHeight()));
+			this.zField.setText(Integer.toString(hoststation.getHeight()));
 			this.positionPanel.add(this.zField, this.managerConstraints);
 			
 			this.statsPanel.setBorder(BorderFactory.createTitledBorder("Enemy behavior (AI only)"));
@@ -827,10 +828,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 2;
 			this.statsPanel.add(this.conBudgetLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.conBudgetSlider.setValue(this.map.getHoststation(index).getConBudget());
+			this.conBudgetSlider.setValue(hoststation.getConBudget());
 			this.statsPanel.add(this.conBudgetSlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.conBudgetField.setText(Integer.toString(this.map.getHoststation(index).getConBudget()));
+			this.conBudgetField.setText(Integer.toString(hoststation.getConBudget()));
 			this.statsPanel.add(this.conBudgetField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.anchor = GridBagConstraints.WEST;
@@ -841,10 +842,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 3;
 			this.statsPanel.add(this.conDelayLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.conDelaySlider.setValue(this.map.getHoststation(index).getConDelay());
+			this.conDelaySlider.setValue(hoststation.getConDelay());
 			this.statsPanel.add(this.conDelaySlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.conDelayField.setText(Integer.toString(this.map.getHoststation(index).getConDelay()));
+			this.conDelayField.setText(Integer.toString(hoststation.getConDelay()));
 			this.statsPanel.add(this.conDelayField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -858,10 +859,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 5;
 			this.statsPanel.add(this.defBudgetLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.defBudgetSlider.setValue(this.map.getHoststation(index).getDefBudget());
+			this.defBudgetSlider.setValue(hoststation.getDefBudget());
 			this.statsPanel.add(this.defBudgetSlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.defBudgetField.setText(Integer.toString(this.map.getHoststation(index).getDefBudget()));
+			this.defBudgetField.setText(Integer.toString(hoststation.getDefBudget()));
 			this.statsPanel.add(this.defBudgetField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -871,10 +872,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 6;
 			this.statsPanel.add(this.defDelayLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.defDelaySlider.setValue(this.map.getHoststation(index).getDefDelay());
+			this.defDelaySlider.setValue(hoststation.getDefDelay());
 			this.statsPanel.add(this.defDelaySlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.defDelayField.setText(Integer.toString(this.map.getHoststation(index).getDefDelay()));
+			this.defDelayField.setText(Integer.toString(hoststation.getDefDelay()));
 			this.statsPanel.add(this.defDelayField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -888,10 +889,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 8;
 			this.statsPanel.add(this.recBudgetLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.recBudgetSlider.setValue(this.map.getHoststation(index).getRecBudget());
+			this.recBudgetSlider.setValue(hoststation.getRecBudget());
 			this.statsPanel.add(this.recBudgetSlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.recBudgetField.setText(Integer.toString(this.map.getHoststation(index).getRecBudget()));
+			this.recBudgetField.setText(Integer.toString(hoststation.getRecBudget()));
 			this.statsPanel.add(this.recBudgetField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -901,10 +902,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 9;
 			this.statsPanel.add(this.recDelayLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.recDelaySlider.setValue(this.map.getHoststation(index).getRecDelay());
+			this.recDelaySlider.setValue(hoststation.getRecDelay());
 			this.statsPanel.add(this.recDelaySlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.recDelayField.setText(Integer.toString(this.map.getHoststation(index).getRecDelay()));
+			this.recDelayField.setText(Integer.toString(hoststation.getRecDelay()));
 			this.statsPanel.add(this.recDelayField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -918,10 +919,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 11;
 			this.statsPanel.add(this.robBudgetLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.robBudgetSlider.setValue(this.map.getHoststation(index).getRobBudget());
+			this.robBudgetSlider.setValue(hoststation.getRobBudget());
 			this.statsPanel.add(this.robBudgetSlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.robBudgetField.setText(Integer.toString(this.map.getHoststation(index).getRobBudget()));
+			this.robBudgetField.setText(Integer.toString(hoststation.getRobBudget()));
 			this.statsPanel.add(this.robBudgetField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -931,10 +932,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 12;
 			this.statsPanel.add(this.robDelayLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.robDelaySlider.setValue(this.map.getHoststation(index).getRobDelay());
+			this.robDelaySlider.setValue(hoststation.getRobDelay());
 			this.statsPanel.add(this.robDelaySlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.robDelayField.setText(Integer.toString(this.map.getHoststation(index).getRobDelay()));
+			this.robDelayField.setText(Integer.toString(hoststation.getRobDelay()));
 			this.statsPanel.add(this.robDelayField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -948,10 +949,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 14;
 			this.statsPanel.add(this.powBudgetLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.powBudgetSlider.setValue(this.map.getHoststation(index).getPowBudget());
+			this.powBudgetSlider.setValue(hoststation.getPowBudget());
 			this.statsPanel.add(this.powBudgetSlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.powBudgetField.setText(Integer.toString(this.map.getHoststation(index).getPowBudget()));
+			this.powBudgetField.setText(Integer.toString(hoststation.getPowBudget()));
 			this.statsPanel.add(this.powBudgetField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -961,10 +962,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 15;
 			this.statsPanel.add(this.powDelayLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.powDelaySlider.setValue(this.map.getHoststation(index).getPowDelay());
+			this.powDelaySlider.setValue(hoststation.getPowDelay());
 			this.statsPanel.add(this.powDelaySlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.powDelayField.setText(Integer.toString(this.map.getHoststation(index).getPowDelay()));
+			this.powDelayField.setText(Integer.toString(hoststation.getPowDelay()));
 			this.statsPanel.add(this.powDelayField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -978,10 +979,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 17;
 			this.statsPanel.add(this.radBudgetLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.radBudgetSlider.setValue(this.map.getHoststation(index).getRadBudget());
+			this.radBudgetSlider.setValue(hoststation.getRadBudget());
 			this.statsPanel.add(this.radBudgetSlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.radBudgetField.setText(Integer.toString(this.map.getHoststation(index).getRadBudget()));
+			this.radBudgetField.setText(Integer.toString(hoststation.getRadBudget()));
 			this.statsPanel.add(this.radBudgetField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -991,10 +992,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 18;
 			this.statsPanel.add(this.radDelayLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.radDelaySlider.setValue(this.map.getHoststation(index).getRadDelay());
+			this.radDelaySlider.setValue(hoststation.getRadDelay());
 			this.statsPanel.add(this.radDelaySlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.radDelayField.setText(Integer.toString(this.map.getHoststation(index).getRadDelay()));
+			this.radDelayField.setText(Integer.toString(hoststation.getRadDelay()));
 			this.statsPanel.add(this.radDelayField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -1008,10 +1009,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 20;
 			this.statsPanel.add(this.safBudgetLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.safBudgetSlider.setValue(this.map.getHoststation(index).getSafBudget());
+			this.safBudgetSlider.setValue(hoststation.getSafBudget());
 			this.statsPanel.add(this.safBudgetSlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.safBudgetField.setText(Integer.toString(this.map.getHoststation(index).getSafBudget()));
+			this.safBudgetField.setText(Integer.toString(hoststation.getSafBudget()));
 			this.statsPanel.add(this.safBudgetField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -1021,10 +1022,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 21;
 			this.statsPanel.add(this.safDelayLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.safDelaySlider.setValue(this.map.getHoststation(index).getSafDelay());
+			this.safDelaySlider.setValue(hoststation.getSafDelay());
 			this.statsPanel.add(this.safDelaySlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.safDelayField.setText(Integer.toString(this.map.getHoststation(index).getSafDelay()));
+			this.safDelayField.setText(Integer.toString(hoststation.getSafDelay()));
 			this.statsPanel.add(this.safDelayField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -1038,10 +1039,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 23;
 			this.statsPanel.add(this.cplBudgetLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.cplBudgetSlider.setValue(this.map.getHoststation(index).getCplBudget());
+			this.cplBudgetSlider.setValue(hoststation.getCplBudget());
 			this.statsPanel.add(this.cplBudgetSlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.cplBudgetField.setText(Integer.toString(this.map.getHoststation(index).getCplBudget()));
+			this.cplBudgetField.setText(Integer.toString(hoststation.getCplBudget()));
 			this.statsPanel.add(this.cplBudgetField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -1051,10 +1052,10 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridy = 24;
 			this.statsPanel.add(this.cplDelayLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.cplDelaySlider.setValue(this.map.getHoststation(index).getCplDelay());
+			this.cplDelaySlider.setValue(hoststation.getCplDelay());
 			this.statsPanel.add(this.cplDelaySlider, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
-			this.cplDelayField.setText(Integer.toString(this.map.getHoststation(index).getCplDelay()));
+			this.cplDelayField.setText(Integer.toString(hoststation.getCplDelay()));
 			this.statsPanel.add(this.cplDelayField, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
 			this.managerConstraints.insets = new Insets(1,1,0,1);
@@ -1072,7 +1073,7 @@ public class LevelManager extends JFrame{
 			this.managerConstraints.gridx = 0;
 			this.mbStatusPanel.setBorder(BorderFactory.createTitledBorder("MB status"));
 			this.mbStatus.setText("Make this Host Station invisible in the Mission Briefing");
-			if(this.map.getHoststation(index).getVisibility() == true) mbStatus.setSelected(false);
+			if(hoststation.getVisibility()) mbStatus.setSelected(false);
 			else mbStatus.setSelected(true);
 			this.mbStatusPanel.add(this.mbStatus, this.managerConstraints);
 			this.applyPanel.add(this.applyUnit, this.managerConstraints);
@@ -1108,40 +1109,41 @@ public class LevelManager extends JFrame{
 			}catch(IOException ex) {
 				System.out.println("An error occured while loading an image icon for unit/building in manager");
 			}
-			
+			Squad squad = (Squad)EditorState.predefinedSquads.get(index);
 			this.numPanel.add(this.numLabel, this.managerConstraints);
-			this.managerConstraints.gridx = 1; //TODO checkpoint
-			this.numField.setText(Integer.toString(this.map.getSquad(index).getQuantity()));
+			this.managerConstraints.gridx = 1;
+			this.numField.setText(Integer.toString(squad.getQuantity()));
 			this.numPanel.add(this.numField, this.managerConstraints);
 			this.managerConstraints.gridx = 0;
 			this.ownPanel.add(this.ownLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			if(this.map.getSquad(index).getOwner() == 1) this.ownList.setSelectedIndex(0);
-			else if(this.map.getSquad(index).getOwner() == 6) this.ownList.setSelectedIndex(1);
-			else if(this.map.getSquad(index).getOwner() == 4) this.ownList.setSelectedIndex(2);
-			else if(this.map.getSquad(index).getOwner() == 3) this.ownList.setSelectedIndex(3);
-			else if(this.map.getSquad(index).getOwner() == 2) this.ownList.setSelectedIndex(4);
-			else if(this.map.getSquad(index).getOwner() == 5) this.ownList.setSelectedIndex(5);
-			else if(this.map.getSquad(index).getOwner() == 7) this.ownList.setSelectedIndex(6);
+			if(squad.getOwner() == 1) this.ownList.setSelectedIndex(0);
+			else if(squad.getOwner() == 6) this.ownList.setSelectedIndex(1);
+			else if(squad.getOwner() == 4) this.ownList.setSelectedIndex(2);
+			else if(squad.getOwner() == 3) this.ownList.setSelectedIndex(3);
+			else if(squad.getOwner() == 2) this.ownList.setSelectedIndex(4);
+			else if(squad.getOwner() == 5) this.ownList.setSelectedIndex(5);
+			else if(squad.getOwner() == 7) this.ownList.setSelectedIndex(6);
 			this.ownPanel.add(this.ownList, this.managerConstraints);
 			this.managerConstraints.gridx = 0;
 			this.locationPanel.add(this.xUnitLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 1;
-			this.xUnitField.setText(Integer.toString(this.map.getSquad(index).getUnitX() + (int)(map.getMapSize() * 0.14/ 2)));
+			double fullSectorSize = EditorState.sectorSize + EditorState.sectorIndent;
+			this.xUnitField.setText(Integer.toString(squad.getUnitX() + (int)(fullSectorSize * 0.14/ 2)));
 			this.locationPanel.add(this.xUnitField, this.managerConstraints);
 			this.managerConstraints.gridx = 2;
 			this.locationPanel.add(this.yUnitLabel, this.managerConstraints);
 			this.managerConstraints.gridx = 3;
-			this.yUnitField.setText(Integer.toString(this.map.getSquad(index).getUnitY() + (int)(map.getMapSize() * 0.14/ 2)));
+			this.yUnitField.setText(Integer.toString(squad.getUnitY() + (int)(fullSectorSize * 0.14/ 2)));
 			this.locationPanel.add(this.yUnitField, this.managerConstraints);
 			this.managerConstraints.gridx = 0;
 			this.useablePanel.setBorder(BorderFactory.createTitledBorder("Useable"));
-			if(this.map.getSquad(index).getUseable() == false) this.useable.setSelected(false);
+			if(!squad.getUseable()) this.useable.setSelected(false);
 			else this.useable.setSelected(true);
 			this.useablePanel.add(this.useable, this.managerConstraints);
 			this.unitMbStatusPanel.setBorder(BorderFactory.createTitledBorder("MB status"));
 			this.mbStatus.setText("Make this squad invisible in the Mission Briefing");
-			if(this.map.getSquad(index).getVisibility() == true) this.mbStatus.setSelected(false);
+			if(squad.getVisibility()) this.mbStatus.setSelected(false);
 			else this.mbStatus.setSelected(true);
 			this.unitMbStatusPanel.add(this.mbStatus, this.managerConstraints);
 			this.applySquadPanel.add(this.applySquad, this.managerConstraints);
@@ -1179,34 +1181,34 @@ public class LevelManager extends JFrame{
 		this.managerConstraints.insets = new Insets(5,25,5,25);
 		if(isBorder == false) {
 			this.ownMapPanel.setBorder(BorderFactory.createTitledBorder("Sector owner"));
-			if(this.map.getOwnMap(sector) == 0) {
+			if(EditorState.own_map.get(sector) == 0) {
 				this.ownMapLabel.setText("This sector is neutral");
-			}else if(this.map.getOwnMap(sector) == 1) {
+			}else if(EditorState.own_map.get(sector) == 1) {
 				this.ownMapLabel.setText("Resistance owns this sector");
-			}else if(this.map.getOwnMap(sector) == 6) {
+			}else if(EditorState.own_map.get(sector) == 6) {
 				this.ownMapLabel.setText("Ghorkov owns this sector");
-			}else if(this.map.getOwnMap(sector) == 4) {
+			}else if(EditorState.own_map.get(sector) == 4) {
 				this.ownMapLabel.setText("Taerkasten owns this sector");
-			}else if(this.map.getOwnMap(sector) == 3) {
+			}else if(EditorState.own_map.get(sector) == 3) {
 				this.ownMapLabel.setText("Mykonian owns this sector");
-			}else if(this.map.getOwnMap(sector) == 2) {
+			}else if(EditorState.own_map.get(sector) == 2) {
 				this.ownMapLabel.setText("Sulgogar owns this sector");
-			}else if(this.map.getOwnMap(sector) == 5) {
+			}else if(EditorState.own_map.get(sector) == 5) {
 				this.ownMapLabel.setText("Black Sect owns this sector");
-			}else if(this.map.getOwnMap(sector) == 7) {
+			}else if(EditorState.own_map.get(sector) == 7) {
 				this.ownMapLabel.setText("This sector is neutral(for buildings)");
 			}
 			this.ownMapPanel.add(this.ownMapLabel);
 			
 			for(UAitem building : UAdata.allBuildings) {
-				if(this.map.getBlgMap(sector) == building.getID()) {
+				if(EditorState.blg_map.get(sector) == building.getID()) {
 					this.blgMapLabel.setText(building.getName());
 					this.blgMapPanel.setBorder(BorderFactory.createTitledBorder("Special building"));
 					this.blgMapPanel.add(this.blgMapLabel, this.managerConstraints);
 				}
 			}
 			for(UAitem building : UAdata.fallbackBuildings) {
-				if(this.map.getBlgMap(sector) == building.getID()) {
+				if(EditorState.blg_map.get(sector) == building.getID()) {
 					this.blgMapLabel.setText(building.getName());
 					this.blgMapPanel.setBorder(BorderFactory.createTitledBorder("Special building"));
 					this.blgMapPanel.add(this.blgMapLabel, this.managerConstraints);
@@ -1229,7 +1231,7 @@ public class LevelManager extends JFrame{
 						if(i == 209) i = 228;
 						if(i == 237) i = 239;
 						
-						if(i == this.map.getTypMap(sector)) {
+						if(i == EditorState.typ_map.get(sector)) {
 							this.typMapLabel.setText("");
 							this.typMapImg = ImageIO.read(this.getClass().getResource("/img/Sector_images/Set1_with_hex/Set1_sector"+i+".jpg"));
 							this.typMapImg = resizeMap(200,200, this.typMapImg);
@@ -1244,7 +1246,7 @@ public class LevelManager extends JFrame{
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
-						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+this.map.getTypMap(sector)));
+						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
 				}else if(set == 1) {
@@ -1260,7 +1262,7 @@ public class LevelManager extends JFrame{
 						if(i == 226) i = 228;
 						if(i == 231) i = 239;
 						
-						if(i == this.map.getTypMap(sector)) {
+						if(i == EditorState.typ_map.get(sector)) {
 							this.typMapLabel.setText("");
 							this.typMapImg = ImageIO.read(this.getClass().getResourceAsStream("/img/Sector_images/Set2_with_hex/Set2_sector"+i+".jpg"));
 							this.typMapImg = resizeMap(200,200, this.typMapImg);
@@ -1275,7 +1277,7 @@ public class LevelManager extends JFrame{
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
-						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+this.map.getTypMap(sector)));
+						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
 				}else if(set == 2) {
@@ -1293,7 +1295,7 @@ public class LevelManager extends JFrame{
 						if(i == 231) i = 239;
 						
 						
-						if(i == this.map.getTypMap(sector)) {
+						if(i == EditorState.typ_map.get(sector)) {
 							this.typMapLabel.setText("");
 							this.typMapImg = ImageIO.read(this.getClass().getResourceAsStream("/img/Sector_images/Set3_with_hex/Set3_sector"+i+".jpg"));
 							this.typMapImg = resizeMap(200,200, this.typMapImg);
@@ -1308,7 +1310,7 @@ public class LevelManager extends JFrame{
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
-						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+this.map.getTypMap(sector)));
+						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
 				}else if(set == 3) {
@@ -1326,7 +1328,7 @@ public class LevelManager extends JFrame{
 						if(i == 231) i = 239;
 						
 						
-						if(i == this.map.getTypMap(sector)) {
+						if(i == EditorState.typ_map.get(sector)) {
 							this.typMapLabel.setText("");
 							this.typMapImg = ImageIO.read(this.getClass().getResourceAsStream("/img/Sector_images/Set4_with_hex/Set4_sector"+i+".jpg"));
 							this.typMapImg = resizeMap(200,200, this.typMapImg);
@@ -1341,7 +1343,7 @@ public class LevelManager extends JFrame{
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
-						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+this.map.getTypMap(sector)));
+						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
 				}else if(set == 4) {
@@ -1356,7 +1358,7 @@ public class LevelManager extends JFrame{
 						if(i == 226) i = 228;
 						if(i == 231) i = 239;
 						
-						if(i == this.map.getTypMap(sector)) {
+						if(i == EditorState.typ_map.get(sector)) {
 							this.typMapLabel.setText("");
 							this.typMapImg = ImageIO.read(this.getClass().getResourceAsStream("/img/Sector_images/Set5_with_hex/Set5_sector"+i+".jpg"));
 							this.typMapImg = resizeMap(200,200, this.typMapImg);
@@ -1371,7 +1373,7 @@ public class LevelManager extends JFrame{
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
-						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+this.map.getTypMap(sector)));
+						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
 				}else if(set == 5) {
@@ -1389,7 +1391,7 @@ public class LevelManager extends JFrame{
 						if(i == 236) i = 239;
 						
 						
-						if(i == this.map.getTypMap(sector)) {
+						if(i == EditorState.typ_map.get(sector)) {
 							this.typMapLabel.setText("");
 							this.typMapImg = ImageIO.read(this.getClass().getResourceAsStream("/img/Sector_images/Set6_with_hex/Set6_sector"+i+".jpg"));
 							this.typMapImg = resizeMap(200,200, this.typMapImg);
@@ -1404,13 +1406,13 @@ public class LevelManager extends JFrame{
 						this.typMapLabel.setIcon(null);
 						this.typMapLabel.setForeground(Color.RED);
 						this.typMapLabel.setText("This typ map doesn't exist. Please change it to avoid game crash");
-						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+this.map.getTypMap(sector)));
+						this.typMapPanel.setBorder(BorderFactory.createTitledBorder("Typ Map "+EditorState.typ_map.get(sector)));
 						this.typMapPanel.add(this.typMapLabel, this.managerConstraints);
 					}
 				}
-				
-				if(this.map.getBeamGate(selectedSectorX, selectedSectorY) != null){
-					this.beamGatePanel.setBorder(BorderFactory.createTitledBorder("Beam gate "+ this.map.getBeamGateNumber(selectedSectorX, selectedSectorY)));
+				BeamGate beamGate = EditorState.getBeamGate(selectedSectorX, selectedSectorY);
+				if(beamGate != null){
+					this.beamGatePanel.setBorder(BorderFactory.createTitledBorder("Beam gate "+ beamGate));
 					this.beamGateLabel.setText("This sector has beam gate");
 					this.managerConstraints.gridwidth = 6;
 					this.managerConstraints.gridx = 0;
@@ -1423,8 +1425,8 @@ public class LevelManager extends JFrame{
 					this.beamGatePanel.add(this.openedBgLabel, this.managerConstraints);
 					this.managerConstraints.gridx = 3;
 					this.managerConstraints.gridwidth = 3;
-					if(this.map.getBeamGate(selectedSectorX, selectedSectorY).getOpenedType() == 1) this.openedBgList.setSelectedIndex(0);
-					else if(this.map.getBeamGate(selectedSectorX, selectedSectorY).getOpenedType() == 2) this.openedBgList.setSelectedIndex(1);
+					if(beamGate.getOpenedType() == 1) this.openedBgList.setSelectedIndex(0);
+					else if(beamGate.getOpenedType() == 2) this.openedBgList.setSelectedIndex(1);
 					this.beamGatePanel.add(this.openedBgList, this.managerConstraints);
 					this.managerConstraints.gridy = 2;
 					this.managerConstraints.gridx = 0;
@@ -1433,28 +1435,28 @@ public class LevelManager extends JFrame{
 					this.beamGatePanel.add(this.closedBgLabel, this.managerConstraints);
 					this.managerConstraints.gridx = 3;
 					this.managerConstraints.gridwidth = 3;
-					if(this.map.getBeamGate(selectedSectorX, selectedSectorY).getClosedType() == 1) this.closedBgList.setSelectedIndex(0);
-					else if(this.map.getBeamGate(selectedSectorX, selectedSectorY).getClosedType() == 2) this.closedBgList.setSelectedIndex(1);
+					if(beamGate.getClosedType() == 1) this.closedBgList.setSelectedIndex(0);
+					else if(beamGate.getClosedType() == 2) this.closedBgList.setSelectedIndex(1);
 					this.beamGatePanel.add(this.closedBgList, this.managerConstraints);
 					this.managerConstraints.gridy = 3;
 					this.managerConstraints.gridx = 0;
 					this.bgMbStatus.setText("Make this beam gate invisible in the Mission Briefing");
 					this.managerConstraints.gridwidth = 7;
-					if(this.map.getBeamGate(selectedSectorX, selectedSectorY).getVisibility() == false) this.bgMbStatus.setSelected(true);
+					if(!beamGate.getVisibility()) this.bgMbStatus.setSelected(true);
 					else this.bgMbStatus.setSelected(false);
 					this.beamGatePanel.add(this.bgMbStatus, this.managerConstraints);
 					this.managerConstraints.gridwidth = 1;
 					this.bgGridy = 5;
-					if(this.map.getBeamGate(selectedSectorX, selectedSectorY).getKeysectors().size() > 0) {
+					if(beamGate.getKeysectors().size() > 0) {
 						this.managerConstraints.gridy = 4;
 						this.managerConstraints.gridx = 0;
 						this.managerConstraints.gridwidth = 6;
 						this.bgKeysectorInfo.setText("It contains keysectors:");
 						this.beamGatePanel.add(this.bgKeysectorInfo, this.managerConstraints);
-						for(int i = 0; i < this.map.getBeamGate(selectedSectorX, selectedSectorY).getKeysectors().size(); i++) {
+						for(int i = 0; i < beamGate.getKeysectors().size(); i++) {
 							this.keysectorList.add(new JLabel());
 							this.managerConstraints.gridy = bgGridy;
-							this.keysectorList.get(this.keysectorList.size()-1).setText("Keysector "+(i+1)+" at x:"+this.map.getBeamGate(selectedSectorX, selectedSectorY).getKeysectors().get(i).getX()+" y:"+this.map.getBeamGate(selectedSectorX, selectedSectorY).getKeysectors().get(i).getY());
+							this.keysectorList.get(this.keysectorList.size()-1).setText("Keysector "+(i+1)+" at x:"+beamGate.getKeysectors().get(i).getX()+" y:"+beamGate.getKeysectors().get(i).getY());
 							this.beamGatePanel.add(this.keysectorList.get(this.keysectorList.size()-1), this.managerConstraints);
 							
 							this.bgGridy++;
@@ -1468,10 +1470,10 @@ public class LevelManager extends JFrame{
 					this.beamGatePanel.add(this.levelTargetLabel, this.managerConstraints);
 					this.managerConstraints.gridwidth = 3;
 					this.managerConstraints.gridx = 2;
-					if(map.getContent() == 0)
-						this.levelTargetList = new JComboBox<String>(this.levelNames);
-					else if(map.getContent() == 1)
-						this.levelTargetList = new JComboBox<String>(this.mdLevelNames);
+					if(EditorState.gameContent == 0)
+						this.levelTargetList = new JComboBox<>(this.levelNames);
+					else if(EditorState.gameContent == 1)
+						this.levelTargetList = new JComboBox<>(this.mdLevelNames);
 					this.beamGatePanel.add(this.levelTargetList, this.managerConstraints);
 					this.managerConstraints.gridwidth = 2;
 					this.managerConstraints.gridx = 3;
@@ -1493,10 +1495,9 @@ public class LevelManager extends JFrame{
 					this.managerConstraints.gridx = 0;
 					
 					updateTargetLevel();
-					if(this.map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().size() == 0) {
+					if(beamGate.getTargetLevel().size() == 0) {
 						this.managerConstraints.gridwidth = 9;
 						this.beamGatePanel.add(this.errorBg, this.managerConstraints);
-						this.managerConstraints.gridwidth = 4;
 					}
 						
 						
@@ -1504,9 +1505,9 @@ public class LevelManager extends JFrame{
 					this.managerConstraints.gridx = 0;
 				}
 				
-				for(int i = 0; i < this.map.getBeamGateList().size();i++) {
-					for(int j = 0; j < this.map.getBeamGateList().get(i).getKeysectors().size(); j++) {
-						if(this.map.getBeamGateList().get(i).getKeysectors().get(j).getX() == selectedSectorX && this.map.getBeamGateList().get(i).getKeysectors().get(j).getY() == selectedSectorY) {
+				for(int i = 0; i < EditorState.beamGates.size();i++) {
+					for(int j = 0; j < EditorState.beamGates.get(i).getKeysectors().size(); j++) {
+						if(EditorState.beamGates.get(i).getKeysectors().get(j).getX() == selectedSectorX && EditorState.beamGates.get(i).getKeysectors().get(j).getY() == selectedSectorY) {
 							this.keysectorLabel.setText("This key sector belongs to beam gate "+(i+1));
 							this.keySectorPanel.setBorder(BorderFactory.createTitledBorder("Key sector "+(j+1)));
 							this.keySectorPanel.add(this.keysectorLabel, managerConstraints);
@@ -1514,8 +1515,9 @@ public class LevelManager extends JFrame{
 						}
 					}
 				}
-				
-				if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY) != null) {
+
+				TechUpgrade techUpgrade = EditorState.getTechUpgrade(selectedSectorX, selectedSectorY);
+				if(techUpgrade != null) {
 					this.managerConstraints.gridy = 0;
 					this.techUpgradePanel.setBorder(BorderFactory.createTitledBorder("Tech upgrade"));
 					this.managerConstraints.insets = new Insets(5,0,5,0);
@@ -1523,31 +1525,31 @@ public class LevelManager extends JFrame{
 					this.techUpgradeLabel.setText("Building type: ");
 					this.managerConstraints.gridx = 1;
 					this.managerConstraints.gridwidth = 5;
-					if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 60) {
+					if(techUpgrade.getBuilding() == 60) {
 						this.techUpgradeBuilding.setSelectedIndex(0);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 61) {
+					}else if(techUpgrade.getBuilding() == 61) {
 						this.techUpgradeBuilding.setSelectedIndex(1);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 4) {
+					}else if(techUpgrade.getBuilding() == 4) {
 						this.techUpgradeBuilding.setSelectedIndex(2);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 7) {
+					}else if(techUpgrade.getBuilding() == 7) {
 						this.techUpgradeBuilding.setSelectedIndex(3);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 15) {
+					}else if(techUpgrade.getBuilding() == 15) {
 						this.techUpgradeBuilding.setSelectedIndex(4);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 51) {
+					}else if(techUpgrade.getBuilding() == 51) {
 						this.techUpgradeBuilding.setSelectedIndex(5);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 50) {
+					}else if(techUpgrade.getBuilding() == 50) {
 						this.techUpgradeBuilding.setSelectedIndex(6);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 16) {
+					}else if(techUpgrade.getBuilding() == 16) {
 						this.techUpgradeBuilding.setSelectedIndex(7);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 65) {
+					}else if(techUpgrade.getBuilding() == 65) {
 						this.techUpgradeBuilding.setSelectedIndex(8);
 						this.techUpgradePanel.add(this.techUpgradeBuilding, this.managerConstraints);
 					}
@@ -1558,22 +1560,22 @@ public class LevelManager extends JFrame{
 					this.techUpgradePanel.add(this.techUpgradeTypeLabel, this.managerConstraints);
 					this.managerConstraints.gridx = 1;
 					this.managerConstraints.gridwidth = 4;
-					if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == -1) {
+					if(techUpgrade.getType() == -1) {
 						this.techUpgradeType.setSelectedIndex(5);
 						this.techUpgradePanel.add(this.techUpgradeType, this.managerConstraints);	
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 1) {
+					}else if(techUpgrade.getType() == 1) {
 						this.techUpgradeType.setSelectedIndex(0);
 						this.techUpgradePanel.add(this.techUpgradeType, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 2) {
+					}else if(techUpgrade.getType() == 2) {
 						this.techUpgradeType.setSelectedIndex(1);
 						this.techUpgradePanel.add(this.techUpgradeType, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 3) {
+					}else if(techUpgrade.getType() == 3) {
 						this.techUpgradeType.setSelectedIndex(2);
 						this.techUpgradePanel.add(this.techUpgradeType, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 4) {
+					}else if(techUpgrade.getType() == 4) {
 						this.techUpgradeType.setSelectedIndex(3);
 						this.techUpgradePanel.add(this.techUpgradeType, this.managerConstraints);
-					}else if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 5) {
+					}else if(techUpgrade.getType() == 5) {
 						this.techUpgradeType.setSelectedIndex(4);
 						this.techUpgradePanel.add(this.techUpgradeType, this.managerConstraints);
 					}
@@ -1581,7 +1583,7 @@ public class LevelManager extends JFrame{
 					this.managerConstraints.gridy = 2;
 					this.managerConstraints.gridwidth = 5;
 					this.tuMbStatus.setText("Make this tech upgrade invisible in the Mission Briefing");
-					if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVisibility() == true) this.tuMbStatus.setSelected(false);
+					if(techUpgrade.getVisibility()) this.tuMbStatus.setSelected(false);
 					else this.tuMbStatus.setSelected(true);
 					this.techUpgradePanel.add(this.tuMbStatus, this.managerConstraints);
 					this.managerConstraints.gridwidth = 1;
@@ -1590,7 +1592,6 @@ public class LevelManager extends JFrame{
 					this.managerConstraints.insets = new Insets(1, 1 , 1, 1);
 					this.techUpgradePanel.add(this.modifyLabel, this.managerConstraints);
 					this.managerConstraints.gridx = 1;
-					//this.managerConstraints.anchor = GridBagConstraints.WEST;
 					this.techUpgradePanel.add(this.selectModifier, this.managerConstraints);
 					this.managerConstraints.gridx = 2;
 					this.managerConstraints.insets = new Insets(1, 1 , 1, 1);
@@ -1603,16 +1604,17 @@ public class LevelManager extends JFrame{
 					this.managerConstraints.gridx = 0;
 					this.managerConstraints.gridwidth = 1;
 				}
-				
-				if(this.map.getStoudsonBomb(selectedSectorX, selectedSectorY) != null) {
-					this.stoudsonBombPanel.setBorder(BorderFactory.createTitledBorder("Stoudson Bomb "+ this.map.getStoudsonBombNumber(selectedSectorX, selectedSectorY)));
+
+				StoudsonBomb bomb = EditorState.getStoudsonBomb(selectedSectorX, selectedSectorY);
+				if(bomb != null) {
+					this.stoudsonBombPanel.setBorder(BorderFactory.createTitledBorder("Stoudson Bomb "+ EditorState.getStoudsonBombNumber(selectedSectorX, selectedSectorY)));
 					this.bombLabel.setText("Bomb appearance:");
 					this.managerConstraints.insets = new Insets(5, 1, 5, 1);
 					this.stoudsonBombPanel.add(this.bombLabel, this.managerConstraints);
 					this.managerConstraints.gridx = 1;
 					this.managerConstraints.gridwidth = 1;
-					if(this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getBombStyle() == 1) this.bombList.setSelectedIndex(0);
-					else if(this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getBombStyle() == 2) this.bombList.setSelectedIndex(1);
+					if(bomb.getBombStyle() == 1) this.bombList.setSelectedIndex(0);
+					else if(bomb.getBombStyle() == 2) this.bombList.setSelectedIndex(1);
 					this.stoudsonBombPanel.add(this.bombList, this.managerConstraints);
 					this.managerConstraints.gridwidth = 1;
 					this.managerConstraints.gridy = 3;
@@ -1621,19 +1623,19 @@ public class LevelManager extends JFrame{
 					this.stoudsonBombPanel.add(this.countdownLabel, this.managerConstraints);
 					this.managerConstraints.gridx = 0;
 					this.managerConstraints.gridy = 0;
-					this.cdHours.setText(Integer.toString(this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getCountdown() / 3600));
+					this.cdHours.setText(Integer.toString(bomb.getCountdown() / 3600));
 					this.countdownPanel.add(this.cdHours, this.managerConstraints);
 					this.managerConstraints.gridx = 1;
 					this.cdHoursLabel.setText("hours");
 					this.countdownPanel.add(this.cdHoursLabel, this.managerConstraints);
 					this.managerConstraints.gridx = 2;
-					this.cdMinutes.setText(Integer.toString((this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getCountdown() % 3600) / 60));
+					this.cdMinutes.setText(Integer.toString((bomb.getCountdown() % 3600) / 60));
 					this.countdownPanel.add(this.cdMinutes, this.managerConstraints);
 					this.cdMinutesLabel.setText("minutes");
 					this.managerConstraints.gridx = 3;
 					this.countdownPanel.add(this.cdMinutesLabel, this.managerConstraints);
 					this.managerConstraints.gridx = 4;
-					this.cdSeconds.setText(Integer.toString((this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getCountdown() % 3600) % 60));
+					this.cdSeconds.setText(Integer.toString((bomb.getCountdown() % 3600) % 60));
 					this.countdownPanel.add(this.cdSeconds, this.managerConstraints);
 					this.managerConstraints.gridx = 5;
 					this.cdSecondsLabel.setText("seconds");
@@ -1648,7 +1650,7 @@ public class LevelManager extends JFrame{
 					this.managerConstraints.gridx = 1;
 					this.managerConstraints.insets = new Insets(1,1,1,60);
 					this.stoudsonBombPanel.add(this.applyBomb, this.managerConstraints);
-					if(this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getReactors().size() > 0) {
+					if(bomb.getReactors().size() > 0) {
 						this.managerConstraints.gridy = 5;
 						this.managerConstraints.gridx = 0;
 						this.managerConstraints.insets = new Insets(1,1,1,1);
@@ -1659,8 +1661,8 @@ public class LevelManager extends JFrame{
 						this.managerConstraints.gridy = 6;
 						this.managerConstraints.gridwidth = 3;
 						this.managerConstraints.insets = new Insets(1,1,1,60);
-						for(int i = 0; i < this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getReactors().size(); i++) {
-							this.reactorList.add(new JLabel("Reactor "+(i+1)+" at x:"+this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getReactors().get(i).getX()+" y:"+this.map.getStoudsonBomb(selectedSectorX, selectedSectorY).getReactors().get(i).getY()));
+						for(int i = 0; i < bomb.getReactors().size(); i++) {
+							this.reactorList.add(new JLabel("Reactor "+(i+1)+" at x:"+bomb.getReactors().get(i).getX()+" y:"+bomb.getReactors().get(i).getY()));
 							this.stoudsonBombPanel.add(this.reactorList.get(this.reactorList.size()-1), this.managerConstraints);
 							this.sbGridy++;
 							this.managerConstraints.gridy = this.sbGridy;
@@ -1674,28 +1676,28 @@ public class LevelManager extends JFrame{
 					this.managerConstraints.gridwidth = 1;
 				}
 				this.managerConstraints.insets = new Insets(5,5,5,5);
-				for(int i = 0; i < this.map.getStoudsonBombList().size(); i++) {
-					for(int j = 0; j < this.map.getStoudsonBombList().get(i).getReactors().size(); j++) {
-						if(this.map.getStoudsonBombList().get(i).getReactors().get(j).getX() == selectedSectorX && this.map.getStoudsonBombList().get(i).getReactors().get(j).getY() == selectedSectorY) {
+				for(int i = 0; i < EditorState.bombs.size(); i++) {
+					for(int j = 0; j < EditorState.bombs.get(i).getReactors().size(); j++) {
+						if(EditorState.bombs.get(i).getReactors().get(j).getX() == selectedSectorX && EditorState.bombs.get(i).getReactors().get(j).getY() == selectedSectorY) {
 							this.reactorTypmapLabel.setText("Reactor appearance: ");
 							this.reactorLabel.setText("This reactor belongs to Stoudson Bomb "+(i+1));
 							this.reactorPanel.setBorder(BorderFactory.createTitledBorder("Reactor "+(j+1) ));
 							this.reactorPanel.add(this.reactorTypmapLabel, managerConstraints);
 							this.managerConstraints.gridx = 1;
-							if(this.map.getStoudsonBombList().get(i).getBombStyle() == 1) {
+							if(EditorState.bombs.get(i).getBombStyle() == 1) {
 								this.reactorTypmapList = new JComboBox<String>(normalReactor);
-								if(this.map.getTypMap(selectedSector) == 243) this.reactorTypmapList.setSelectedIndex(0);
-								else if(this.map.getTypMap(selectedSector) == 244) this.reactorTypmapList.setSelectedIndex(1);
+								if(EditorState.typ_map.get(selectedSector) == 243) this.reactorTypmapList.setSelectedIndex(0);
+								else if(EditorState.typ_map.get(selectedSector) == 244) this.reactorTypmapList.setSelectedIndex(1);
 								else this.reactorTypmapList.setSelectedIndex(2);
 							}
-							if(this.map.getStoudsonBombList().get(i).getBombStyle() == 2) {
+							if(EditorState.bombs.get(i).getBombStyle() == 2) {
 								this.reactorTypmapList = new JComboBox<String>(parasiteReactor);
-								if(this.map.getTypMap(selectedSector) == 233) this.reactorTypmapList.setSelectedIndex(0);
-								else if(this.map.getTypMap(selectedSector) == 234) this.reactorTypmapList.setSelectedIndex(1);
-								else if(this.map.getTypMap(selectedSector) == 232) this.reactorTypmapList.setSelectedIndex(2);
-								else if(this.map.getTypMap(selectedSector) == 231) this.reactorTypmapList.setSelectedIndex(3);
-								else if(this.map.getTypMap(selectedSector) == 243) this.reactorTypmapList.setSelectedIndex(4);
-								else if(this.map.getTypMap(selectedSector) == 244) this.reactorTypmapList.setSelectedIndex(5);
+								if(EditorState.typ_map.get(selectedSector) == 233) this.reactorTypmapList.setSelectedIndex(0);
+								else if(EditorState.typ_map.get(selectedSector) == 234) this.reactorTypmapList.setSelectedIndex(1);
+								else if(EditorState.typ_map.get(selectedSector) == 232) this.reactorTypmapList.setSelectedIndex(2);
+								else if(EditorState.typ_map.get(selectedSector) == 231) this.reactorTypmapList.setSelectedIndex(3);
+								else if(EditorState.typ_map.get(selectedSector) == 243) this.reactorTypmapList.setSelectedIndex(4);
+								else if(EditorState.typ_map.get(selectedSector) == 244) this.reactorTypmapList.setSelectedIndex(5);
 								else this.reactorTypmapList.setSelectedIndex(6);
 							}
 							this.reactorPanel.add(this.reactorTypmapList, managerConstraints);
@@ -1951,16 +1953,20 @@ public class LevelManager extends JFrame{
 	}
 	
 	void refreshHoststationXfield(int index) {
-		this.xField.setText(Integer.toString(this.map.getHoststation(index).getUnitX()+ (int)(this.map.getMapSize() * 0.5/ 2)));
+		double fullSectorSize = EditorState.sectorSize + EditorState.sectorIndent;
+		this.xField.setText(Integer.toString(EditorState.hostStations.get(index).getUnitX()+ (int)(fullSectorSize * 0.5/ 2)));
 	}
 	void refreshHoststationYfield(int index) {
-		this.yField.setText(Integer.toString(this.map.getHoststation(index).getUnitY()+ (int)(this.map.getMapSize() * 0.5/ 2)));
+		double fullSectorSize = EditorState.sectorSize + EditorState.sectorIndent;
+		this.yField.setText(Integer.toString(EditorState.hostStations.get(index).getUnitY()+ (int)(fullSectorSize * 0.5/ 2)));
 	}
 	void refreshSquadXfield(int index) {
-		this.xUnitField.setText(Integer.toString(this.map.getSquad(index).getUnitX()+ (int)(this.map.getMapSize() * 0.14/ 2)));
+		double fullSectorSize = EditorState.sectorSize + EditorState.sectorIndent;
+		this.xUnitField.setText(Integer.toString(EditorState.predefinedSquads.get(index).getUnitX()+ (int)(fullSectorSize * 0.14/ 2)));
 	}
 	void refreshSquadYfield(int index) {
-		this.yUnitField.setText(Integer.toString(this.map.getSquad(index).getUnitY()+ (int)(this.map.getMapSize() * 0.14/ 2)));
+		double fullSectorSize = EditorState.sectorSize + EditorState.sectorIndent;
+		this.yUnitField.setText(Integer.toString(EditorState.predefinedSquads.get(index).getUnitY()+ (int)(fullSectorSize * 0.14/ 2)));
 	}
 	
 	private class ListenerClass implements ChangeListener, ActionListener, KeyListener{
@@ -2038,157 +2044,161 @@ public class LevelManager extends JFrame{
 				}
 			}
 			if(e.getSource() == applyUnit) {
+				Hoststation hoststation = (Hoststation)EditorState.hostStations.get(currentIndex);
+				double fullSectorSize = EditorState.sectorSize + EditorState.sectorIndent;
 				try {
-					map.getHoststation(currentIndex).setEnergy(Integer.parseInt(energyField.getText()));
-					map.getHoststation(currentIndex).setViewAngle(Integer.parseInt(viewAngleField.getText()));
-					map.getHoststation(currentIndex).setReloadConst(Integer.parseInt(reloadConstField.getText()));
+					hoststation.setEnergy(Integer.parseInt(energyField.getText()));
+					hoststation.setViewAngle(Integer.parseInt(viewAngleField.getText()));
+					hoststation.setReloadConst(Integer.parseInt(reloadConstField.getText()));
 					if(Integer.parseInt(xField.getText()) < map.getLeftCorner()) xField.setText(Integer.toString(map.getLeftCorner()));
 					if(Integer.parseInt(xField.getText()) > map.getRightCorner()) xField.setText(Integer.toString(map.getRightCorner()));
-					map.getHoststation(currentIndex).setUnitX(Integer.parseInt(xField.getText()) - (int)(map.getMapSize() * 0.5/ 2));
+					hoststation.setUnitX(Integer.parseInt(xField.getText()) - (int)(fullSectorSize * 0.5/ 2));
 					if(Integer.parseInt(yField.getText()) < map.getTopCorner()) yField.setText(Integer.toString(map.getTopCorner()));
 					if(Integer.parseInt(yField.getText()) > map.getDownCorner()) yField.setText(Integer.toString(map.getDownCorner()));
-					map.getHoststation(currentIndex).setUnitY(Integer.parseInt(yField.getText()) - (int)(map.getMapSize() * 0.5/ 2));
-					map.getHoststation(currentIndex).setHeight(Integer.parseInt(zField.getText()));
+					hoststation.setUnitY(Integer.parseInt(yField.getText()) - (int)(fullSectorSize * 0.5/ 2));
+					hoststation.setHeight(Integer.parseInt(zField.getText()));
 					
 					
 					if(Integer.parseInt(conBudgetField.getText()) < 0) conBudgetField.setText("0");
 					if(Integer.parseInt(conBudgetField.getText()) > 100) conBudgetField.setText("100");
-					map.getHoststation(currentIndex).setConBudget(Integer.parseInt(conBudgetField.getText()));
+					hoststation.setConBudget(Integer.parseInt(conBudgetField.getText()));
 					conBudgetSlider.setValue(Integer.parseInt(conBudgetField.getText()));
 					if(Integer.parseInt(conDelayField.getText()) < 0) conDelayField.setText("0");
 					if(Integer.parseInt(conDelayField.getText()) > 9000) conDelayField.setText("9000");
-					map.getHoststation(currentIndex).setConDelay(Integer.parseInt(conDelayField.getText()));
+					hoststation.setConDelay(Integer.parseInt(conDelayField.getText()));
 					conDelaySlider.setValue(Integer.parseInt(conDelayField.getText()));
 					
 					if(Integer.parseInt(defBudgetField.getText()) < 0) defBudgetField.setText("0");
 					if(Integer.parseInt(defBudgetField.getText()) > 100) defBudgetField.setText("100");
-					map.getHoststation(currentIndex).setDefBudget(Integer.parseInt(defBudgetField.getText()));
+					hoststation.setDefBudget(Integer.parseInt(defBudgetField.getText()));
 					defBudgetSlider.setValue(Integer.parseInt(defBudgetField.getText()));
 					if(Integer.parseInt(defDelayField.getText()) < 0) defDelayField.setText("0");
 					if(Integer.parseInt(defDelayField.getText()) > 9000) defDelayField.setText("9000");
-					map.getHoststation(currentIndex).setDefDelay(Integer.parseInt(defDelayField.getText()));
+					hoststation.setDefDelay(Integer.parseInt(defDelayField.getText()));
 					defDelaySlider.setValue(Integer.parseInt(defDelayField.getText()));
 					
 					if(Integer.parseInt(recBudgetField.getText()) < 0) recBudgetField.setText("0");
 					if(Integer.parseInt(recBudgetField.getText()) > 100) recBudgetField.setText("100");
-					map.getHoststation(currentIndex).setRecBudget(Integer.parseInt(recBudgetField.getText()));
+					hoststation.setRecBudget(Integer.parseInt(recBudgetField.getText()));
 					recBudgetSlider.setValue(Integer.parseInt(recBudgetField.getText()));
 					if(Integer.parseInt(recDelayField.getText()) < 0) recDelayField.setText("0");
 					if(Integer.parseInt(recDelayField.getText()) > 9000) recDelayField.setText("9000");
-					map.getHoststation(currentIndex).setRecDelay(Integer.parseInt(recDelayField.getText()));
+					hoststation.setRecDelay(Integer.parseInt(recDelayField.getText()));
 					recDelaySlider.setValue(Integer.parseInt(recDelayField.getText()));
 					
 					if(Integer.parseInt(robBudgetField.getText()) < 0) robBudgetField.setText("0");
 					if(Integer.parseInt(robBudgetField.getText()) > 100) robBudgetField.setText("100");
-					map.getHoststation(currentIndex).setRobBudget(Integer.parseInt(robBudgetField.getText()));
+					hoststation.setRobBudget(Integer.parseInt(robBudgetField.getText()));
 					robBudgetSlider.setValue(Integer.parseInt(robBudgetField.getText()));
 					if(Integer.parseInt(robDelayField.getText()) < 0) robDelayField.setText("0");
 					if(Integer.parseInt(robDelayField.getText()) > 9000) robDelayField.setText("9000");
-					map.getHoststation(currentIndex).setRobDelay(Integer.parseInt(robDelayField.getText()));
+					hoststation.setRobDelay(Integer.parseInt(robDelayField.getText()));
 					robDelaySlider.setValue(Integer.parseInt(robDelayField.getText()));
 					
 					if(Integer.parseInt(powBudgetField.getText()) < 0) powBudgetField.setText("0");
 					if(Integer.parseInt(powBudgetField.getText()) > 100) powBudgetField.setText("100");
-					map.getHoststation(currentIndex).setPowBudget(Integer.parseInt(powBudgetField.getText()));
+					hoststation.setPowBudget(Integer.parseInt(powBudgetField.getText()));
 					powBudgetSlider.setValue(Integer.parseInt(powBudgetField.getText()));
 					if(Integer.parseInt(powDelayField.getText()) < 0) powDelayField.setText("0");
 					if(Integer.parseInt(powDelayField.getText()) > 9000) powDelayField.setText("9000");
-					map.getHoststation(currentIndex).setPowDelay(Integer.parseInt(powDelayField.getText()));
+					hoststation.setPowDelay(Integer.parseInt(powDelayField.getText()));
 					powDelaySlider.setValue(Integer.parseInt(powDelayField.getText()));
 					
 					if(Integer.parseInt(radBudgetField.getText()) < 0) radBudgetField.setText("0");
 					if(Integer.parseInt(radBudgetField.getText()) > 100) radBudgetField.setText("100");
-					map.getHoststation(currentIndex).setRadBudget(Integer.parseInt(radBudgetField.getText()));
+					hoststation.setRadBudget(Integer.parseInt(radBudgetField.getText()));
 					radBudgetSlider.setValue(Integer.parseInt(radBudgetField.getText()));
 					if(Integer.parseInt(radDelayField.getText()) < 0) radDelayField.setText("0");
 					if(Integer.parseInt(radDelayField.getText()) > 9000) radDelayField.setText("9000");
-					map.getHoststation(currentIndex).setRadDelay(Integer.parseInt(radDelayField.getText()));
+					hoststation.setRadDelay(Integer.parseInt(radDelayField.getText()));
 					radDelaySlider.setValue(Integer.parseInt(radDelayField.getText()));
 					
 					if(Integer.parseInt(safBudgetField.getText()) < 0) safBudgetField.setText("0");
 					if(Integer.parseInt(safBudgetField.getText()) > 100) safBudgetField.setText("100");
-					map.getHoststation(currentIndex).setSafBudget(Integer.parseInt(safBudgetField.getText()));
+					hoststation.setSafBudget(Integer.parseInt(safBudgetField.getText()));
 					safBudgetSlider.setValue(Integer.parseInt(safBudgetField.getText()));
 					if(Integer.parseInt(safDelayField.getText()) < 0) safDelayField.setText("0");
 					if(Integer.parseInt(safDelayField.getText()) > 9000) safDelayField.setText("9000");
-					map.getHoststation(currentIndex).setSafDelay(Integer.parseInt(safDelayField.getText()));
+					hoststation.setSafDelay(Integer.parseInt(safDelayField.getText()));
 					safDelaySlider.setValue(Integer.parseInt(safDelayField.getText()));
 					
 					if(Integer.parseInt(cplBudgetField.getText()) < 0) cplBudgetField.setText("0");
 					if(Integer.parseInt(cplBudgetField.getText()) > 100) cplBudgetField.setText("100");
-					map.getHoststation(currentIndex).setCplBudget(Integer.parseInt(cplBudgetField.getText()));
+					hoststation.setCplBudget(Integer.parseInt(cplBudgetField.getText()));
 					cplBudgetSlider.setValue(Integer.parseInt(cplBudgetField.getText()));
 					if(Integer.parseInt(cplDelayField.getText()) < 0) cplDelayField.setText("0");
 					if(Integer.parseInt(cplDelayField.getText()) > 9000) cplDelayField.setText("9000");
-					map.getHoststation(currentIndex).setCplDelay(Integer.parseInt(cplDelayField.getText()));
+					hoststation.setCplDelay(Integer.parseInt(cplDelayField.getText()));
 					cplDelaySlider.setValue(Integer.parseInt(cplDelayField.getText()));
 				}catch(NumberFormatException ex) {
 					JOptionPane.showMessageDialog(null,"Values must be numeric", "Wrong value", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				if(mbStatus.isSelected()) map.getHoststation(currentIndex).setVisibility(false);
-				else map.getHoststation(currentIndex).setVisibility(true);
+				if(mbStatus.isSelected()) hoststation.setVisibility(false);
+				else hoststation.setVisibility(true);
 				
 				if(hsType.getSelectedIndex() == 0) {
-					map.getHoststation(currentIndex).setVehicle(56);
+					hoststation.setVehicle(56);
 				}else if(hsType.getSelectedIndex() == 1) {
-					map.getHoststation(currentIndex).setVehicle(59);
+					hoststation.setVehicle(59);
 				}else if(hsType.getSelectedIndex() == 2) {
-					map.getHoststation(currentIndex).setVehicle(57);
+					hoststation.setVehicle(57);
 				}else if(hsType.getSelectedIndex() == 3) {
-					map.getHoststation(currentIndex).setVehicle(60);
+					hoststation.setVehicle(60);
 				}else if(hsType.getSelectedIndex() == 4) {
-					map.getHoststation(currentIndex).setVehicle(58);
+					hoststation.setVehicle(58);
 				}else if(hsType.getSelectedIndex() == 5) {
-					map.getHoststation(currentIndex).setVehicle(61);
+					hoststation.setVehicle(61);
 				}else if(hsType.getSelectedIndex() == 6) {
-					map.getHoststation(currentIndex).setVehicle(62);
+					hoststation.setVehicle(62);
 				}else if(hsType.getSelectedIndex() == 7) {
-					map.getHoststation(currentIndex).setVehicle(132);
+					hoststation.setVehicle(132);
 				}
 				map.makeUnsaved();
 				map.repaint();
 			}
 			
 			if(e.getSource() == applySquad) {
+				Squad squad = (Squad)EditorState.predefinedSquads.get(currentIndex);
+				double fullSectorSize = EditorState.sectorSize + EditorState.sectorIndent;
 				try {
-					map.getSquad(currentIndex).setQuantity(Integer.parseInt(numField.getText()));
-					if(map.getSquad(currentIndex).getQuantity() > 32) {
-						map.getSquad(currentIndex).setQuantity(32);
+					squad.setQuantity(Integer.parseInt(numField.getText()));
+					if(squad.getQuantity() > 32) {
+						squad.setQuantity(32);
 						numField.setText("32");
-					}else if(map.getSquad(currentIndex).getQuantity() < 1) {
-						map.getSquad(currentIndex).setQuantity(1);
+					}else if(squad.getQuantity() < 1) {
+						squad.setQuantity(1);
 						numField.setText("1");
 					}
 						
 					if(ownList.getSelectedIndex() == 0) {
-						map.getSquad(currentIndex).setOwner(1);
+						squad.setOwner(1);
 					}else if(ownList.getSelectedIndex() == 1) {
-						map.getSquad(currentIndex).setOwner(6);
+						squad.setOwner(6);
 					}else if(ownList.getSelectedIndex() == 2) {
-						map.getSquad(currentIndex).setOwner(4);
+						squad.setOwner(4);
 					}else if(ownList.getSelectedIndex() == 3) {
-						map.getSquad(currentIndex).setOwner(3);
+						squad.setOwner(3);
 					}else if(ownList.getSelectedIndex() == 4) {
-						map.getSquad(currentIndex).setOwner(2);
+						squad.setOwner(2);
 					}else if(ownList.getSelectedIndex() == 5) {
-						map.getSquad(currentIndex).setOwner(5);
+						squad.setOwner(5);
 					}else if(ownList.getSelectedIndex() == 6) {
-						map.getSquad(currentIndex).setOwner(7);
+						squad.setOwner(7);
 					}
-					map.getSquad(currentIndex).updateImage();
+					squad.updateImage();
 					
 					if(Integer.parseInt(xUnitField.getText()) < map.getLeftCorner()) xUnitField.setText(Integer.toString(map.getLeftCorner()) );
 					if(Integer.parseInt(xUnitField.getText()) > map.getRightCorner()) xUnitField.setText(Integer.toString(map.getRightCorner()) );
-					map.getSquad(currentIndex).setUnitX(Integer.parseInt(xUnitField.getText()) - (int)(map.getMapSize() * 0.14/ 2));
+					squad.setUnitX(Integer.parseInt(xUnitField.getText()) - (int)(fullSectorSize * 0.14/ 2));
 					if(Integer.parseInt(yUnitField.getText()) < map.getTopCorner()) yUnitField.setText(Integer.toString(map.getTopCorner()) );
 					if(Integer.parseInt(yUnitField.getText()) > map.getDownCorner()) yUnitField.setText(Integer.toString(map.getDownCorner()) );
-					map.getSquad(currentIndex).setUnitY(Integer.parseInt(yUnitField.getText()) - (int)(map.getMapSize() * 0.14/ 2));
+					squad.setUnitY(Integer.parseInt(yUnitField.getText()) - (int)(fullSectorSize * 0.14/ 2));
 					
-					if(useable.isSelected() == false) map.getSquad(currentIndex).setUseable(false);
-					else map.getSquad(currentIndex).setUseable(true);
-					if(mbStatus.isSelected() == false) map.getSquad(currentIndex).setVisibility(true);
-					else map.getSquad(currentIndex).setVisibility(false);
+					if(!useable.isSelected()) squad.setUseable(false);
+					else squad.setUseable(true);
+					if(!mbStatus.isSelected()) squad.setVisibility(true);
+					else squad.setVisibility(false);
 						
 				}catch(NumberFormatException ex){
 					JOptionPane.showMessageDialog(null,"Values must be numeric", "Wrong value", JOptionPane.ERROR_MESSAGE);
@@ -2379,132 +2389,131 @@ public class LevelManager extends JFrame{
 			}
 			
 			if(e.getSource() == saveModifiers) {
-				if(techUpgradeBuilding.getSelectedIndex() == 0) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(60);
-				else if(techUpgradeBuilding.getSelectedIndex() == 1) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(61);
-				else if(techUpgradeBuilding.getSelectedIndex() == 2) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(4);
-				else if(techUpgradeBuilding.getSelectedIndex() == 3) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(7);
-				else if(techUpgradeBuilding.getSelectedIndex() == 4) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(15);
-				else if(techUpgradeBuilding.getSelectedIndex() == 5) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(51);
-				else if(techUpgradeBuilding.getSelectedIndex() == 6) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(50);
-				else if(techUpgradeBuilding.getSelectedIndex() == 7) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(16);
-				else if(techUpgradeBuilding.getSelectedIndex() == 8) 
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).setBuilding(65);
+				TechUpgrade techUpgrade = EditorState.getTechUpgrade(selectedSectorX, selectedSectorY);
+				if(techUpgradeBuilding.getSelectedIndex() == 0)
+					techUpgrade.setBuilding(60);
+				else if(techUpgradeBuilding.getSelectedIndex() == 1)
+					techUpgrade.setBuilding(61);
+				else if(techUpgradeBuilding.getSelectedIndex() == 2)
+					techUpgrade.setBuilding(4);
+				else if(techUpgradeBuilding.getSelectedIndex() == 3)
+					techUpgrade.setBuilding(7);
+				else if(techUpgradeBuilding.getSelectedIndex() == 4)
+					techUpgrade.setBuilding(15);
+				else if(techUpgradeBuilding.getSelectedIndex() == 5)
+					techUpgrade.setBuilding(51);
+				else if(techUpgradeBuilding.getSelectedIndex() == 6)
+					techUpgrade.setBuilding(50);
+				else if(techUpgradeBuilding.getSelectedIndex() == 7)
+					techUpgrade.setBuilding(16);
+				else if(techUpgradeBuilding.getSelectedIndex() == 8)
+					techUpgrade.setBuilding(65);
 
 				
-				if(techUpgradeType.getSelectedIndex() == 0) map.getTechUpgrade(selectedSectorX, selectedSectorY).setType(1);
-				else if(techUpgradeType.getSelectedIndex() == 1) map.getTechUpgrade(selectedSectorX, selectedSectorY).setType(2);
-				else if(techUpgradeType.getSelectedIndex() == 2) map.getTechUpgrade(selectedSectorX, selectedSectorY).setType(3);
-				else if(techUpgradeType.getSelectedIndex() == 3) map.getTechUpgrade(selectedSectorX, selectedSectorY).setType(4);
-				else if(techUpgradeType.getSelectedIndex() == 4) map.getTechUpgrade(selectedSectorX, selectedSectorY).setType(5);
-				else if(techUpgradeType.getSelectedIndex() == 5) map.getTechUpgrade(selectedSectorX, selectedSectorY).setType(-1);
+				if(techUpgradeType.getSelectedIndex() == 0) techUpgrade.setType(1);
+				else if(techUpgradeType.getSelectedIndex() == 1) techUpgrade.setType(2);
+				else if(techUpgradeType.getSelectedIndex() == 2) techUpgrade.setType(3);
+				else if(techUpgradeType.getSelectedIndex() == 3) techUpgrade.setType(4);
+				else if(techUpgradeType.getSelectedIndex() == 4) techUpgrade.setType(5);
+				else if(techUpgradeType.getSelectedIndex() == 5) techUpgrade.setType(-1);
 				
-				if(tuMbStatus.isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).setVisibility(false);
-				else map.getTechUpgrade(selectedSectorX, selectedSectorY).setVisibility(true);
+				if(tuMbStatus.isSelected()) techUpgrade.setVisibility(false);
+				else techUpgrade.setVisibility(true);
 				
 				for(int i = 0; i < vehicleAdded.size(); i++) {
-					if(resEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableVehicle(vehicleIDs.get(i), 1);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableVehicle(vehicleIDs.get(i), 1);
-					if(ghorEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableVehicle(vehicleIDs.get(i), 6);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableVehicle(vehicleIDs.get(i), 6);
-					if(taerEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableVehicle(vehicleIDs.get(i), 4);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableVehicle(vehicleIDs.get(i), 4);
-					if(mykoEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableVehicle(vehicleIDs.get(i), 3);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableVehicle(vehicleIDs.get(i), 3);
-					if(sulgEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableVehicle(vehicleIDs.get(i), 2);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableVehicle(vehicleIDs.get(i), 2);
-					if(blasecEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableVehicle(vehicleIDs.get(i), 5);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableVehicle(vehicleIDs.get(i), 5);
-					if(targetHSEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableVehicle(vehicleIDs.get(i), 7);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableVehicle(vehicleIDs.get(i), 7);
+					if(resEnabler.get(i).isSelected()) techUpgrade.enableVehicle(vehicleIDs.get(i), 1);
+					else techUpgrade.disableVehicle(vehicleIDs.get(i), 1);
+					if(ghorEnabler.get(i).isSelected()) techUpgrade.enableVehicle(vehicleIDs.get(i), 6);
+					else techUpgrade.disableVehicle(vehicleIDs.get(i), 6);
+					if(taerEnabler.get(i).isSelected()) techUpgrade.enableVehicle(vehicleIDs.get(i), 4);
+					else techUpgrade.disableVehicle(vehicleIDs.get(i), 4);
+					if(mykoEnabler.get(i).isSelected()) techUpgrade.enableVehicle(vehicleIDs.get(i), 3);
+					else techUpgrade.disableVehicle(vehicleIDs.get(i), 3);
+					if(sulgEnabler.get(i).isSelected()) techUpgrade.enableVehicle(vehicleIDs.get(i), 2);
+					else techUpgrade.disableVehicle(vehicleIDs.get(i), 2);
+					if(blasecEnabler.get(i).isSelected()) techUpgrade.enableVehicle(vehicleIDs.get(i), 5);
+					else techUpgrade.disableVehicle(vehicleIDs.get(i), 5);
+					if(targetHSEnabler.get(i).isSelected()) techUpgrade.enableVehicle(vehicleIDs.get(i), 7);
+					else techUpgrade.disableVehicle(vehicleIDs.get(i), 7);
 					
 					try {
-						if(Integer.parseInt(addEnergyField.get(i).getText()) != 0) map.getTechUpgrade(selectedSectorX, selectedSectorY).addEnergy(vehicleIDs.get(i), Integer.parseInt(addEnergyField.get(i).getText()));
-						else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().size() > i) map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).setEnergy(0);
-						if(Integer.parseInt(addShieldField.get(i).getText()) != 0) map.getTechUpgrade(selectedSectorX, selectedSectorY).addShield(vehicleIDs.get(i), Integer.parseInt(addShieldField.get(i).getText()));
-						else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().size() > i) map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).setShield(0);
-						if(Integer.parseInt(addWeaponField.get(i).getText()) != 0) map.getTechUpgrade(selectedSectorX, selectedSectorY).addWeapon(vehicleIDs.get(i), Integer.parseInt(addWeaponField.get(i).getText()));
-						else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().size() > i) map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).setWeaponNum(0);
-						if(Integer.parseInt(addRadarField.get(i).getText()) != 0) map.getTechUpgrade(selectedSectorX, selectedSectorY).addRadar(vehicleIDs.get(i), Integer.parseInt(addRadarField.get(i).getText()));
-						else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().size() > i) map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).setRadar(0);
-						if(Integer.parseInt(addDamageField.get(i).getText()) != 0) map.getTechUpgrade(selectedSectorX, selectedSectorY).addDamage(vehicleIDs.get(i), Integer.parseInt(addDamageField.get(i).getText()));
-						else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().size() > i) map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().get(i).setEnergy(0);
-						if(Integer.parseInt(addShotTimeField.get(i).getText()) != 0) map.getTechUpgrade(selectedSectorX, selectedSectorY).addShotTime(vehicleIDs.get(i), Integer.parseInt(addShotTimeField.get(i).getText()));
-						else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().size() > i) map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().get(i).setShotTime(0);
-						if(Integer.parseInt(addShotTimeUserField.get(i).getText()) != 0) map.getTechUpgrade(selectedSectorX, selectedSectorY).addShotTimeUser(vehicleIDs.get(i), Integer.parseInt(addShotTimeUserField.get(i).getText()));
-						else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().size() > i) map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().get(i).setShotTimeUser(0);
+						if(Integer.parseInt(addEnergyField.get(i).getText()) != 0) techUpgrade.addEnergy(vehicleIDs.get(i), Integer.parseInt(addEnergyField.get(i).getText()));
+						else if(techUpgrade.getVehicleList().size() > i) techUpgrade.getVehicleList().get(i).setEnergy(0);
+						if(Integer.parseInt(addShieldField.get(i).getText()) != 0) techUpgrade.addShield(vehicleIDs.get(i), Integer.parseInt(addShieldField.get(i).getText()));
+						else if(techUpgrade.getVehicleList().size() > i) techUpgrade.getVehicleList().get(i).setShield(0);
+						if(Integer.parseInt(addWeaponField.get(i).getText()) != 0) techUpgrade.addWeapon(vehicleIDs.get(i), Integer.parseInt(addWeaponField.get(i).getText()));
+						else if(techUpgrade.getVehicleList().size() > i) techUpgrade.getVehicleList().get(i).setWeaponNum(0);
+						if(Integer.parseInt(addRadarField.get(i).getText()) != 0) techUpgrade.addRadar(vehicleIDs.get(i), Integer.parseInt(addRadarField.get(i).getText()));
+						else if(techUpgrade.getVehicleList().size() > i) techUpgrade.getVehicleList().get(i).setRadar(0);
+						if(Integer.parseInt(addDamageField.get(i).getText()) != 0) techUpgrade.addDamage(vehicleIDs.get(i), Integer.parseInt(addDamageField.get(i).getText()));
+						else if(techUpgrade.getWeaponList().size() > i) techUpgrade.getWeaponList().get(i).setEnergy(0);
+						if(Integer.parseInt(addShotTimeField.get(i).getText()) != 0) techUpgrade.addShotTime(vehicleIDs.get(i), Integer.parseInt(addShotTimeField.get(i).getText()));
+						else if(techUpgrade.getWeaponList().size() > i) techUpgrade.getWeaponList().get(i).setShotTime(0);
+						if(Integer.parseInt(addShotTimeUserField.get(i).getText()) != 0) techUpgrade.addShotTimeUser(vehicleIDs.get(i), Integer.parseInt(addShotTimeUserField.get(i).getText()));
+						else if(techUpgrade.getWeaponList().size() > i) techUpgrade.getWeaponList().get(i).setShotTimeUser(0);
 					}catch(NumberFormatException ex) {
 						JOptionPane.showMessageDialog(null,"All the values should be numbers", "Wrong value", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				
 				for(int i = 0; i < buildingAdded.size(); i++) {
-					if(resBuildingEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableBuilding(buildingIDs.get(i), 1);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableBuilding(buildingIDs.get(i), 1);
-					if(ghorBuildingEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableBuilding(buildingIDs.get(i), 6);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableBuilding(buildingIDs.get(i), 6);
-					if(taerBuildingEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableBuilding(buildingIDs.get(i), 4);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableBuilding(buildingIDs.get(i), 4);
-					if(mykoBuildingEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableBuilding(buildingIDs.get(i), 3);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableBuilding(buildingIDs.get(i), 3);
-					if(sulgBuildingEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableBuilding(buildingIDs.get(i), 2);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableBuilding(buildingIDs.get(i), 2);
-					if(blasecBuildingEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableBuilding(buildingIDs.get(i), 5);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableBuilding(buildingIDs.get(i), 5);
-					if(targetHSBuildingEnabler.get(i).isSelected()) map.getTechUpgrade(selectedSectorX, selectedSectorY).enableBuilding(buildingIDs.get(i), 7);
-					else map.getTechUpgrade(selectedSectorX, selectedSectorY).disableBuilding(buildingIDs.get(i), 7);
+					if(resBuildingEnabler.get(i).isSelected()) techUpgrade.enableBuilding(buildingIDs.get(i), 1);
+					else techUpgrade.disableBuilding(buildingIDs.get(i), 1);
+					if(ghorBuildingEnabler.get(i).isSelected()) techUpgrade.enableBuilding(buildingIDs.get(i), 6);
+					else techUpgrade.disableBuilding(buildingIDs.get(i), 6);
+					if(taerBuildingEnabler.get(i).isSelected()) techUpgrade.enableBuilding(buildingIDs.get(i), 4);
+					else techUpgrade.disableBuilding(buildingIDs.get(i), 4);
+					if(mykoBuildingEnabler.get(i).isSelected()) techUpgrade.enableBuilding(buildingIDs.get(i), 3);
+					else techUpgrade.disableBuilding(buildingIDs.get(i), 3);
+					if(sulgBuildingEnabler.get(i).isSelected()) techUpgrade.enableBuilding(buildingIDs.get(i), 2);
+					else techUpgrade.disableBuilding(buildingIDs.get(i), 2);
+					if(blasecBuildingEnabler.get(i).isSelected()) techUpgrade.enableBuilding(buildingIDs.get(i), 5);
+					else techUpgrade.disableBuilding(buildingIDs.get(i), 5);
+					if(targetHSBuildingEnabler.get(i).isSelected()) techUpgrade.enableBuilding(buildingIDs.get(i), 7);
+					else techUpgrade.disableBuilding(buildingIDs.get(i), 7);
 					
 				}
 				map.repaint();
-				
-				
-				
-				if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 60) {
+
+				if(techUpgrade.getBuilding() == 60) {
 					techUpgradeBuilding.setSelectedIndex(0);
-					map.setTypMap(selectedSector, 106);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 61) {
+					EditorState.typ_map.set(selectedSector, 106);
+				}else if(techUpgrade.getBuilding() == 61) {
 					techUpgradeBuilding.setSelectedIndex(1);
-					map.setTypMap(selectedSector, 113);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 4) {
+					EditorState.typ_map.set(selectedSector, 113);
+				}else if(techUpgrade.getBuilding() == 4) {
 					techUpgradeBuilding.setSelectedIndex(2);
-					map.setTypMap(selectedSector, 100);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 7) {
+					EditorState.typ_map.set(selectedSector, 100);
+				}else if(techUpgrade.getBuilding() == 7) {
 					techUpgradeBuilding.setSelectedIndex(3);
-					map.setTypMap(selectedSector, 73);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 15) {
+					EditorState.typ_map.set(selectedSector, 73);
+				}else if(techUpgrade.getBuilding() == 15) {
 					techUpgradeBuilding.setSelectedIndex(4);
-					map.setTypMap(selectedSector, 104);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 51) {
+					EditorState.typ_map.set(selectedSector, 104);
+				}else if(techUpgrade.getBuilding() == 51) {
 					techUpgradeBuilding.setSelectedIndex(5);
-					map.setTypMap(selectedSector, 101);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 50) {
+					EditorState.typ_map.set(selectedSector, 101);
+				}else if(techUpgrade.getBuilding() == 50) {
 					techUpgradeBuilding.setSelectedIndex(6);
-					map.setTypMap(selectedSector, 102);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 16) {
+					EditorState.typ_map.set(selectedSector, 102);
+				}else if(techUpgrade.getBuilding() == 16) {
 					techUpgradeBuilding.setSelectedIndex(7);
-					map.setTypMap(selectedSector, 103);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuilding() == 65) {
+					EditorState.typ_map.set(selectedSector, 103);
+				}else if(techUpgrade.getBuilding() == 65) {
 					techUpgradeBuilding.setSelectedIndex(8);
-					map.setTypMap(selectedSector, 110);
+					EditorState.typ_map.set(selectedSector, 110);
 				}
-				if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == -1) {
+				if(techUpgrade.getType() == -1) {
 					techUpgradeType.setSelectedIndex(5);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 1) {
+				}else if(techUpgrade.getType() == 1) {
 					techUpgradeType.setSelectedIndex(0);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 2) {
+				}else if(techUpgrade.getType() == 2) {
 					techUpgradeType.setSelectedIndex(1);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 3) {
+				}else if(techUpgrade.getType() == 3) {
 					techUpgradeType.setSelectedIndex(2);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 4) {
+				}else if(techUpgrade.getType() == 4) {
 					techUpgradeType.setSelectedIndex(3);
-				}else if(map.getTechUpgrade(selectedSectorX, selectedSectorY).getType() == 5) {
+				}else if(techUpgrade.getType() == 5) {
 					techUpgradeType.setSelectedIndex(4);
 				}
 				techUpgradePanel.repaint();
@@ -2516,10 +2525,10 @@ public class LevelManager extends JFrame{
 			
 			for(int i = 0; i < removeVehicle.size(); i++) {
 				if(e.getSource() == removeVehicle.get(i)) {
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().remove(i);
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().remove(i);
-					
-					
+					TechUpgrade techUpgrade = EditorState.getTechUpgrade(selectedSectorX, selectedSectorY);
+					techUpgrade.getVehicleList().remove(i);
+					techUpgrade.getWeaponList().remove(i);
+
 					removeVehicle.remove(removeVehicle.get(i));
 					addShotTimeUserField.remove(addShotTimeUserField.get(i));
 					addShotTimeUserLabel.remove(addShotTimeUserLabel.get(i));
@@ -2555,7 +2564,7 @@ public class LevelManager extends JFrame{
 			
 			for(int i = 0; i < removeBuilding.size(); i++) {
 				if(e.getSource() == removeBuilding.get(i)) {
-					map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().remove(i);
+					EditorState.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().remove(i);
 					
 					removeBuilding.remove(removeBuilding.get(i));
 					targetHSBuildingEnabler.remove(targetHSBuildingEnabler.get(i));
@@ -2579,14 +2588,14 @@ public class LevelManager extends JFrame{
 			if(e.getSource() == addlevelTarget) {
 				managerConstraints.gridwidth = 4;
 				beamGatePanel.remove(errorBg);
-				if(map.getContent() == 0) {
+				if(EditorState.gameContent == 0) {
 					for(int i = 0; i < 44; i++) {
-						if(levelTargetList.getSelectedIndex() == i && !map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().contains(levelIDs[i]))
+						if(levelTargetList.getSelectedIndex() == i && !EditorState.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().contains(levelIDs[i]))
 							addLevelTarget(levelNames[i], levelIDs[i]);
 					}
-				}else if(map.getContent() == 1) {
+				}else if(EditorState.gameContent == 1) {
 					for(int i = 0; i < 31; i++) {
-						if(levelTargetList.getSelectedIndex() == i && !map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().contains(mdLevelIDs[i]))
+						if(levelTargetList.getSelectedIndex() == i && !EditorState.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().contains(mdLevelIDs[i]))
 							addLevelTarget(mdLevelNames[i], mdLevelIDs[i]);
 					}
 				}
@@ -2602,7 +2611,7 @@ public class LevelManager extends JFrame{
 			
 			for(int i = 0; i < removeLevelTarget.size(); i++) {
 				if(e.getSource() == removeLevelTarget.get(i)) {
-					map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().remove(i);
+					EditorState.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().remove(i);
 					beamGatePanel.remove(removeLevelTarget.get(i));
 					beamGatePanel.remove(levelTargets.get(i));
 					removeLevelTarget.remove(removeLevelTarget.get(i));
@@ -2612,7 +2621,7 @@ public class LevelManager extends JFrame{
 					managerConstraints.gridwidth = 1;
 					bgGridy--;
 					managerConstraints.gridy = bgGridy;
-					if(map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().size() == 0) {
+					if(EditorState.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().size() == 0) {
 						managerConstraints.gridwidth = 9;
 						beamGatePanel.add(errorBg, managerConstraints);
 						managerConstraints.gridwidth = 4;
@@ -2627,18 +2636,18 @@ public class LevelManager extends JFrame{
 			}
 			if(e.getSource() == applyBg) {
 				managerConstraints.insets = new Insets(1,50,1,1);
-				if(openedBgList.getSelectedIndex() == 0) map.getBeamGate(selectedSectorX, selectedSectorY).setOpenedType(1);
-				else if(openedBgList.getSelectedIndex() == 1) map.getBeamGate(selectedSectorX, selectedSectorY).setOpenedType(2);
+				if(openedBgList.getSelectedIndex() == 0) EditorState.getBeamGate(selectedSectorX, selectedSectorY).setOpenedType(1);
+				else if(openedBgList.getSelectedIndex() == 1) EditorState.getBeamGate(selectedSectorX, selectedSectorY).setOpenedType(2);
 				if(closedBgList.getSelectedIndex() == 0) {
-					map.getBeamGate(selectedSectorX, selectedSectorY).setClosedType(1);
-					map.setTypMap(selectedSector, 202);
+					EditorState.getBeamGate(selectedSectorX, selectedSectorY).setClosedType(1);
+					EditorState.typ_map.set(selectedSector, 202);
 				}
 				else if(closedBgList.getSelectedIndex() == 1) {
-					map.getBeamGate(selectedSectorX, selectedSectorY).setClosedType(2);
-					map.setTypMap(selectedSector, 3);
+					EditorState.getBeamGate(selectedSectorX, selectedSectorY).setClosedType(2);
+					EditorState.typ_map.set(selectedSector, 3);
 				}
-				if(bgMbStatus.isSelected()) map.getBeamGate(selectedSectorX, selectedSectorY).setVisibility(false);
-				else map.getBeamGate(selectedSectorX, selectedSectorY).setVisibility(true);
+				if(bgMbStatus.isSelected()) EditorState.getBeamGate(selectedSectorX, selectedSectorY).setVisibility(false);
+				else EditorState.getBeamGate(selectedSectorX, selectedSectorY).setVisibility(true);
 				noSector();
 				map.makeUnsaved();
 				map.updateMap();
@@ -2646,16 +2655,16 @@ public class LevelManager extends JFrame{
 			}
 			if(e.getSource() == applyBomb) {
 				if(bombList.getSelectedIndex() == 0) {
-					map.getStoudsonBomb(selectedSectorX, selectedSectorY).setBombStyle(1);
-					map.setTypMap(selectedSector, 245);
+					EditorState.getStoudsonBomb(selectedSectorX, selectedSectorY).setBombStyle(1);
+					EditorState.typ_map.set(selectedSector, 245);
 				}
 				else if (bombList.getSelectedIndex() == 1) {
-					map.getStoudsonBomb(selectedSectorX, selectedSectorY).setBombStyle(2);
-					map.setTypMap(selectedSector, 235);
+					EditorState.getStoudsonBomb(selectedSectorX, selectedSectorY).setBombStyle(2);
+					EditorState.typ_map.set(selectedSector, 235);
 				}
 				try {
 					if(Integer.parseInt(cdHours.getText()) >=0 && Integer.parseInt(cdMinutes.getText()) >= 0 && Integer.parseInt(cdSeconds.getText()) >=0)
-						map.getStoudsonBomb(selectedSectorX, selectedSectorY).setCountdown((Integer.parseInt(cdHours.getText()) * 3600)+(Integer.parseInt(cdMinutes.getText()) * 60)+(Integer.parseInt(cdSeconds.getText())));
+						EditorState.getStoudsonBomb(selectedSectorX, selectedSectorY).setCountdown((Integer.parseInt(cdHours.getText()) * 3600)+(Integer.parseInt(cdMinutes.getText()) * 60)+(Integer.parseInt(cdSeconds.getText())));
 					else JOptionPane.showMessageDialog(null,"Values shouldn't be negative", "Wrong value", JOptionPane.ERROR_MESSAGE);
 				}catch(NumberFormatException ex) {
 					JOptionPane.showMessageDialog(null,"Entered value is not a number", "Wrong value", JOptionPane.ERROR_MESSAGE);
@@ -2665,27 +2674,27 @@ public class LevelManager extends JFrame{
 				map.updateMap();
 			}
 			if(e.getSource() == applyReactor) {
-				for(int i = 0; i < map.getStoudsonBombList().size(); i++) {
-					for(int j = 0; j < map.getStoudsonBombList().get(i).getReactors().size(); j++) {
-						if(map.getStoudsonBombList().get(i).getReactors().get(j).getX() == selectedSectorX && map.getStoudsonBombList().get(i).getReactors().get(j).getY() == selectedSectorY) {
-							if(map.getStoudsonBombList().get(i).getBombStyle() == 1){
-								if(reactorTypmapList.getSelectedIndex() == 0) 
-									map.setTypMap(selectedSector, 243);
-								else if(reactorTypmapList.getSelectedIndex() == 1) 
-									map.setTypMap(selectedSector, 244);
-							}else if(map.getStoudsonBombList().get(i).getBombStyle() == 2) {
-								if(reactorTypmapList.getSelectedIndex() == 0) 
-									map.setTypMap(selectedSector, 233);
-								else if(reactorTypmapList.getSelectedIndex() == 1) 
-									map.setTypMap(selectedSector, 234);
-								else if(reactorTypmapList.getSelectedIndex() == 2) 
-									map.setTypMap(selectedSector, 232);
-								else if(reactorTypmapList.getSelectedIndex() == 3) 
-									map.setTypMap(selectedSector, 231);
-								else if(reactorTypmapList.getSelectedIndex() == 4) 
-									map.setTypMap(selectedSector, 243);
-								else if(reactorTypmapList.getSelectedIndex() == 5) 
-									map.setTypMap(selectedSector, 244);
+				for(int i = 0; i < EditorState.bombs.size(); i++) {
+					for(int j = 0; j < EditorState.bombs.get(i).getReactors().size(); j++) {
+						if(EditorState.bombs.get(i).getReactors().get(j).getX() == selectedSectorX && EditorState.bombs.get(i).getReactors().get(j).getY() == selectedSectorY) {
+							if(EditorState.bombs.get(i).getBombStyle() == 1){
+								if(reactorTypmapList.getSelectedIndex() == 0)
+									EditorState.typ_map.set(selectedSector, 243);
+								else if(reactorTypmapList.getSelectedIndex() == 1)
+									EditorState.typ_map.set(selectedSector, 244);
+							}else if(EditorState.bombs.get(i).getBombStyle() == 2) {
+								if(reactorTypmapList.getSelectedIndex() == 0)
+									EditorState.typ_map.set(selectedSector, 233);
+								else if(reactorTypmapList.getSelectedIndex() == 1)
+									EditorState.typ_map.set(selectedSector, 234);
+								else if(reactorTypmapList.getSelectedIndex() == 2)
+									EditorState.typ_map.set(selectedSector, 232);
+								else if(reactorTypmapList.getSelectedIndex() == 3)
+									EditorState.typ_map.set(selectedSector, 231);
+								else if(reactorTypmapList.getSelectedIndex() == 4)
+									EditorState.typ_map.set(selectedSector, 243);
+								else if(reactorTypmapList.getSelectedIndex() == 5)
+									EditorState.typ_map.set(selectedSector, 244);
 							}
 									
 							break;
@@ -2709,7 +2718,7 @@ public class LevelManager extends JFrame{
 		}// end Action Performed
 		
 		void addLevelTarget(String name, int id) {
-			map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().add(id);
+			EditorState.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().add(id);
 			levelTargets.add(new JLabel("This beam gate unlocks: "+name));
 			beamGatePanel.add(levelTargets.get(levelTargets.size()-1), managerConstraints);
 			managerConstraints.gridx = 3;
@@ -2739,12 +2748,12 @@ public class LevelManager extends JFrame{
 	}// TODO end Listener class
 
 	void updateTargetLevel() {
-		for(int i = 0; i < map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().size(); i++) {
+		for(int i = 0; i < EditorState.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().size(); i++) {
 			for(int j = 0; j < 44; j++) {
-				if(map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().get(i) == levelIDs[j])
+				if(EditorState.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().get(i) == levelIDs[j])
 					levelTargets.add(new JLabel("This beam gate unlocks: "+levelNames[j]));
 				else if(j < 31){
-					if(map.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().get(i) == mdLevelIDs[j])
+					if(EditorState.getBeamGate(selectedSectorX, selectedSectorY).getTargetLevel().get(i) == mdLevelIDs[j])
 						levelTargets.add(new JLabel("This beam gate unlocks: "+mdLevelNames[j]));
 				}
 			}
@@ -2769,52 +2778,52 @@ public class LevelManager extends JFrame{
 	}
 	
 	void updateTechUpgrade() {
-
-		for(int i = 0; i < this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().size(); i++){
+		TechUpgrade techUpgrade = EditorState.getTechUpgrade(selectedSectorX, selectedSectorY);
+		for(int i = 0; i < techUpgrade.getVehicleList().size(); i++){
 			this.managerConstraints.gridx = 0;
 			this.managerConstraints.gridwidth = 8;
 			this.managerConstraints.gridy = tuGridy;
-			this.vehicleIDs.add(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getVehicleID());
+			this.vehicleIDs.add(techUpgrade.getVehicleList().get(i).getVehicleID());
 			this.vehicleAdded.add(new JPanel(new GridBagLayout()));
-			String vehicleName = UAdata.getUnit(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getVehicleID()).getName();
+			String vehicleName = UAdata.getUnit(techUpgrade.getVehicleList().get(i).getVehicleID()).getName();
 
 			this.vehicleAdded.get(this.vehicleAdded.size()-1).setBorder(BorderFactory.createTitledBorder(vehicleName));
 			techUpgradePanel.add(vehicleAdded.get(vehicleAdded.size()-1), managerConstraints);
 			resEnabler.add(new JCheckBox("Enable for Resistance"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getEnable(1)) resEnabler.get(resEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getVehicleList().get(i).getEnable(1)) resEnabler.get(resEnabler.size()-1).setSelected(true);
 			ghorEnabler.add(new JCheckBox("Enable for Ghorkov"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getEnable(6)) ghorEnabler.get(ghorEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getVehicleList().get(i).getEnable(6)) ghorEnabler.get(ghorEnabler.size()-1).setSelected(true);
 			taerEnabler.add(new JCheckBox("Enable for Taerkasten"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getEnable(4)) taerEnabler.get(taerEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getVehicleList().get(i).getEnable(4)) taerEnabler.get(taerEnabler.size()-1).setSelected(true);
 			mykoEnabler.add(new JCheckBox("Enable for Mykonian"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getEnable(3)) mykoEnabler.get(mykoEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getVehicleList().get(i).getEnable(3)) mykoEnabler.get(mykoEnabler.size()-1).setSelected(true);
 			sulgEnabler.add(new JCheckBox("Enable for Sulgogar"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getEnable(2)) sulgEnabler.get(sulgEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getVehicleList().get(i).getEnable(2)) sulgEnabler.get(sulgEnabler.size()-1).setSelected(true);
 			blasecEnabler.add(new JCheckBox("Enable for Black Sect"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getEnable(5)) blasecEnabler.get(blasecEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getVehicleList().get(i).getEnable(5)) blasecEnabler.get(blasecEnabler.size()-1).setSelected(true);
 			targetHSEnabler.add(new JCheckBox("Enable for Target Host Station"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getEnable(7)) targetHSEnabler.get(targetHSEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getVehicleList().get(i).getEnable(7)) targetHSEnabler.get(targetHSEnabler.size()-1).setSelected(true);
 			addEnergyLabel.add(new JLabel("Add energy:"));
 			addEnergyField.add(new JTextField(4));
-			addEnergyField.get(addEnergyField.size() -1).setText(Integer.toString(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getEnergy()));
+			addEnergyField.get(addEnergyField.size() -1).setText(Integer.toString(techUpgrade.getVehicleList().get(i).getEnergy()));
 			addShieldLabel.add(new JLabel("Add shield:"));
 			addShieldField.add(new JTextField(4));
-			addShieldField.get(addShieldField.size() -1).setText(Integer.toString(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getShield()));
+			addShieldField.get(addShieldField.size() -1).setText(Integer.toString(techUpgrade.getVehicleList().get(i).getShield()));
 			addWeaponLabel.add(new JLabel("Add weapon:"));
 			addWeaponField.add(new JTextField(4));
-			addWeaponField.get(addWeaponField.size() -1).setText(Integer.toString(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getWeaponNum()));
+			addWeaponField.get(addWeaponField.size() -1).setText(Integer.toString(techUpgrade.getVehicleList().get(i).getWeaponNum()));
 			addRadarLabel.add(new JLabel("Add radar:"));
 			addRadarField.add(new JTextField(4));
-			addRadarField.get(addRadarField.size() -1).setText(Integer.toString(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getVehicleList().get(i).getRadar()));
+			addRadarField.get(addRadarField.size() -1).setText(Integer.toString(techUpgrade.getVehicleList().get(i).getRadar()));
 			addDamageLabel.add(new JLabel("Add damage:"));
 			addDamageField.add(new JTextField(4));
-			addDamageField.get(addDamageField.size() -1).setText(Integer.toString(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().get(i).getEnergy()));
+			addDamageField.get(addDamageField.size() -1).setText(Integer.toString(techUpgrade.getWeaponList().get(i).getEnergy()));
 			addShotTimeLabel.add(new JLabel("Add shot time:"));
 			addShotTimeField.add(new JTextField(4));
-			addShotTimeField.get(addShotTimeField.size() -1).setText(Integer.toString(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().get(i).getShotTime()));
+			addShotTimeField.get(addShotTimeField.size() -1).setText(Integer.toString(techUpgrade.getWeaponList().get(i).getShotTime()));
 			addShotTimeUserLabel.add(new JLabel("Add shot time user:"));
 			addShotTimeUserField.add(new JTextField(4));
-			addShotTimeUserField.get(addShotTimeUserField.size() -1).setText(Integer.toString(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getWeaponList().get(i).getShotTimeUser()));
+			addShotTimeUserField.get(addShotTimeUserField.size() -1).setText(Integer.toString(techUpgrade.getWeaponList().get(i).getShotTimeUser()));
 			removeVehicle.add(new JButton("Remove"));
 
 			managerConstraints.gridy = 0;
@@ -2882,30 +2891,30 @@ public class LevelManager extends JFrame{
 			this.tuGridy++;
 		}
 		
-		for(int i = 0; i < this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().size(); i++) {
+		for(int i = 0; i < techUpgrade.getBuildingList().size(); i++) {
 			this.managerConstraints.gridx = 0;
 			this.managerConstraints.gridwidth = 8;
 			this.managerConstraints.gridy = tuGridy;
-			this.buildingIDs.add(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getBuildingID());
+			this.buildingIDs.add(techUpgrade.getBuildingList().get(i).getBuildingID());
 			this.buildingAdded.add(new JPanel(new GridBagLayout()));
-			String buildingName = UAdata.getBuilding(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getBuildingID()).getName();
+			String buildingName = UAdata.getBuilding(techUpgrade.getBuildingList().get(i).getBuildingID()).getName();
 			
 			this.buildingAdded.get(this.buildingAdded.size()-1).setBorder(BorderFactory.createTitledBorder(buildingName));
 			this.techUpgradePanel.add(buildingAdded.get(buildingAdded.size()-1), managerConstraints);
 			this.resBuildingEnabler.add(new JCheckBox("Enable for Resistance"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getEnable(1)) resBuildingEnabler.get(resBuildingEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getBuildingList().get(i).getEnable(1)) resBuildingEnabler.get(resBuildingEnabler.size()-1).setSelected(true);
 			this.ghorBuildingEnabler.add(new JCheckBox("Enable for Ghorkov"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getEnable(6)) ghorBuildingEnabler.get(ghorBuildingEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getBuildingList().get(i).getEnable(6)) ghorBuildingEnabler.get(ghorBuildingEnabler.size()-1).setSelected(true);
 			this.taerBuildingEnabler.add(new JCheckBox("Enable for Taerkasten"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getEnable(4)) taerBuildingEnabler.get(taerBuildingEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getBuildingList().get(i).getEnable(4)) taerBuildingEnabler.get(taerBuildingEnabler.size()-1).setSelected(true);
 			this.mykoBuildingEnabler.add(new JCheckBox("Enable for Mykonian"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getEnable(3)) mykoBuildingEnabler.get(mykoBuildingEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getBuildingList().get(i).getEnable(3)) mykoBuildingEnabler.get(mykoBuildingEnabler.size()-1).setSelected(true);
 			this.sulgBuildingEnabler.add(new JCheckBox("Enable for Sulgogar"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getEnable(2)) sulgBuildingEnabler.get(sulgBuildingEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getBuildingList().get(i).getEnable(2)) sulgBuildingEnabler.get(sulgBuildingEnabler.size()-1).setSelected(true);
 			this.blasecBuildingEnabler.add(new JCheckBox("Enable for Black Sect"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getEnable(5)) blasecBuildingEnabler.get(blasecBuildingEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getBuildingList().get(i).getEnable(5)) blasecBuildingEnabler.get(blasecBuildingEnabler.size()-1).setSelected(true);
 			this.targetHSBuildingEnabler.add(new JCheckBox("Enable for Target Host Station"));
-			if(this.map.getTechUpgrade(selectedSectorX, selectedSectorY).getBuildingList().get(i).getEnable(7)) targetHSBuildingEnabler.get(targetHSBuildingEnabler.size()-1).setSelected(true);
+			if(techUpgrade.getBuildingList().get(i).getEnable(7)) targetHSBuildingEnabler.get(targetHSBuildingEnabler.size()-1).setSelected(true);
 			this.removeBuilding.add(new JButton("Remove"));
 			
 			this.managerConstraints.gridy = 0;
@@ -2938,25 +2947,26 @@ public class LevelManager extends JFrame{
 	@SuppressWarnings("unchecked")
 	public void saveJSON(File f) {
 		JSONObject stats = new JSONObject();
-		stats.put("con_budget", Integer.toString(map.getHoststation(this.currentIndex).getConBudget()));
-		stats.put("con_delay", Integer.toString(map.getHoststation(this.currentIndex).getRawConDelay()));
-		stats.put("def_budget", Integer.toString(map.getHoststation(this.currentIndex).getDefBudget()));
-		stats.put("def_delay", Integer.toString(map.getHoststation(this.currentIndex).getRawDefDelay()));
-		stats.put("rec_budget", Integer.toString(map.getHoststation(this.currentIndex).getRecBudget()));
-		stats.put("rec_delay", Integer.toString(map.getHoststation(this.currentIndex).getRawRecDelay()));
-		stats.put("rob_budget", Integer.toString(map.getHoststation(this.currentIndex).getRobBudget()));
-		stats.put("rob_delay", Integer.toString(map.getHoststation(this.currentIndex).getRawRobDelay()));
-		stats.put("pow_budget", Integer.toString(map.getHoststation(this.currentIndex).getPowBudget()));
-		stats.put("pow_delay", Integer.toString(map.getHoststation(this.currentIndex).getRawPowDelay()));
-		stats.put("rad_budget", Integer.toString(map.getHoststation(this.currentIndex).getRadBudget()));
-		stats.put("rad_delay", Integer.toString(map.getHoststation(this.currentIndex).getRawRadDelay()));
-		stats.put("saf_budget", Integer.toString(map.getHoststation(this.currentIndex).getSafBudget()));
-		stats.put("saf_delay", Integer.toString(map.getHoststation(this.currentIndex).getRawSafDelay()));
-		stats.put("cpl_budget", Integer.toString(map.getHoststation(this.currentIndex).getCplBudget()));
-		stats.put("cpl_delay", Integer.toString(map.getHoststation(this.currentIndex).getRawCplDelay()));
+		Hoststation hoststation = (Hoststation)EditorState.hostStations.get(this.currentIndex);
+		stats.put("con_budget", Integer.toString(hoststation.getConBudget()));
+		stats.put("con_delay", Integer.toString(hoststation.getRawConDelay()));
+		stats.put("def_budget", Integer.toString(hoststation.getDefBudget()));
+		stats.put("def_delay", Integer.toString(hoststation.getRawDefDelay()));
+		stats.put("rec_budget", Integer.toString(hoststation.getRecBudget()));
+		stats.put("rec_delay", Integer.toString(hoststation.getRawRecDelay()));
+		stats.put("rob_budget", Integer.toString(hoststation.getRobBudget()));
+		stats.put("rob_delay", Integer.toString(hoststation.getRawRobDelay()));
+		stats.put("pow_budget", Integer.toString(hoststation.getPowBudget()));
+		stats.put("pow_delay", Integer.toString(hoststation.getRawPowDelay()));
+		stats.put("rad_budget", Integer.toString(hoststation.getRadBudget()));
+		stats.put("rad_delay", Integer.toString(hoststation.getRawRadDelay()));
+		stats.put("saf_budget", Integer.toString(hoststation.getSafBudget()));
+		stats.put("saf_delay", Integer.toString(hoststation.getRawSafDelay()));
+		stats.put("cpl_budget", Integer.toString(hoststation.getCplBudget()));
+		stats.put("cpl_delay", Integer.toString(hoststation.getRawCplDelay()));
 		try {
 			statSaver = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-			statSaver.println(stats.toString());
+			statSaver.println(stats);
 			statSaver.close();
 		}catch(IOException ex) {
 			JOptionPane.showMessageDialog(null,"An I/O Error Occurred while saving the JSON file", "Error", JOptionPane.ERROR_MESSAGE);

@@ -70,6 +70,24 @@ public class EditorState {
         }
         return null;
     }
+    public static TechUpgrade getTechUpgrade(int x, int y) {
+        for(TechUpgrade tu : techUpgrades) {
+            if(tu.getX() == x && tu.getY() == y) return tu;
+        }
+        return null;
+    }
+    public static StoudsonBomb getStoudsonBomb(int x, int y) {
+        for(StoudsonBomb bomb : bombs) {
+            if(bomb.getX() == x && bomb.getY() == y) return bomb;
+        }
+        return null;
+    }
+    public static int getStoudsonBombNumber(int x, int y) {
+        for(int i = 0; i < bombs.size(); i++){
+            if(bombs.get(i).getX() == x && bombs.get(i).getY() == y) return i;
+        }
+        return -1;
+    }
 
     public static void resetState() {
         isSaved = true;

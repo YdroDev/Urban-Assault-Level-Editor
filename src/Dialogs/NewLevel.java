@@ -119,7 +119,7 @@ public class NewLevel implements WindowListener, ActionListener {
                     if(warn == JOptionPane.YES_OPTION) {
                         EditorState.resetState();
                         this.window.createNewMap();
-                        removeNewMapDialog();
+                        removeDialog();
                         dialog.setVisible(false);
                         savedMap = JFileChooser.CANCEL_OPTION;
                         this.window.makeUnsaved();
@@ -132,47 +132,28 @@ public class NewLevel implements WindowListener, ActionListener {
             }
         }
         if(e.getSource() == cancelBut) {
-            removeNewMapDialog();
+            removeDialog();
             dialog.setVisible(false);
         }
     }
-
     @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
+    public void windowOpened(WindowEvent e) {}
     @Override
     public void windowClosing(WindowEvent e) {
-        removeNewMapDialog();
+        removeDialog();
         dialog.setVisible(false);
     }
-
     @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
+    public void windowClosed(WindowEvent e) {}
     @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
+    public void windowIconified(WindowEvent e) {}
     @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
+    public void windowDeiconified(WindowEvent e) {}
     @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
+    public void windowActivated(WindowEvent e) {}
     @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
-    void removeNewMapDialog() {
+    public void windowDeactivated(WindowEvent e) {}
+    void removeDialog() {
         dialog.remove(cancelBut);
         dialog.remove(confirmBut);
         dialog.remove(borderInfo);

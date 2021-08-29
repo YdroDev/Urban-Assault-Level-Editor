@@ -35,19 +35,18 @@ import javax.swing.JPopupMenu;
 
 public class GameMap extends JComponent{
 	
-	private MainWindow mainwindow;
+	private final MainWindow mainwindow;
 	private int horizontalGrid = 0;
 	private int verticalGrid = 0;
-	private Graphics2D drawMap;
 	private int sumIndentX;
 	private int sumIndentY;
 	private int hSize = 1;
 	private int vSize = 1;
 	private int sectorCounter;
 	private int borderSectorCounter;
-	private JPopupMenu currentPosMenu;
-	private JPopupMenu selectedPopUp;
-	private JPopupMenu selectedPopUpSquad;
+	private final JPopupMenu currentPosMenu;
+	private final JPopupMenu selectedPopUp;
+	private final JPopupMenu selectedPopUpSquad;
 	private int currentClickedX;
 	private int currentClickedY;
 	private int currentHeight;
@@ -68,50 +67,50 @@ public class GameMap extends JComponent{
 	private JMenu specialBuilding;
 	private JMenu sectorItem;
 	private JMenu newItem;
-	private JMenu bgKeySector;
-	private JMenu bombReactors;
+	private final JMenu bgKeySector;
+	private final JMenu bombReactors;
 	private JMenuItem addResistance, addGhorkov, addTaerkasten, addMykonian, addSulgogar, addBlacksect, addTrainingHS;
-	private JMenuItem sectorResistance, sectorGhorkov, sectorTaerkasten, sectorMykonian, sectorSulgogar, sectorBlacksect, sectorTrainingHS, sectorNeutral;
-	private JMenuItem setHgt;
+	private final JMenuItem sectorResistance, sectorGhorkov, sectorTaerkasten, sectorMykonian, sectorSulgogar, sectorBlacksect, sectorTrainingHS, sectorNeutral;
+	private final JMenuItem setHgt;
 	
-	private ArrayList<JMenuItem> resUnitsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> ghorUnitsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> taerUnitsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> mykoUnitsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> sulgUnitsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> trainingUnitsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> specialUnitsMenu = new ArrayList<JMenuItem>();
+	private final ArrayList<JMenuItem> resUnitsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> ghorUnitsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> taerUnitsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> mykoUnitsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> sulgUnitsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> trainingUnitsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> specialUnitsMenu = new ArrayList<>();
 	
-	private ArrayList<JMenuItem> resBuildingsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> ghorBuildingsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> taerBuildingsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> mykoBuildingsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> blackSectBuildingsMenu = new ArrayList<JMenuItem>();
-	private ArrayList<JMenuItem> miscBuildingsMenu = new ArrayList<JMenuItem>();
+	private final ArrayList<JMenuItem> resBuildingsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> ghorBuildingsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> taerBuildingsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> mykoBuildingsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> blackSectBuildingsMenu = new ArrayList<>();
+	private final ArrayList<JMenuItem> miscBuildingsMenu = new ArrayList<>();
 	
-	private JMenuItem removeHS;
-	private JMenuItem removeSquad;
+	private final JMenuItem removeHS;
+	private final JMenuItem removeSquad;
 	
-	private JMenuItem clearSector;
-	private JMenuItem sectorApperance;
-	private JMenuItem newBeamGate;
-	private JMenuItem newBomb;
-	private JMenuItem newTechUpgrade;
+	private final JMenuItem clearSector;
+	private final JMenuItem sectorApperance;
+	private final JMenuItem newBeamGate;
+	private final JMenuItem newBomb;
+	private final JMenuItem newTechUpgrade;
 	
-	private EditorMouseListener mouselisten;
-	private ArrayList<JMenuItem> bgList;
-	private ArrayList<JMenuItem> bombList;
+	private final EditorMouseListener mouselisten;
+	private final ArrayList<JMenuItem> bgList;
+	private final ArrayList<JMenuItem> bombList;
 
-	private ArrayList<Boolean> error_map;
+	private final ArrayList<Boolean> error_map;
 	
 	private BufferedImage errorimg;
 	
-	private BufferedImage[] set1Images;
-	private BufferedImage[] set2Images;
-	private BufferedImage[] set3Images;
-	private BufferedImage[] set4Images;
-	private BufferedImage[] set5Images;
-	private BufferedImage[] set6Images;
+	private final BufferedImage[] set1Images;
+	private final BufferedImage[] set2Images;
+	private final BufferedImage[] set3Images;
+	private final BufferedImage[] set4Images;
+	private final BufferedImage[] set5Images;
+	private final BufferedImage[] set6Images;
 	
 	private Unit selected;
 	private BeamGate selectedBG;
@@ -123,12 +122,11 @@ public class GameMap extends JComponent{
 	private int selectedSectorY;
 	private int selectedSector;
 	private int borderSelectedSector;
-	private ArrayList<Integer> borderSelectedSectors;
+	private final ArrayList<Integer> borderSelectedSectors;
 	private int temp;
 	
 	Font font;
-	private String hInfo;
-	
+
 	GameMap(MainWindow mw){
 		this.mainwindow = mw;
 		mouselisten = new EditorMouseListener();
@@ -260,12 +258,12 @@ public class GameMap extends JComponent{
 		selectedPopUpSquad.add(removeSquad);
 		removeSquad.addActionListener(mouselisten);
 		
-		bgList = new ArrayList<JMenuItem>();
-		bombList = new ArrayList<JMenuItem>();
+		bgList = new ArrayList<>();
+		bombList = new ArrayList<>();
 
-		error_map = new ArrayList<Boolean>();
+		error_map = new ArrayList<>();
 		
-		borderSelectedSectors = new ArrayList<Integer>();
+		borderSelectedSectors = new ArrayList<>();
 		
 		font = new Font("Helvetica", Font.PLAIN, 10);
 
@@ -384,7 +382,7 @@ public class GameMap extends JComponent{
 	}
 	
 	public void paintComponent(Graphics g) { // TODO drawing starts here
-		drawMap = (Graphics2D)g;
+		Graphics2D drawMap = (Graphics2D) g;
 		drawMap.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		drawMap.setFont(MainWindow.hgtFont); 
 		for(int i = 0; i < error_map.size(); i++) error_map.set(i, false);
@@ -749,6 +747,7 @@ public class GameMap extends JComponent{
 		sectorCounter = 0;
 		hSize = EditorState.sectorSize;
 		vSize = EditorState.sectorSize;
+		String hInfo;
 		if(verticalGrid > 0 && horizontalGrid > 0) {
 			for(int i = 0; i < verticalGrid ; i++) {
 				for(int j = 0; j < horizontalGrid; j++) {
@@ -825,7 +824,7 @@ public class GameMap extends JComponent{
 		this.sectorCounter = 0;
 		for(int i = 0; i < verticalGrid; i++) {
 			for(int j = 0; j < horizontalGrid; j++) {
-				if(error_map.get(this.sectorCounter) == true) {
+				if(error_map.get(this.sectorCounter)) {
 					drawMap.drawImage(errorimg, hSize, vSize, this);
 				}
 				hSize += EditorState.sectorSize;
@@ -1518,7 +1517,7 @@ public class GameMap extends JComponent{
 			}else if(e.getKeyCode() == KeyEvent.VK_PERIOD) {
 				nextTypMap();
 			}
-			if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+			if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiersEx() & KeyEvent.CTRL_MASK) != 0)) {
 				 mainwindow.savePrompt();
 			}
 			if(e.getKeyCode() == KeyEvent.VK_0) {
