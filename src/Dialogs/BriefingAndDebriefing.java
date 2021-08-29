@@ -17,7 +17,7 @@ import java.util.Objects;
 
 public class BriefingAndDebriefing implements WindowListener, ActionListener {
     private final MainWindow window;
-    private final JDialog dialog;
+    private JDialog dialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
 
     private JPanel MBpanel, MDpanel;
@@ -383,27 +383,28 @@ public class BriefingAndDebriefing implements WindowListener, ActionListener {
                 EditorState.mbMapSizeY = Integer.parseInt(MBsizeYField.getText());
                 EditorState.dbMapSizeX = Integer.parseInt(MDsizeXField.getText());
                 EditorState.dbMapSizeY = Integer.parseInt(MDsizeYField.getText());
-                removeDialog();
+
                 closed = true;
                 dialog.setVisible(false);
+                removeDialog();
                 this.window.makeUnsaved();
             }catch(NumberFormatException ex) {
                 JOptionPane.showMessageDialog(dialog,"Entered value is not valid", "Wrong value", JOptionPane.ERROR_MESSAGE);
             }
         }
         if(e.getSource() == cancelBriefing) {
-            removeDialog();
             closed = true;
             dialog.setVisible(false);
+            removeDialog();
         }
     }
     @Override
     public void windowOpened(WindowEvent e) {}
     @Override
     public void windowClosing(WindowEvent e) {
-        removeDialog();
         closed = true;
         dialog.setVisible(false);
+        removeDialog();
     }
     @Override
     public void windowClosed(WindowEvent e) {}

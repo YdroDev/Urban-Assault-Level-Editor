@@ -14,6 +14,7 @@ public class KeyboardShortcuts implements WindowListener, ActionListener {
     private final JDialog dialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
 
+    private JLabel label;
     private JButton closeButton;
 
     public KeyboardShortcuts(MainWindow window) {
@@ -33,80 +34,51 @@ public class KeyboardShortcuts implements WindowListener, ActionListener {
 
         closeButton = new JButton("Close");
         closeButton.addActionListener(this);
-
-        dialog.add(new JLabel("'1' - set selected sector owner to resistance"), constraints);
+        label = new JLabel("<html><p>'1' - set selected sector owner to resistance</p>" +
+                "<p>'2' - set selected sector owner to sulgogar</p>" +
+                "<p>'3' - set selected sector owner to mykonian</p>" +
+                "<p>'4' - set selected sector owner to taerkasten</p>" +
+                "<p>'5' - set selected sector owner to black sect</p>" +
+                "<p>'6' - set selected sector owner to ghorkov</p>" +
+                "<p>'7' - set selected sector owner to neutral(for buildings)</p>" +
+                "<p>'0' - set selected sector owner to neutral</p>" +
+                "<p>'+' - increase selected sector height by 1</p>" +
+                "<p>'-' - decrease selected sector height by 1</p>" +
+                "<p>'.' - change selected sector appearance(typ_map) to next one</p>" +
+                "<p>',' - change selected sector appearance(typ_map) to previous one</p>" +
+                "<p>'H' - change selected sector/sectors height</p>" +
+                "<p>'T' - change selected sector appearance(typ_map)</p>" +
+                "<p>'Del' - clear selected sector</p>" +
+                "<p>'Ctrl + S' - save current level</p></html>");
+        constraints.gridy = 0;
+        dialog.add(label, constraints);
         constraints.gridy = 1;
-        dialog.add(new JLabel("'2' - set selected sector owner to sulgogar"), constraints);
-        constraints.gridy = 2;
-        dialog.add(new JLabel("'3' - set selected sector owner to mykonian"), constraints);
-        constraints.gridy = 3;
-        dialog.add(new JLabel("'4' - set selected sector owner to taerkasten"), constraints);
-        constraints.gridy = 4;
-        dialog.add(new JLabel("'5' - set selected sector owner to black sect"), constraints);
-        constraints.gridy = 5;
-        dialog.add(new JLabel("'6' - set selected sector owner to ghorkov"), constraints);
-        constraints.gridy = 6;
-        dialog.add(new JLabel("'7' - set selected sector owner to neutral(for buildings)"), constraints);
-        constraints.gridy = 7;
-        dialog.add(new JLabel("'0' - set selected sector owner to neutral"), constraints);
-        constraints.gridy = 8;
-        dialog.add(new JLabel("'+' - increase selected sector height by 1"), constraints);
-        constraints.gridy = 9;
-        dialog.add(new JLabel("'-' - decrease selected sector height by 1"), constraints);
-        constraints.gridy = 10;
-        dialog.add(new JLabel("'.' - change selected sector appearance(typ_map) to next one"), constraints);
-        constraints.gridy = 11;
-        dialog.add(new JLabel("',' - change selected sector appearance(typ_map) to previous one"), constraints);
-        constraints.gridy = 12;
-        dialog.add(new JLabel("'H' - change selected sector/sectors height"), constraints);
-        constraints.gridy = 13;
-        dialog.add(new JLabel("'T' - change selected sector appearance(typ_map)"), constraints);
-        constraints.gridy = 14;
-        dialog.add(new JLabel("'Del' - clear selected sector"), constraints);
-        constraints.gridy = 15;
-        dialog.add(new JLabel("'Ctrl + S' - save current level"), constraints);
-        constraints.gridy = 16;
         constraints.anchor = GridBagConstraints.CENTER;
         dialog.add(closeButton, constraints);
+        dialog.setVisible(true);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == closeButton) {
             dialog.setVisible(false);
+            removeDialog();
         }
     }
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
+    public void windowOpened(WindowEvent e) {}
     @Override
     public void windowClosing(WindowEvent e) {
-
+        if(e.getSource() == dialog) {
+            dialog.setVisible(false);
+            removeDialog();
+        }
     }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
+    public void windowClosed(WindowEvent e) {}
+    public void windowIconified(WindowEvent e) {}
+    public void windowDeiconified(WindowEvent e) {}
+    public void windowActivated(WindowEvent e) {}
+    public void windowDeactivated(WindowEvent e) {}
+    void removeDialog() {
+        if(closeButton != null) dialog.remove(closeButton);
+        if(label != null) dialog.remove(label);
     }
 }

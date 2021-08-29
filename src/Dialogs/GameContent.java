@@ -13,14 +13,17 @@ import java.awt.event.WindowListener;
 
 public class GameContent implements WindowListener, ActionListener {
     private final MainWindow window;
-    private final JDialog dialog;
+    private JDialog dialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
 
+    private JLabel contentLabel;
+    private JPanel contentList;
+    private JPanel contentButtons;
+    private JPanel contentNote;
     private JRadioButton noneContent;
     private JRadioButton mdContent;
     private JButton saveButton;
     private JButton cancelButton;
-    private JPanel contentList;
 
     public GameContent(MainWindow window) {
         this.window = window;
@@ -28,11 +31,13 @@ public class GameContent implements WindowListener, ActionListener {
         dialog.addWindowListener(this);
     }
     public void render() {
+        removeDialog();
+
         ButtonGroup contentGroup = new ButtonGroup();
         noneContent = new JRadioButton("none");
         mdContent = new JRadioButton("Metropolis Dawn");
-        JPanel contentNote = new JPanel(new GridBagLayout());
-        JPanel contentButtons = new JPanel(new GridBagLayout());
+        contentNote = new JPanel(new GridBagLayout());
+        contentButtons = new JPanel(new GridBagLayout());
         saveButton = new JButton("Apply");
         cancelButton = new JButton("Cancel");
         dialog.setSize(500, 400);
@@ -43,7 +48,8 @@ public class GameContent implements WindowListener, ActionListener {
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.insets = new Insets(2,5,2,20);
-        dialog.add(new JLabel("Select additional content for the game"), constraints);
+        contentLabel = new JLabel("Select additional content for the game");
+        dialog.add(contentLabel, constraints);
         contentList = new JPanel(new GridBagLayout());
         contentList.setBorder(BorderFactory.createTitledBorder("Available game content"));
         constraints.anchor = GridBagConstraints.WEST;
@@ -96,6 +102,7 @@ public class GameContent implements WindowListener, ActionListener {
         dialog.add(contentNote, constraints);
         constraints.gridy = 3;
         dialog.add(contentButtons, constraints);
+        dialog.setVisible(true);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -117,28 +124,27 @@ public class GameContent implements WindowListener, ActionListener {
             this.window.makeUnsaved();
         }
         if(e.getSource() == cancelButton) {
+            dialog.setVisible(false);
             removeDialog();
         }
     }
-    @Override
     public void windowOpened(WindowEvent e) {}
     @Override
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
+            dialog.setVisible(false);
             removeDialog();
         }
     }
-    @Override
     public void windowClosed(WindowEvent e) {}
-    @Override
     public void windowIconified(WindowEvent e) {}
-    @Override
     public void windowDeiconified(WindowEvent e) {}
-    @Override
     public void windowActivated(WindowEvent e) {}
-    @Override
     public void windowDeactivated(WindowEvent e) {}
     public void removeDialog() {
-        //TODO implement
+        if(contentButtons != null) dialog.remove(contentButtons);
+        if(contentNote != null) dialog.remove(contentNote);
+        if(contentList != null) dialog.remove(contentList);
+        if(contentLabel != null) dialog.remove(contentLabel);
     }
 }

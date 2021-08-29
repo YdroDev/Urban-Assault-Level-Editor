@@ -74,8 +74,8 @@ public class CampaignMaps implements WindowListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == mapsClose) {
-            removeDialog();
             dialog.setVisible(false);
+            removeDialog();
         }
     }
     @Override
@@ -83,8 +83,8 @@ public class CampaignMaps implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         if(e.getSource() == dialog) {
-            removeDialog();
             dialog.setVisible(false);
+            removeDialog();
         }
     }
     @Override
@@ -98,6 +98,6 @@ public class CampaignMaps implements WindowListener, ActionListener {
     @Override
     public void windowDeactivated(WindowEvent e) {}
     void removeDialog() {
-        if(mapsClose != null) dialog.remove(mapsClose);
+        if(mapsPanel != null) dialog.remove(mapsPanel);
     }
 }

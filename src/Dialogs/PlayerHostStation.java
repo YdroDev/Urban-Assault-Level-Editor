@@ -157,7 +157,6 @@ public class PlayerHostStation implements WindowListener, ActionListener {
         if(noHSavailable != null) dialog.remove(noHSavailable);
         if(hsListPanel != null) dialog.remove(hsListPanel);
         availableHS.clear();
-//        hsListPanel.setBorder(null);
         if(playerHSLabel != null) dialog.remove(playerHSLabel);
     }
 }
