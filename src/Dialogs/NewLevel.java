@@ -108,16 +108,18 @@ public class NewLevel implements WindowListener, ActionListener {
             String hText = horizontalNum.getText();
             String vText = verticalNum.getText();
             int warn = JOptionPane.YES_OPTION;
+            int horizontalSectors = Integer.parseInt(hText);
+            int verticalSectors = Integer.parseInt(vText);
 
             try {
-                EditorState.horizontalSectors = Integer.parseInt(hText);
-                EditorState.verticalSectors = Integer.parseInt(vText);
-                if(EditorState.horizontalSectors > 0 && EditorState.verticalSectors > 0) {
-                    if(EditorState.horizontalSectors > 64 || EditorState.verticalSectors > 64) {
+                if(horizontalSectors > 0 && verticalSectors > 0) {
+                    if(horizontalSectors > 64 || verticalSectors > 64) {
                         warn = JOptionPane.showConfirmDialog(null,"Playing on level with number of sectors greater than 64 may be unstable. Do you want to proceed?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                     }
                     if(warn == JOptionPane.YES_OPTION) {
                         EditorState.resetState();
+                        EditorState.horizontalSectors = horizontalSectors;
+                        EditorState.verticalSectors = verticalSectors;
                         this.window.createNewMap();
                         removeDialog();
                         dialog.setVisible(false);
